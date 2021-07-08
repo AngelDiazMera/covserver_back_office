@@ -23,6 +23,7 @@ function Caroussel(props: Props) {
         setTimeout(() => {
             setActualIndex(actualIndex + 1);
             setAnimating(false);
+            setFormCompleted(formData.hasOwnProperty('name') && formData.hasOwnProperty('acronym') ? true : false);
             props.setActualIndex(actualIndex + 1);
         }, 500);
     };
@@ -32,6 +33,7 @@ function Caroussel(props: Props) {
         setTimeout(() => {
             setActualIndex(actualIndex - 1);
             setAnimating(false);
+            setFormCompleted(true);
             props.setActualIndex(actualIndex - 1);
         }, 500);
     };

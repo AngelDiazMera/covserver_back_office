@@ -6,7 +6,7 @@ interface Props {
     updateFormData: any
 }
 
-function AccountForm(props: Props) {
+function EnterpriseForm(props: Props) {
 
     const [name, setName] = useState('');
     const [acronym, setAcronym] = useState('');
@@ -50,4 +50,4 @@ function AccountForm(props: Props) {
     )
 }
 
-export default AccountForm
+export default EnterpriseForm

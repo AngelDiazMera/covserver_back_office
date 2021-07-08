@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 import { saveEnterprise } from '../../providers/enterprise/enterpriseRequests'
 import palette from "../../colors/colorPalette"
-import AccountForm from './components/enterprise_form/enterpriseForm'
+import AccountForm from './components/account_form/accountForm'
 import Caroussel from './components/caroussel/caroussel'
 import ConfirmationForm from './components/confirmation_form/confirmationForm'
-import EnterpriseForm from './components/account_form/accountForm'
+import EnterpriseForm from './components/enterprise_form/enterpriseForm'
 import Step from './components/step'
 
 function LoginForm() {
@@ -76,7 +76,7 @@ function LoginForm() {
                 </div>
                 <form onSubmit={handleSubmit} className="order-3">
                     <Caroussel
-                        slides={[EnterpriseForm, AccountForm, ConfirmationForm,]}
+                        slides={[AccountForm, EnterpriseForm, ConfirmationForm,]}
                         setActualIndex={handleIndexChange}
                         setFormData={(val: {}) => {setFormData(val)}}
                     />

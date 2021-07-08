@@ -6,7 +6,7 @@ interface Props {
     updateFormData: Function
 }
 
-function EnterpriseForm(props: Props) {
+function AccountForm(props: Props) {
 
     const [email, setEmail] = useState('');
     const [psw, setPsw] = useState('');
@@ -76,4 +76,4 @@ function EnterpriseForm(props: Props) {
     )
 }
 
-export default EnterpriseForm
+export default AccountForm
