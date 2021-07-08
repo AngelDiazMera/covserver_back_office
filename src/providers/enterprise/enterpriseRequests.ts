@@ -12,14 +12,14 @@ export interface Enterprise{
     name?: string,
     acronym?: string,
 };
-
+// Encrypts password with hash (salt = 10)
 const _encrypt = (password: string):string => {
     const saltRounds: string = bcrypt.genSaltSync(10);
     const encPsw = bcrypt.hashSync(password, saltRounds);
     return encPsw;
 }
-
-export const saveEnterprise = async (enterpriseData: Enterprise) => {
+// Axios Request to save an enterprise by a POST method
+export const saveEnterprise = async (enterpriseData: Enterprise): Promise<void> => {
     var enterprise = enterpriseData;
     if (enterprise.access === undefined || enterprise.name === undefined || enterprise.name === undefined)
         return;
@@ -32,4 +32,10 @@ export const saveEnterprise = async (enterpriseData: Enterprise) => {
         return;
     }
     if (res.status === 500) alert('Ha ocurrido al alcanzar la API');
+};
+
+// Verifies if email is available or not
+export const checkEmailAvailability = async (email: string): Promise<boolean> => {
+    const res:AxiosResponse<any> = await axios.get(`${serverConnection.URL}/enterprise/email_validation/${email}`);
+    return res.data.val;
 };

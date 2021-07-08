@@ -26,9 +26,9 @@ function Step(props: Props) {
                     </Centered>
                 </div>
             </div>
-            <div className="d-flex flex-column align-items-start my-1 d-none d-sm-block">
-                <h6 className="m-0" style={{ color:props.checked ? palette['secondary-text'] : ''}}>{ props.header }</h6>
-                <span className="lh-1 text-start" style={{ color:props.checked ? palette['divider-color'] : palette['secondary-text'] }}>
+            <div className="d-flex flex-column align-items-start my-1 d-none d-sm-block lh-1">
+                <h6 className="m-0 mb-1" style={{ color:props.checked ? palette['secondary-text'] : ''}}>{ props.header }</h6>
+                <span className="text-start" style={{ color:props.checked ? palette['divider-color'] : palette['secondary-text']}}>
                     <small>
                         { props.content }
                     </small>

@@ -20,8 +20,9 @@ function Caroussel(props: Props) {
     const [makeRegister, setMakeRegister] = useState(false);
     
     useEffect(() => {
-        if (makeRegister === true) saveEnterprise(formData); 
-        setMakeRegister(false);
+        if (makeRegister === true) saveEnterprise(formData)
+            .then(() => setMakeRegister(false)); 
+        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [makeRegister]);
 
@@ -63,8 +64,11 @@ function Caroussel(props: Props) {
     return (
         <div>
             {/* if you want to use fade animation, use "carousel-fade" on the className prop */}
-            <div id="carouselExampleFade" className="carousel slide px-0 px-sm-5" data-bs-interval="false">
-                <div className="carousel-inner" style={{height:280}}>
+            <div 
+                id="carouselExampleFade" 
+                className="carousel slide px-0 px-sm-5"
+                data-bs-interval="false">
+                <div className="carousel-inner" style={{minHeight:280}}>
                     {props.slides?.map((Slide: React.ElementType, index: number) => (
                         <div className={`carousel-item${actualIndex === index ? ' active' : ''}`} key={index}>
                             <div className="d-block w-100">
@@ -85,6 +89,7 @@ function Caroussel(props: Props) {
                     <FiChevronLeft/>
                     <span>Anterior</span>
                 </button>
+                
                 {actualIndex < props.slides.length - 1 ? 
                 <button  
                     type="button" 
@@ -98,9 +103,14 @@ function Caroussel(props: Props) {
                     <FiChevronRight/>
                 </button>
                 :
+                !accepted ? 
+                <div className="btn btn-dark" style={{background: '#838ecf', borderColor: '#838ecf'}}>
+                    Registrar
+                </div>
+                :
                 <input 
                     disabled = {
-                        !accepted
+                        makeRegister
                     }
                     type="submit" 
                     value="Registrar"

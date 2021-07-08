@@ -2,8 +2,11 @@ import styled from "styled-components";
 
 import Background from "./components/background";
 import RegisterForm from "../../layouts/register_form/registerForm";
+import Image from "./components/image";
+
 
 const BigHeader = styled.h2`
+    opacity: 0.85;
     font-size: 4em;
     @media (max-width: 991.5px) {
         font-size: 2em;
@@ -23,8 +26,13 @@ function RegisterPage() {
                     </div>
                 </div>
                 <div className="col-12 col-lg-5 p-0 order-first order-lg-last">
-                    <Background>
-                        <BigHeader>Tu nuevo observador de infectados</BigHeader> 
+                    <Background> 
+                        <div className="h-100 d-flex flex-row flex-lg-column align-content-between justify-content-between">
+                            <BigHeader>Tu nuevo observador de infectados</BigHeader> 
+                            <div className="d-flex flex-row justify-content-end">
+                                <Image/>
+                            </div>
+                        </div>
                     </Background>
                 </div>
             </div>
