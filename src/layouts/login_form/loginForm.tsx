@@ -1,19 +1,26 @@
-import React, { useState } from 'react'
+import React, { FormEventHandler, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import Caroussel from './caroussel/caroussel'
+import { Enterprise, saveEnterprise } from '../../providers/enterprise/enterpriseRequests'
 import palette from "../../colors/colorPalette"
-import Step from './components/step'
 import AccountForm from './enterprise_form/enterpriseForm'
-import EnterpriseForm from './account_form/accountForm'
+import Caroussel from './caroussel/caroussel'
 import ConfirmationForm from './confirmation_form/confirmationForm'
+import EnterpriseForm from './account_form/accountForm'
+import Step from './components/step'
 
 function LoginForm() {
 
     const [actualIndex, setActualIndex] = useState(0);
+    const [formData, setFormData] = useState({});
 
     const handleIndexChange = (val: number) => {
         setActualIndex(val);
+    }
+
+    const handleSubmit = (evt:React.FormEvent<HTMLFormElement>) => {
+        saveEnterprise(formData);
+        evt.preventDefault();
     }
 
     return (
@@ -67,10 +74,11 @@ function LoginForm() {
                         <Link to="/login" className="text-decoration-none mx-1"> Ingresa aquí</Link>
                     </div>
                 </div>
-                <form action="" className="order-3">
+                <form onSubmit={handleSubmit} className="order-3">
                     <Caroussel
                         slides={[EnterpriseForm, AccountForm, ConfirmationForm,]}
                         setActualIndex={handleIndexChange}
+                        setFormData={(val: {}) => {setFormData(val)}}
                     />
                 </form>
             </div>

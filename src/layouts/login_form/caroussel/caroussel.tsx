@@ -5,7 +5,8 @@ import palette from "../../../colors/colorPalette"
 
 interface Props {
     slides: React.ElementType[]
-    setActualIndex: Function
+    setActualIndex: Function,
+    setFormData: Function
 }
 
 function Caroussel(props: Props) {
@@ -44,6 +45,7 @@ function Caroussel(props: Props) {
         Object.assign(newData, obj);
         console.log(newData);
         setFormData(newData);
+        props.setFormData(newData);
     }
 
     const termsAccepted = (val:boolean) => setAccepted(val);
