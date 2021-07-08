@@ -1,4 +1,3 @@
-// import axios from "axios";
 import axios, { AxiosResponse } from "axios";
 import bcrypt from "bcryptjs";
 import { serverConnection } from "../../keys";

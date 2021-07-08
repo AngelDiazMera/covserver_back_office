@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import img from '../../../assets/fondo.png';
 
+// Image styled component to at the purple background
 const Image = styled.img.attrs(props => ({
     src: props.src || img
 }))`

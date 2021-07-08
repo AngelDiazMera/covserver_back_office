@@ -1,32 +1,35 @@
 import { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+// Components
+import palette from "../../colors/colorPalette"
+import { saveEnterprise } from '../../providers/enterprise/enterpriseRequests';
 
-import palette from "../../../../colors/colorPalette"
-import { saveEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
-
+// Props definition
 interface Props {
-    slides: React.ElementType[]
-    setActualIndex: Function,
+    slides: React.ElementType[], // Array of components
+    setActualIndex: Function, // Callback
 }
 
-function Caroussel(props: Props) {
+function CarousselForm(props: Props) {
+    // State variables
+    const [actualIndex, setActualIndex] = useState(0); // Actual index in caroussel
+    const [animating, setAnimating] = useState(false); // To check if it is animating
 
-    const [actualIndex, setActualIndex] = useState(0);
-    const [animating, setAnimating] = useState(false);
-
-    const [formCompleted, setFormCompleted] = useState(false);
-    const [formData, setFormData] = useState({});
-    const [accepted, setAccepted] = useState(false);
-    const [makeRegister, setMakeRegister] = useState(false);
+    const [formCompleted, setFormCompleted] = useState(false); // When form is completed, value changes to true
+    const [formData, setFormData] = useState({}); // Full data to request( type: Enterprise )
+    const [accepted, setAccepted] = useState(false); // If terms are accepted
+    const [makeRegister, setMakeRegister] = useState(false); // To check if it is doing the request
     
+    // Hook: When the user clicks the register button
     useEffect(() => {
+        // It will save the enterprise (REQUEST), then, it will activate the button again
         if (makeRegister === true) saveEnterprise(formData)
             .then(() => setMakeRegister(false)); 
         
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [makeRegister]);
 
-
+    // To swipe the slides of the caroussel
     const nextSlide = () => {
         setAnimating(true);
         setTimeout(() => {
@@ -47,10 +50,12 @@ function Caroussel(props: Props) {
         }, 500);
     };
 
+    // Called from children to stablish that a form is completed
     const setCompleted = (val: boolean): void => {
         setFormCompleted(val);
     };
 
+    // Called from children to update the request data
     const updateFormData = (obj: {}): void => {
         const newData = formData;
         Object.assign(newData, obj);
@@ -89,7 +94,7 @@ function Caroussel(props: Props) {
                     <FiChevronLeft/>
                     <span>Anterior</span>
                 </button>
-                
+                {/* It will show the "Siguiente" button only if it is not the last slide */}
                 {actualIndex < props.slides.length - 1 ? 
                 <button  
                     type="button" 
@@ -103,13 +108,16 @@ function Caroussel(props: Props) {
                     <FiChevronRight/>
                 </button>
                 :
+                // If terms are not accepted a "button" (div simulation) will be shown (handle the boolean logic was so problematic)
                 !accepted ? 
                 <div className="btn btn-dark" style={{background: '#838ecf', borderColor: '#838ecf'}}>
                     Registrar
                 </div>
                 :
+                // Button to register the data when terms are accepted
                 <input 
                     disabled = {
+                        // Disabled only while doing the request
                         makeRegister
                     }
                     type="submit" 
@@ -123,4 +131,4 @@ function Caroussel(props: Props) {
     )
 }
 
-export default Caroussel
+export default CarousselForm

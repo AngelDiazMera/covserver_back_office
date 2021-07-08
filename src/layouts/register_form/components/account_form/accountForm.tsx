@@ -2,28 +2,31 @@ import React, { useEffect, useState } from 'react'
 import TextInput from '../../../../components/text_input/textInput'
 import { checkEmailAvailability } from '../../../../providers/enterprise/enterpriseRequests';
 
+// Props definition
 interface Props {
-    setFormCompleted: Function,
-    updateFormData: Function
+    setFormCompleted: Function, // callback
+    updateFormData: Function // callback
 }
 
 function AccountForm(props: Props) {
+    // State variables
+    const [email, setEmail] = useState(''); // email
+    const [psw, setPsw] = useState(''); // password
+    const [repPsw, setRepPsw] = useState(''); // repeated password
 
-    const [email, setEmail] = useState('');
-    const [psw, setPsw] = useState('');
-    const [repPsw, setRepPsw] = useState('');
-
-    const [isEmailWrong, setIsEmailWrong] = useState(false);
-    const [emailLabel, setEmailLabel] = useState('');
+    const [isEmailWrong, setIsEmailWrong] = useState(false); // To validate email
+    const [emailLabel, setEmailLabel] = useState(''); // Helper text to email's input
 
     // Hook: Check if form is completed
     useEffect(() => {
+        // If email is wrong, return
         if (isEmailWrong) {
             props.setFormCompleted(false);
             return;
         }
-        
+        // Check if password fields are not empty
         if (psw.trim() !== '' || repPsw.trim() !== '') {
+            // Check if password are the same
             if (psw === repPsw) {
                 props.setFormCompleted(true);
                 props.updateFormData({access: {email: email, password: '', nonEncPsw: psw}});
@@ -35,10 +38,12 @@ function AccountForm(props: Props) {
 
     // Hook: when email changes and is correct, ask to server if email is well written every 500ms
     useEffect(() => {
+        // Check if email is empty
         if (email.trim() === '') return;
+        // Check if email is wrong
         if(_isEmailWrong()) return;
         setEmailLabel('Comprobando disponibilidad...')
-
+        // Request to server every 500 ms
         const timer:NodeJS.Timeout = setTimeout(() => {
             checkEmailAvailability(email)
                 .then((available:boolean) => {

@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react'
+// Components
 import TextInput from '../../../../components/text_input/textInput';
 
+// Props definition
 interface Props {
-    setFormCompleted: Function,
+    setFormCompleted: Function, // Callback
     updateFormData: any
 }
 
 function EnterpriseForm(props: Props) {
-
-    const [name, setName] = useState('');
-    const [acronym, setAcronym] = useState('');
-
+    // State variables
+    const [name, setName] = useState(''); // Name of the enterprise
+    const [acronym, setAcronym] = useState(''); // Acronym of the enterprise
+    // Hook: When name or acronym are updated (and their content is different 
+    // from ''), callbacks will be called
+    //  Callback 1: setFormCompleted -> Sets if this form is completed
+    //  Callback 2: updateFormData -> Updates this data to the parent
     useEffect(() => {
         props.setFormCompleted(false)
         if (name.trim() !== '' && acronym.trim() !== '') {

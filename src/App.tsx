@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom';
-
+// Components
 import AuthRoutes from './routes/auth.routes';
 import DashboardRoutes from './routes/dashboard.routes';
 
@@ -18,7 +18,6 @@ function App() {
 
   return (
     <>
-      {/* <h1>Probando rutas de la página</h1> */}
       <Router>
         <DecideRoutes/>
       </Router>
