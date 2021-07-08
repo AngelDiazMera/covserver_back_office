@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
-import palette from "../../../colors/colorPalette"
+import palette from "../../../../colors/colorPalette"
 
 interface Props {
     slides: React.ElementType[]

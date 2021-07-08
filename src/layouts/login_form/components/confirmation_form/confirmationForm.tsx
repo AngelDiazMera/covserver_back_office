@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
-import Checkbox from '../../../components/checkbox/checkbox'
-import palette from "../../../colors/colorPalette"
-import { Enterprise } from '../../../providers/enterprise/enterpriseRequests';
+import Checkbox from '../../../../components/checkbox/checkbox'
+import palette from "../../../../colors/colorPalette"
+import { Enterprise } from '../../../../providers/enterprise/enterpriseRequests';
 
 
 interface Props {

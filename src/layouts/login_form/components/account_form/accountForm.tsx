@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import TextInput from '../../../components/text_input/textInput'
+import TextInput from '../../../../components/text_input/textInput'
 
 interface Props {
     setFormCompleted: Function,
@@ -25,7 +25,7 @@ function EnterpriseForm(props: Props) {
     }, [email, psw, repPsw]);
 
     const _validateEmail = (email: string): boolean => {
-        const regExp: RegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const regExp: RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return regExp.test(email);
     };
 

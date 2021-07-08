@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import TextInput from '../../../components/text_input/textInput';
+import TextInput from '../../../../components/text_input/textInput';
 
 interface Props {
     setFormCompleted: Function,

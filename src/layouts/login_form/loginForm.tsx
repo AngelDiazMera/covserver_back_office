@@ -1,12 +1,12 @@
-import React, { FormEventHandler, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Enterprise, saveEnterprise } from '../../providers/enterprise/enterpriseRequests'
+import { saveEnterprise } from '../../providers/enterprise/enterpriseRequests'
 import palette from "../../colors/colorPalette"
-import AccountForm from './enterprise_form/enterpriseForm'
-import Caroussel from './caroussel/caroussel'
-import ConfirmationForm from './confirmation_form/confirmationForm'
-import EnterpriseForm from './account_form/accountForm'
+import AccountForm from './components/enterprise_form/enterpriseForm'
+import Caroussel from './components/caroussel/caroussel'
+import ConfirmationForm from './components/confirmation_form/confirmationForm'
+import EnterpriseForm from './components/account_form/accountForm'
 import Step from './components/step'
 
 function LoginForm() {
