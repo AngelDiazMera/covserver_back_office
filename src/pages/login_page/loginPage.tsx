@@ -24,7 +24,7 @@ function LoginPage() {
                 </div>
                 <div className="col-12 col-lg-5 p-0 order-first order-lg-last">
                     <Background>
-                        <BigHeader>Tenemos una sorpresa para ti</BigHeader> 
+                        <BigHeader>Tu nuevo observador de infectados</BigHeader> 
                     </Background>
                 </div>
             </div>
