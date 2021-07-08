@@ -17,7 +17,7 @@ function AccountForm(props: Props) {
         if (email.trim() !== '' && psw.trim() !== '' && repPsw.trim() !== '') {
             if (psw === repPsw && _validateEmail(email)) {
                 props.setFormCompleted(true);
-                props.updateFormData({access: {email: email, password: psw}});
+                props.updateFormData({access: {email: email, password: '', nonEncPsw: psw}});
             }
             else props.setFormCompleted(false)
         }

@@ -1,12 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import palette from "../../../../colors/colorPalette"
+import { saveEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
 
 interface Props {
     slides: React.ElementType[]
     setActualIndex: Function,
-    setFormData: Function
 }
 
 function Caroussel(props: Props) {
@@ -17,6 +17,14 @@ function Caroussel(props: Props) {
     const [formCompleted, setFormCompleted] = useState(false);
     const [formData, setFormData] = useState({});
     const [accepted, setAccepted] = useState(false);
+    const [makeRegister, setMakeRegister] = useState(false);
+    
+    useEffect(() => {
+        if (makeRegister === true) saveEnterprise(formData); 
+        setMakeRegister(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [makeRegister]);
+
 
     const nextSlide = () => {
         setAnimating(true);
@@ -47,7 +55,6 @@ function Caroussel(props: Props) {
         Object.assign(newData, obj);
         console.log(newData);
         setFormData(newData);
-        props.setFormData(newData);
     }
 
     const termsAccepted = (val:boolean) => setAccepted(val);
@@ -92,10 +99,13 @@ function Caroussel(props: Props) {
                 </button>
                 :
                 <input 
-                    disabled = {!accepted}
+                    disabled = {
+                        !accepted
+                    }
                     type="submit" 
                     value="Registrar"
                     className="btn btn-dark" 
+                    onClick={() => setMakeRegister(true)}
                     style={{backgroundColor:palette['primary-color'], borderColor:palette['primary-color']}} />
                 }
             </div>

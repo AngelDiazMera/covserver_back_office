@@ -12,15 +12,9 @@ import Step from './components/step'
 function RegisterForm() {
 
     const [actualIndex, setActualIndex] = useState(0);
-    const [formData, setFormData] = useState({});
 
     const handleIndexChange = (val: number) => {
         setActualIndex(val);
-    }
-
-    const handleSubmit = (evt:React.FormEvent<HTMLFormElement>) => {
-        saveEnterprise(formData);
-        evt.preventDefault();
     }
 
     return (
@@ -74,13 +68,12 @@ function RegisterForm() {
                         <Link to="/login" className="text-decoration-none mx-1"> Ingresa aquí</Link>
                     </div>
                 </div>
-                <form onSubmit={handleSubmit} className="order-3">
+                <div className="order-3">
                     <Caroussel
                         slides={[AccountForm, EnterpriseForm, ConfirmationForm,]}
                         setActualIndex={handleIndexChange}
-                        setFormData={(val: {}) => {setFormData(val)}}
                     />
-                </form>
+                </div>
             </div>
         </div>
     )

@@ -20,9 +20,9 @@ function ConfirmationForm(props: Props) {
         if (!props.userData.access) return '';
 
         var hidden = '';
-        var pswLenght: number = props.userData.access.password.length;
+        var pswLenght: number = props.userData.access.nonEncPsw.length;
         hidden = '•'.repeat(pswLenght);
-        return isPswVisible ? props.userData.access?.password : hidden;
+        return isPswVisible ? props.userData.access?.nonEncPsw : hidden;
     };
 
     return (

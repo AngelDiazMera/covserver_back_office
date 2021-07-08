@@ -6,10 +6,11 @@ import { serverConnection } from "../../keys";
 export interface Enterprise{
     access?:{
         email: string,
-        password: string
+        password: string,
+        nonEncPsw: string
     },
     name?: string,
-    acronym?: string
+    acronym?: string,
 };
 
 const _encrypt = (password: string):string => {
@@ -19,15 +20,16 @@ const _encrypt = (password: string):string => {
 }
 
 export const saveEnterprise = async (enterpriseData: Enterprise) => {
-    const enterprise = enterpriseData;
+    var enterprise = enterpriseData;
     if (enterprise.access === undefined || enterprise.name === undefined || enterprise.name === undefined)
         return;
-        enterprise.access.password = _encrypt(enterprise.access.password);
+        enterprise.access.password = _encrypt(enterprise.access.nonEncPsw);
     
     const res:AxiosResponse<any> = await axios.post(`${serverConnection.URL}/enterprise`, enterprise);
 
-    if (res.status === 200 && res.data.msg !== undefined)
-        alert('Se ha registrado la empresa');
-
+    if (res.data.msg !== undefined){
+        alert(res.data.msg);
+        return;
+    }
     if (res.status === 500) alert('Ha ocurrido al alcanzar la API');
 };
