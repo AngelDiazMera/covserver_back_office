@@ -9,7 +9,7 @@ import ConfirmationForm from './components/confirmation_form/confirmationForm'
 import EnterpriseForm from './components/enterprise_form/enterpriseForm'
 import Step from './components/step'
 
-function LoginForm() {
+function RegisterForm() {
 
     const [actualIndex, setActualIndex] = useState(0);
     const [formData, setFormData] = useState({});
@@ -86,4 +86,4 @@ function LoginForm() {
     )
 }
 
-export default LoginForm
+export default RegisterForm

@@ -1,7 +1,7 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import LoginPage from '../pages/login_page/loginPage';
 import RegisterPage from '../pages/register_page/registerPage';
+import LoginPage from '../pages/login_page/loginPage';
 
 function AuthRoutes() {
     return (
