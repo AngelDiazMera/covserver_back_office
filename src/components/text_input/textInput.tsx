@@ -10,8 +10,8 @@ interface Props {
     placeHolder?: string,
     label?: string,
     helper?: string,
-    regExValidator?: RegExp,
-    wrong?:boolean
+    wrong?: boolean,
+    wrongText?: string,
 };
 
 const Input = styled.input`
@@ -33,16 +33,16 @@ function TextInput(props: Props) {
         <div className="mb-3">
             <label className="w-100 form-label">{props.label}
             <Input 
-            style={props.wrong? {background:'#f0e0df'} : undefined}
-            name={props.name}
-            type={props.type}  
-            value={props.value}
-            onChange={ (evt) => props.onChange(evt) }
-            required={props.required ? false : props.required}
-            placeholder={props.placeHolder}
-            aria-describedby="emailHelp"/></label>
+                style={props.wrong? {background:'#f0e0df'} : undefined}
+                name={props.name}
+                type={props.type}  
+                value={props.value}
+                onChange={ (evt) => props.onChange(evt) }
+                required={props.required ? false : props.required}
+                placeholder={props.placeHolder}
+                aria-describedby="emailHelp"/></label>
             <div id="emailHelp" className="form-text">{props.helper}</div>
-            {props.wrong?<div id="emailHelp" className="form-text" style={{color:'#f2564e'}}>Las contraseñas no coinciden</div>: null}
+            {props.wrong?<div id="emailHelp" className="form-text" style={{color:'#f2564e'}}>{props.wrongText}</div>: null}
         </div>
     )
 }

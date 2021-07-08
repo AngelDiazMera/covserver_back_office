@@ -26,16 +26,17 @@ function Step(props: Props) {
                     </Centered>
                 </div>
             </div>
-            <div className="d-flex flex-column align-items-start my-1">
+            <div className="d-flex flex-column align-items-start my-1 d-none d-sm-block">
                 <h6 className="m-0" style={{ color:props.checked ? palette['secondary-text'] : ''}}>{ props.header }</h6>
-                <span className="text-start" style={{ color:props.checked ? palette['divider-color'] : palette['secondary-text'] }}>
+                <span className="lh-1 text-start" style={{ color:props.checked ? palette['divider-color'] : palette['secondary-text'] }}>
                     <small>
                         { props.content }
                     </small>
                 </span>
             </div>
             {!props.isLast ? (
-            <div className="d-flex flex-column justify-content-center mx-1">
+            <div className="d-none d-sm-block d-flex flex-column  justify-content-center mx-1 ">
+                <div style={{height:'calc(50% - 20px)'}}/>
                 <span className="fs-5" style={{ color:palette['divider-color'] }}><FiChevronRight/></span>
             </div>
             ) : null}

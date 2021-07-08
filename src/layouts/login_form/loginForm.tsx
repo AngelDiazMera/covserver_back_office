@@ -17,39 +17,46 @@ function LoginForm() {
     }
 
     return (
-        <div className="py-lg-0 pb-lg-0 pt-15 pb-12" style={{maxWidth:675}}>
+        <div className=" w-100 py-lg-0 pb-lg-0 pt-15 pb-12" style={{maxWidth:675}}>
 
-            <div className="d-flex flex-column">
-                <div className="d-flex flex-column-auto flex-column px-10">
+            <div className="d-flex flex-column px-3 px-xl-0">
+                <div className="d-flex flex-column-auto flex-column px-10 order-0 ">
                     <Link to="/register" className = "pb-lg-4 pb-10">
                         Aquí va el logo
                     </Link>
                 </div>
 
-                <div className="d-flex flex-row justify-content-center mb-3">
-                    <Step 
-                        step={ 1 }
-                        header="Cuenta"
-                        content="Detalles de la cuenta"
-                        selected={actualIndex === 0}
-                        checked={actualIndex > 0}
-                    />
-                    <Step 
-                        step={ 2 }
-                        header="Empresa"
-                        content="Detalles de la empresa"
-                        selected={actualIndex === 1}
-                        checked={actualIndex > 1}
-                    />
-                    <Step 
-                        step={ 3 }
-                        header="Confirmar"
-                        content="Completa el registro"
-                        selected={actualIndex === 2}
-                        isLast={true}
-                    />
+                <div className="d-inline-flex flex-row  justify-content-center mb-3 order-4 order-sm-1">
+                    <div className=" p-0">
+                        <Step 
+                            step={ 1 }
+                            header="Cuenta"
+                            content="Detalles de la cuenta"
+                            selected={actualIndex === 0}
+                            checked={actualIndex > 0}
+                        />
+                    </div>
+                    <div className=" p-0">
+                        <Step 
+                            step={ 2 }
+                            header="Empresa"
+                            content="Detalles de la empresa"
+                            selected={actualIndex === 1}
+                            checked={actualIndex > 1}
+                        />
+                    </div>
+                    <div className=" p-0">
+                        <Step 
+                            step={ 3 }
+                            header="Confirmar"
+                            content="Completa el registro"
+                            selected={actualIndex === 2}
+                            isLast={true}
+                        />
+                    </div>
                 </div>
-                <div className="d-flex flex-column pb-10 pb-lg-12">
+                
+                <div className="d-flex flex-column pb-10 pb-lg-12 order-2">
                     <h3 className="text-start">
                         Crea una cuenta
                     </h3>
@@ -60,7 +67,7 @@ function LoginForm() {
                         <Link to="/login" className="text-decoration-none mx-1"> Ingresa aquí</Link>
                     </div>
                 </div>
-                <form action="">
+                <form action="" className="order-3">
                     <Caroussel
                         slides={[EnterpriseForm, AccountForm, ConfirmationForm,]}
                         setActualIndex={handleIndexChange}

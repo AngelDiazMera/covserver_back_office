@@ -15,6 +15,7 @@ function Caroussel(props: Props) {
 
     const [formCompleted, setFormCompleted] = useState(false);
     const [formData, setFormData] = useState({});
+    const [accepted, setAccepted] = useState(false);
 
     const nextSlide = () => {
         setAnimating(true);
@@ -45,15 +46,18 @@ function Caroussel(props: Props) {
         setFormData(newData);
     }
 
+    const termsAccepted = (val:boolean) => setAccepted(val);
+    
+
     return (
         <div>
             {/* if you want to use fade animation, use "carousel-fade" on the className prop */}
-            <div id="carouselExampleFade" className="carousel slide  px-5" data-bs-interval="false">
-                <div className="carousel-inner">
+            <div id="carouselExampleFade" className="carousel slide px-0 px-sm-5" data-bs-interval="false">
+                <div className="carousel-inner" style={{height:280}}>
                     {props.slides?.map((Slide: React.ElementType, index: number) => (
                         <div className={`carousel-item${actualIndex === index ? ' active' : ''}`} key={index}>
                             <div className="d-block w-100">
-                                <Slide className="d-block w-100" setFormCompleted={setCompleted} updateFormData={updateFormData}/>
+                                <Slide className="d-block w-100" setFormCompleted={setCompleted} updateFormData={updateFormData} userData={formData} termsAccepted={termsAccepted}/>
                             </div>
                         </div> 
                     ))}
@@ -84,6 +88,7 @@ function Caroussel(props: Props) {
                 </button>
                 :
                 <input 
+                    disabled = {!accepted}
                     type="submit" 
                     value="Registrar"
                     className="btn btn-dark" 
