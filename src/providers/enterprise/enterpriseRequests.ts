@@ -31,21 +31,3 @@ export const saveEnterprise = async (enterpriseData: Enterprise) => {
 
     if (res.status === 500) alert('Ha ocurrido al alcanzar la API');
 };
-
-/*
-Duplicated email:
-    {
-        "error": {
-            "driver": true,
-            "name": "MongoError",
-            "index": 0,
-            "code": 11000,
-            "keyPattern": {
-                "access.email": 1
-            },
-            "keyValue": {
-                "access.email": "cs1@me.com"
-            }
-        }
-    }
-*/
