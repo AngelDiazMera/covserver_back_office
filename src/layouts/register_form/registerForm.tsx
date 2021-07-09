@@ -7,6 +7,7 @@ import CarousselForm from '../caroussel_form/carrouselForm'
 import ConfirmationForm from './components/confirmation_form/confirmationForm'
 import EnterpriseForm from './components/enterprise_form/enterpriseForm'
 import Step from './components/step/step'
+import logo from '../../assets/large-icon.png';
 
 function RegisterForm() {
     // State variables
@@ -17,13 +18,13 @@ function RegisterForm() {
     }
 
     return (
-        <div className=" w-100 py-lg-0 pb-lg-0 pt-15 pb-12" style={{maxWidth:675}}>
+        <div className="w-100 py-lg-0 pb-lg-0 pt-15 pb-12" style={{maxWidth:675}}>
 
-            <div className="d-flex flex-column px-3 px-xl-0">
+            <div className="d-flex flex-column px-3 px-xl-0 ">
                 {/* Application logo */}
                 <div className="d-flex flex-column-auto flex-column px-10 order-0 ">
-                    <Link to="/register" className = "pb-lg-4 pb-10">
-                        Aquí va el logo
+                    <Link to="/register" className = "pb-lg-4 pb-10 mb-3">
+                        <img src={logo} alt="Logotipo de CovServer" style={{width:'275px'}} />
                     </Link>
                 </div>
                 {/* Wizard navigation: The component that shows what is the current slide */}

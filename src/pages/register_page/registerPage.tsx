@@ -19,23 +19,27 @@ function RegisterPage() {
     return (
         <div className="container-fluid h-100">
             <div className="row">
-                {/* Register form */}
-                <div className="col-12 col-lg-7 p-0 pt-3 pt-sm-4">
-                    <div className="d-flex flex-row justify-content-center">
-                        <RegisterForm/>
-                    </div>
-                </div>
                 {/* Purple gradient side decoration */}
-                <div className="col-12 col-lg-5 p-0 order-first order-lg-last">
-                    <Background> 
-                        <div className="h-100 d-flex flex-row flex-lg-column align-content-between justify-content-between">
-                            <BigHeader>Tu nuevo observador de infectados</BigHeader> 
-                            <div className="d-flex flex-row justify-content-end">
-                                <Image/>
+                <Background> 
+                    <div className="h-100 d-flex flex-column flex-lg-row" >
+                {/* Register form */}
+        
+                        <div className="d-flex flex-grow-1 justify-content-center col-12 col-lg-7 p-2 pt-3 pt-sm-4 bg-white text-body rounded-3 shadow order-2 order-lg-1">
+                            <RegisterForm/>
+                        </div>
+
+                        <div className="col-12 col-lg-5 order-1 order-lg-2">
+                            <div className="h-100 d-flex flex-row flex-lg-column align-content-between justify-content-between align-self-end">
+                                <div  className="p-3 p-lg-5">
+                                    <BigHeader>Tu nuevo observador de infectados</BigHeader> 
+                                </div>
+                                <div className="d-flex flex-row justify-content-end p-2">
+                                    <Image/>
+                                </div>
                             </div>
                         </div>
-                    </Background>
-                </div>
+                    </div>
+                </Background>
             </div>
         </div>
     );
