@@ -59,7 +59,6 @@ function CarousselForm(props: Props) {
     const updateFormData = (obj: {}): void => {
         const newData = formData;
         Object.assign(newData, obj);
-        console.log(newData);
         setFormData(newData);
     }
 

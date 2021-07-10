@@ -69,13 +69,11 @@ function AccountForm(props: Props) {
     // Check if the email is wrong (if text  is '' or is not valid)
     const _isEmailWrong = () => {
         if(email.trim() === '') {
-            console.log('campo vacío');
             setEmailLabel('Este campo no puede estar vacío.');
             setIsEmailWrong(true);
             return true;
         }
         if(!_validateEmail(email)) {
-            console.log('no válido');
             setEmailLabel('La dirección de email no es válida.');
             setIsEmailWrong(true);
             return true;
