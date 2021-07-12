@@ -1,11 +1,12 @@
-import { Switch, Route, Redirect } from 'react-router-dom';
-
-import LoginPage from '../pages/login_page/loginPage';
+import { Route, Redirect } from 'react-router-dom';
+// PAges
 import RegisterPage from '../pages/register_page/registerPage';
+import LoginPage from '../pages/login_page/loginPage';
 
+// Routes if user is logged in
 function AuthRoutes() {
     return (
-        <Switch>
+        <>
             <Route exact path="/">
                 <Redirect to="/login"/>
             </Route>
@@ -15,7 +16,7 @@ function AuthRoutes() {
             <Route path="/register">
                 <RegisterPage/>
             </Route>
-        </Switch>
+        </>
     );
 }
 
