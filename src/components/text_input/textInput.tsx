@@ -44,7 +44,10 @@ function TextInput(props: Props) {
                 aria-describedby="emailHelp"/></label>
             <div id="emailHelp" className="form-text">{props.helper}</div>
             {props.wrong 
-            ? <div id="emailHelp" className="form-text" style={{color:'#f2564e'}}>
+            ? <div 
+                id="emailHelp" 
+                className="form-text" 
+                style={{color:'#f2564e'}}>
                 {props.wrongText}
               </div>
             : null}

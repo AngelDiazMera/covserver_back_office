@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
-import bcrypt from "bcryptjs";
 import { serverConnection } from "../../keys";
+import { encryptPassword } from "../../lib/encrypt";
 
 export interface Enterprise{
     access?:{
@@ -11,18 +11,12 @@ export interface Enterprise{
     name?: string,
     acronym?: string,
 };
-// Encrypts password with hash (salt = 10)
-const _encrypt = (password: string):string => {
-    const saltRounds: string = bcrypt.genSaltSync(10);
-    const encPsw = bcrypt.hashSync(password, saltRounds);
-    return encPsw;
-}
 // Axios Request to save an enterprise by a POST method
 export const saveEnterprise = async (enterpriseData: Enterprise): Promise<void> => {
     var enterprise = enterpriseData;
     if (enterprise.access === undefined || enterprise.name === undefined || enterprise.name === undefined)
         return;
-        enterprise.access.password = _encrypt(enterprise.access.nonEncPsw);
+        enterprise.access.password = encryptPassword(enterprise.access.nonEncPsw);
     
     const res:AxiosResponse<any> = await axios.post(`${serverConnection.URL}/enterprise`, enterprise);
 

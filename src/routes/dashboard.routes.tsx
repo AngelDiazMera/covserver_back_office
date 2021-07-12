@@ -1,10 +1,10 @@
-import { Switch } from 'react-router-dom';
+import {  } from 'react-router-dom';
 
 function DashboardRoutes() {
     return (
-        <Switch>
+        <>
             
-        </Switch>
+        </>
     );
 }
 

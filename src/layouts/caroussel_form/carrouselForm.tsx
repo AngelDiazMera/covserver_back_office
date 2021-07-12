@@ -103,7 +103,7 @@ function CarousselForm(props: Props) {
                     style={{backgroundColor:palette['primary-color'], borderColor:palette['primary-color']}} 
                     disabled={actualIndex === (props.slides?.length - 1) || animating || !formCompleted} 
                     onClick={nextSlide}>
-                    <span>Siguiente</span>
+                    Siguiente
                     <FiChevronRight/>
                 </button>
                 :
