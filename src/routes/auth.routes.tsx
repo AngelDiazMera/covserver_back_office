@@ -2,6 +2,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import RegisterPage from '../pages/register_page/registerPage';
 import LoginPage from '../pages/login_page/loginPage';
+import UserPage from '../pages/user_page/user_page';
+import Dashboard from '../pages/user_page/dashboard';
 
 function AuthRoutes() {
     return (
@@ -14,6 +16,12 @@ function AuthRoutes() {
             </Route>
             <Route path="/register">
                 <RegisterPage/>
+            </Route>
+            <Route path="/employees">
+                <UserPage/>
+            </Route>
+            <Route path="/dashboard">
+                <Dashboard/>
             </Route>
         </Switch>
     );
