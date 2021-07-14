@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
+import Enterprise from '../../auth/enterpriseAuth';
 import { deleteToken } from '../../providers/authHelpers';
 
 interface Props {
@@ -30,6 +31,9 @@ function Dashboard(props: Props) {
     return (
         <div>
             Dashboard <br/>
+            <p><strong>Nombre: </strong>{Enterprise.getInstance().name}</p>
+            <p><strong>Acrónimo: </strong>{Enterprise.getInstance().acronym}</p>
+            <p><strong>Email: </strong>{Enterprise.getInstance().email}</p>
             <button 
                 disabled = { makeRegister }
                 type="submit" 

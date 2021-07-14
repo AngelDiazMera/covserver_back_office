@@ -55,11 +55,11 @@ export const loadUser = async ():Promise<boolean> => {
     // if enterprise user exists
     try {
         const { data } = await api.get('enterprise/mine');
-        EnterpriseInstance.setInstance(data.enterprise as EnterpriseData);
-        return true
+        EnterpriseInstance.setInstance(data as EnterpriseData);
+        return true;
     } catch (error) {
-        alert(error.response.data.msg)
-        return false
+        alert(error.response.data.msg);
+        return false;
     }
 }
 

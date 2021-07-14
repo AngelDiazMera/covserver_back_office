@@ -11,7 +11,7 @@ export interface EnterpriseData {
 export default class Enterprise {
     private static instance: Enterprise;
 
-    private static enterprise: EnterpriseData = {};
+    private static enterprise: EnterpriseData;
 
     /**
      * The Singleton's constructor should always be private to prevent direct
@@ -25,7 +25,7 @@ export default class Enterprise {
      * This implementation let you subclass the Singleton class while keeping
      * just one instance of each subclass around.
      */
-    public static getInstance(): object {
+    public static getInstance(): EnterpriseData {
         if (!Enterprise.instance) {
             Enterprise.instance = new Enterprise();
         }

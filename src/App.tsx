@@ -22,8 +22,8 @@ function App() {
     // When the user is loaded, loadingUser must be false and hasUser 
     // must depend on the storage of the browser
     async function loadUserOnStorage() {
-      const user = await loadUser();
-      setHasUser(user);
+      const result = await loadUser();
+      setHasUser(result);
       setloadingUser(false);
     };
     loadUserOnStorage();
