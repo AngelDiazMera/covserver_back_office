@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 // Components
 import palette from "../../../../colors/colorPalette"
-import { Enterprise } from '../../../../providers/enterprise/enterpriseRequests';
+import { Enterprise } from '../../../../providers/enterpriseRequests';
 import Checkbox from '../../../../components/checkbox/checkbox'
 
 // Props definition

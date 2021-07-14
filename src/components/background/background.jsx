@@ -1,5 +1,26 @@
 import styled from "styled-components";
 
+import img from '../../assets/fondo.png';
+
+// Image styled component to at the purple background
+export const Image = styled.img.attrs(props => ({
+    src: props.src || img
+}))`
+    opacity: 0.85;
+    width:24vw;
+    width:24vw;
+    max-width:280px;
+    max-height:280px;
+    @media (max-width: 991.5px) {
+        width: 84px;
+        height: 84px;
+    }
+    @media (max-width: 485px) {
+        width: 65.6px;
+        height: 65.6px;
+    }
+`;
+
 const Background = styled.div`
     height: 100vh;
     max-height: 100vh;

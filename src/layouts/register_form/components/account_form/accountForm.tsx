@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TextInput from '../../../../components/text_input/textInput'
-import { checkEmailAvailability } from '../../../../providers/enterprise/enterpriseRequests';
+import { checkEmailAvailability } from '../../../../providers/enterpriseRequests'
+import { validateEmail } from '../../../../lib/emailValidation';
 
 // Props definition
 interface Props {
@@ -64,11 +65,6 @@ function AccountForm(props: Props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [email]);
 
-    // Validates email by RegEx
-    const _validateEmail = (email: string): boolean => {
-        const regExp: RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regExp.test(email);
-    };
 
     // Check if the email is wrong (if text  is '' or is not valid)
     const _isEmailWrong = () => {
@@ -77,7 +73,7 @@ function AccountForm(props: Props) {
             setIsEmailWrong(true);
             return true;
         }
-        if(!_validateEmail(email)) {
+        if(!validateEmail(email)) {
             setEmailLabel('La dirección de email no es válida.');
             setIsEmailWrong(true);
             return true;

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 // Components
 import palette from "../../colors/colorPalette"
-import { saveEnterprise } from '../../providers/enterprise/enterpriseRequests';
+import { saveEnterprise } from '../../providers/enterpriseRequests';
 
 // Props definition
 interface Props {

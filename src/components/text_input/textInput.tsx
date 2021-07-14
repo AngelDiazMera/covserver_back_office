@@ -12,12 +12,13 @@ interface Props {
     helper?: string,
     wrong?: boolean,
     wrongText?: string,
+    big?: boolean
 };
 
 const Input = styled.input`
     width: 100%;
     font-size: 16px;
-    padding: 10px;
+    padding: 10px};
     padding-left: 16px;
     background: #f8f9fa;
     border: none;
@@ -30,11 +31,12 @@ const Input = styled.input`
 
 function TextInput(props: Props) {
     const bgColor:string = props.wrong ? '#f0e0df' : '#f8f9fa';
+    const padding:string = props.big ? '20px' : '10px';
     return (
         <div className="mb-3">
-            <label className="w-100 form-label">{props.label}
+            <label className="w-100 form-label text-secondary" style={{fontWeight:500}}>{props.label}
             <Input 
-                style={{background:bgColor}}
+                style={{background:bgColor, padding: padding}}
                 name={props.name}
                 type={props.type}  
                 value={props.value}

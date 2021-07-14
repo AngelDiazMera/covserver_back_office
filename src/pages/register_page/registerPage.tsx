@@ -1,8 +1,7 @@
 import styled from "styled-components";
 // Components
-import Background from "./components/background";
+import Background, { Image } from "../../components/background/background";
 import RegisterForm from "../../layouts/register_form/registerForm";
-import Image from "./components/image";
 // Just  a styled component for decoration
 const BigHeader = styled.h2`
     opacity: 0.85;
@@ -22,8 +21,7 @@ function RegisterPage() {
                 {/* Purple gradient side decoration */}
                 <Background> 
                     <div className="h-100 d-flex flex-column flex-lg-row" >
-                {/* Register form */}
-        
+                        {/* Register form */}
                         <div className="d-flex flex-grow-1 justify-content-center col-12 col-lg-7 p-2 pt-3 pt-sm-4 bg-white text-body rounded-3 shadow order-2 order-lg-1">
                             <RegisterForm/>
                         </div>
