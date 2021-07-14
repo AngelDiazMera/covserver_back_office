@@ -34,7 +34,7 @@ function LoginPage(props:Props) {
         
                         <div className="d-flex flex-grow-1 justify-content-center justify-content-lg-start col-12 col-lg-7 p-2 pt-3 pt-sm-4 bg-white text-body rounded-3 shadow order-2" >
                             <div className="w-100" style={{maxWidth:550}}>
-                                <div className="w-100 py-lg-0 pb-lg-0 pb-12 m-2 m-lg-5 px-0 px-lg-4">
+                                <div className="w-100 py-lg-0 pb-lg-0 pb-12 m-2 m-xl-5 px-0 px-lg-4">
 
                                     <div className="d-flex flex-column px-3 px-xl-0">
                                         {/* Application logo */}
