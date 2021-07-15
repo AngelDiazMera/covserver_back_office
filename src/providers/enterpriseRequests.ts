@@ -16,19 +16,24 @@ export interface Enterprise{
 };
 
 // Axios Request to save an enterprise by a POST method
-export const saveEnterprise = async (enterpriseData: Enterprise): Promise<void> => {
+export const signUp = async (enterpriseData: Enterprise): Promise<boolean> => {
     var enterprise = enterpriseData;
     if (enterprise.access === undefined || enterprise.name === undefined || enterprise.name === undefined)
-        return;
-        enterprise.access.password = encryptPassword(enterprise.access.nonEncPsw);
+        return false;
+
+    enterprise.access.password = encryptPassword(enterprise.access.nonEncPsw);
     
     const res:AxiosResponse<any> = await api.post('enterprise/signup', enterprise);
 
     if (res.data.msg !== undefined){
-        alert(res.data.msg);
-        return;
+        alert(`${res.data.msg}\nRedirigiendo...`);
+        return true;
     }
-    if (res.status === 500) alert('Ha ocurrido al alcanzar la API');
+    if (res.status === 500) {
+        alert('Ha ocurrido al alcanzar la API');
+        return false;
+    }
+    return false;
 };
 
 // Axios request to sign into the app and get a bearer jwt
