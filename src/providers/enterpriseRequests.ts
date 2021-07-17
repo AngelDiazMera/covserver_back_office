@@ -18,20 +18,21 @@ export interface Enterprise{
 // Axios Request to save an enterprise by a POST method
 export const signUp = async (enterpriseData: Enterprise): Promise<boolean> => {
     var enterprise = enterpriseData;
-    if (enterprise.access === undefined || enterprise.name === undefined || enterprise.name === undefined)
+    if (enterprise.access === undefined || enterprise.name === undefined || enterprise.acronym === undefined)
         return false;
-
+    // Password encryption
     enterprise.access.password = encryptPassword(enterprise.access.nonEncPsw);
+    // Try the sign up
+    try {
+        const res:AxiosResponse<any> = await api.post('enterprise/signup', enterprise);
     
-    const res:AxiosResponse<any> = await api.post('enterprise/signup', enterprise);
-
-    if (res.data.msg !== undefined){
-        alert(`${res.data.msg}\nRedirigiendo...`);
-        return true;
-    }
-    if (res.status === 500) {
+        if (res.data.msg !== undefined){
+            alert(`${res.data.msg}\nRedirigiendo...`);
+            return true;
+        }
+        
+    } catch (error) {
         alert('Ha ocurrido al alcanzar la API');
-        return false;
     }
     return false;
 };
@@ -73,3 +74,14 @@ export const checkEmailAvailability = async (email: string): Promise<boolean> =>
     const res:AxiosResponse<any> = await api.get(`enterprise/email_validation/${email}`);
     return res.data.val;
 };
+
+export const getEnterprises = async (): Promise<any> => {
+    try {
+        const { data } = await api.get('enterprise');
+        const enterprises = data.enterprises as EnterpriseData[];
+        return enterprises;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}

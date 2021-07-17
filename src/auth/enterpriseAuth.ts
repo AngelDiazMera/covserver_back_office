@@ -41,7 +41,7 @@ export default class Enterprise {
      * Finally, any singleton should define some business logic, which can be
      * executed on its instance.
      */
-    public someBusinessLogic() {
-        // ...
-    }
+    // public someBusinessLogic() {
+    //     // ...
+    // }
 }

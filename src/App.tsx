@@ -22,8 +22,8 @@ function App() {
     // When the user is loaded, loadingUser must be false and hasUser 
     // must depend on the storage of the browser
     async function loadUserOnStorage() {
-      const result = await loadUser();
-      setHasUser(result);
+      const isUserLogged = await loadUser();
+      setHasUser(isUserLogged);
       setloadingUser(false);
     };
     loadUserOnStorage();
@@ -38,14 +38,28 @@ function App() {
   return (
     <Router>
       {/* if user is logged in, '/' redirects to '/dashboard', else redirects to '/login' */}
-      <Route exact path="/"> <Redirect to={hasUser ? '/dashboard' : '/login'}/> </Route>
+      <Route 
+        exact path="/"> 
+        <Redirect to={hasUser ? '/dashboard' : '/login'}/> 
+      </Route>
       {/* Routes in case that the user is not authenticated */}
-      <PrivateRoute authed={!hasUser} path="/login" component={() => <LoginPage onLogIn={handleOnLogin}/>}/>
-      <PrivateRoute authed={!hasUser} path="/register" component={RegisterPage}/>
+      <PrivateRoute 
+        authed={!hasUser} 
+        path="/login" 
+        component={() => <LoginPage onLogIn={handleOnLogin}/>}/>
+      <PrivateRoute 
+        authed={!hasUser} 
+        path="/register" 
+        component={RegisterPage}/>
       {/* Routes in case that the user is authenticated */}
-      <PrivateRoute authed={hasUser} path="/dashboard" component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
+      <PrivateRoute 
+        authed={hasUser} 
+        path="/dashboard" 
+        component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
       {/* 404 Route */}
-      <Redirect from='*' to={hasUser ? '/dashboard' : '/login'} />
+      <Redirect 
+        from='*' 
+        to={hasUser ? '/dashboard' : '/login'} />
     </Router>
   );
 }

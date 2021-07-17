@@ -45,29 +45,29 @@ function AccountForm(props: Props) {
         if(_isEmailWrong()) return;
         setEmailLabel('Comprobando disponibilidad...')
         // Request to server every 500 ms
-        const timer:NodeJS.Timeout = setTimeout(() => {
-            checkEmailAvailability(email)
-                .then((available:boolean) => {
-                    if (!available) {
-                        setEmailLabel('Este email no se encuentra disponible.');
-                        setIsEmailWrong(true);
-                    } else {
-                        setEmailLabel('');
-                        setIsEmailWrong(false);
-                    };
-                })
-                .catch(err => {
-                    setEmailLabel('No se pudo alcanzar la API.');
+        const timer:NodeJS.Timeout = setTimeout(async () =>  {
+            try {
+                const available = await checkEmailAvailability(email);
+                if (!available) {
+                    setEmailLabel('Este email no se encuentra disponible.');
                     setIsEmailWrong(true);
-                });
+                } else {
+                    setEmailLabel('');
+                    setIsEmailWrong(false);
+                };
+            } catch (error) {
+                setEmailLabel('No se pudo alcanzar la API.');
+                setIsEmailWrong(true);
+            }
         }, 500);
+        // Cleanup
         return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [email]);
 
 
     // Check if the email is wrong (if text  is '' or is not valid)
-    const _isEmailWrong = () => {
+    const _isEmailWrong = ():boolean => {
         if(email.trim() === '') {
             setEmailLabel('Este campo no puede estar vacío.');
             setIsEmailWrong(true);

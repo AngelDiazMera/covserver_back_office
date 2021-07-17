@@ -24,14 +24,19 @@ function CarousselForm(props: Props) {
     
     // Hook: When the user clicks the register button
     useEffect(() => {
+        if(!makeRegister) return;
+
         // It will save the enterprise (REQUEST), then, it will activate the button again
-        if (makeRegister === true) signUp(formData)
-            .then((registered: boolean) => {
-                setMakeRegister(false)
-                if (registered)
+        const registerEnterprise = async () => {
+            if (makeRegister === true){
+                const isRegistered = await signUp(formData);
+                setMakeRegister(false);
+                if (isRegistered)
                     history.push('/login');
-            }); 
-        
+            }
+        };
+        registerEnterprise();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [makeRegister]);
 
