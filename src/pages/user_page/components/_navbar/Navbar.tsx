@@ -1,8 +1,48 @@
-import React from "react";
+import { useEffect, useState } from 'react'
 import logo from '../img/img_cov.png'
+import {Collapse} from 'bootstrap';
 
 function Navbar() {
-   
+
+  const myFunction = () => {
+    const e:any = document.querySelector(".sidebar"), o:any = document.querySelectorAll("#sidebarToggle, #sidebarToggleTop");
+    if (e) {
+      e.querySelector(".collapse");
+      var t = [].slice
+        .call(document.querySelectorAll(".sidebar .collapse"))
+        .map(function (e) {
+          return new Collapse(e, { toggle: !1 });
+        });
+      for (var l of o)
+        l.addEventListener("click", function () {
+          if (
+            (document.body.classList.toggle("sidebar-toggled"),
+            e.classList.toggle("toggled"),
+            e.classList.contains("toggled"))
+          )
+            for (var l of t) l.hide();
+        });
+      window.addEventListener("resize", function () {
+        if (
+          Math.max(
+            document.documentElement.clientWidth || 0,
+            window.innerWidth || 0
+          ) < 768
+        )
+          for (var e of t) e.hide();
+      });
+    } 
+  }; 
+
+// Hook: When the user clicks the update button
+  useEffect(() => {  
+     
+      console.log("Hola");
+      myFunction();
+    
+    
+  }, []);
+
     return (
       <nav
         className="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
@@ -69,6 +109,7 @@ function Navbar() {
             className="btn rounded-circle border-0"
             id="sidebarToggle"
             type="button"
+            onClick={myFunction}
           />
         </div>
       </div>

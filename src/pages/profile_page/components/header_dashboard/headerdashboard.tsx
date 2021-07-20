@@ -1,7 +1,21 @@
 import React from "react";
 import logo from '../../../user_page/components/img/circle.png'
+//The model data that help to show the data.
+import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
+import { useEffect, useState } from 'react'
+import { getMyEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
 
 function HeaderNav () {
+const [name,setName] = React.useState('');
+//Get the data of enterprise
+  useEffect(() => {
+    const loadEnterprise = async () => {
+        const enterprise = await getMyEnterprise();
+        setName(enterprise.name);
+        Enterprise.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
+    };
+    loadEnterprise();
+  }, [])
   
     return (
       <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
@@ -23,17 +37,17 @@ function HeaderNav () {
           <ul className="navbar-nav flex-nowrap ms-auto">
             <li className="nav-item dropdown no-arrow mx-1">
               <div className="nav-item dropdown no-arrow">
-                <a
-                  className="dropdown-toggle nav-link"
+                <button
+                  className="nav-link"
                   aria-expanded="false"
-                  data-bs-toggle="dropdown"
-                  href="#"
                   style={{
-                    color: "var(--bs-dark)"
+                    color: "#191a23",
+                    border: "0px",
+                    background: "white"
                   }}
                 >
                   Salir
-                </a>
+                </button>
               </div>
             </li>
             <div className="d-none d-sm-block topbar-divider" ></div>
@@ -51,7 +65,7 @@ function HeaderNav () {
                       fontSize: "20px"
                     }}
                   >
-                    Empresa patitos
+                    {name}
                   </span>
                   <img
                     className="border rounded-circle img-profile"
