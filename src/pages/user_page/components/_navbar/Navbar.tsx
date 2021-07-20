@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import logo from "../img/img_cov.png";
 import { Collapse } from "bootstrap";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [isNavActive, setIsNavActive] = useState(false);
@@ -49,28 +50,28 @@ function Navbar() {
         <hr className="sidebar-divider my-0" />
         <ul className="navbar-nav text-light" id="accordionSidebar">
           <li className="nav-item">
-            <a className="nav-link" href={"../dashboard"}>
+            <Link className="nav-link" to={"../dashboard"}>
               <i className="fas fa-tachometer-alt" />
               <span> Dashboard</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <Link className="nav-link" to="#">
               <i className="fas fa-user"></i>
               <span> Mi cuenta</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href={"../employees"}>
+            <Link className="nav-link" to={"../employees"}>
               <i className="fas fa-table"></i>
               <span> Empleados</span>
-            </a>
+            </Link>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="#">
+            <Link className="nav-link" to="#">
               <i className="fas fa-user-circle"></i>
               <span> Cerrar sesión</span>
-            </a>
+            </Link>
           </li>
         </ul>
 
