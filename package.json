@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@popperjs/core": "^2.9.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -14,7 +13,6 @@
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
-    "bootstrap": "^5.0.2",
     "mobx": "^6.3.2",
     "mobx-react": "^7.2.0",
     "react": "^17.0.2",
@@ -52,7 +50,6 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "@types/bootstrap": "^5.0.17",
     "@types/styled-components": "^5.1.11"
   }
 }

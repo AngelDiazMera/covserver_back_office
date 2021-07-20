@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import logo from "../img/img_cov.png";
-import { Collapse } from "bootstrap";
 import { Link } from "react-router-dom";
 
 function Navbar() {
