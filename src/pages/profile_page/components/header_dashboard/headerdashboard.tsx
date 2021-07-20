@@ -1,23 +1,22 @@
 import React from "react";
-import logo from '../img/circle.png'
-import { getMyEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
+import logo from '../../../user_page/components/img/circle.png'
 //The model data that help to show the data.
 import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
 import { useEffect, useState } from 'react'
- 
-function HeaderNav () {
-  
-  const [name,setName] = React.useState('');
-  //Get the data of enterprise
-    useEffect(() => {
-      const loadEnterprise = async () => {
-          const enterprise = await getMyEnterprise();
-          setName(enterprise.name);
-          Enterprise.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
-      };
-      loadEnterprise();
-    }, [])
+import { getMyEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
 
+function HeaderNav () {
+const [name,setName] = React.useState('');
+//Get the data of enterprise
+  useEffect(() => {
+    const loadEnterprise = async () => {
+        const enterprise = await getMyEnterprise();
+        setName(enterprise.name);
+        Enterprise.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
+    };
+    loadEnterprise();
+  }, [])
+  
     return (
       <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
         <div className="container-fluid">
@@ -33,12 +32,12 @@ function HeaderNav () {
               fontSize: "25px"
             }}
           >
-            Empleados
+            Mi cuenta
           </span>
           <ul className="navbar-nav flex-nowrap ms-auto">
             <li className="nav-item dropdown no-arrow mx-1">
               <div className="nav-item dropdown no-arrow">
-              <button
+                <button
                   className="nav-link"
                   aria-expanded="false"
                   style={{
@@ -66,7 +65,7 @@ function HeaderNav () {
                       fontSize: "20px"
                     }}
                   >
-                    Name
+                    {name}
                   </span>
                   <img
                     className="border rounded-circle img-profile"
