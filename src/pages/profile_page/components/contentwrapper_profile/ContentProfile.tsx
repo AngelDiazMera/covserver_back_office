@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderDash from "../../components/header_dashboard/headerdashboard";
+import HeaderDash from "../header_myAccount/headerdashboard";
 import RowProfile from "../../components/Row_profile/RowProfile";
 import Footer from "../../../user_page/components/foter/Footer";
 

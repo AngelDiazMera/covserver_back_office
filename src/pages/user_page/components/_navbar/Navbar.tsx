@@ -55,7 +55,7 @@ function Navbar() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="#">
+            <Link className="nav-link" to={'../profile'}>
               <i className="fas fa-user"></i>
               <span> Mi cuenta</span>
             </Link>

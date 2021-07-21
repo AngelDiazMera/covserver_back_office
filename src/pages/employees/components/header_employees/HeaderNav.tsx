@@ -1,5 +1,5 @@
 import React from "react";
-import logo from '../img/circle.png'
+import logo from '../../../user_page/components/img/circle.png'
 import { getMyEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
 //The model data that help to show the data.
 import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
@@ -12,8 +12,8 @@ function HeaderNav () {
     useEffect(() => {
       const loadEnterprise = async () => {
           const enterprise = await getMyEnterprise();
-          setName(enterprise.name);
-          Enterprise.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
+          //setName(Enterprise.getInstance().name!);
+          //Enterprise.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
       };
       loadEnterprise();
     }, [])

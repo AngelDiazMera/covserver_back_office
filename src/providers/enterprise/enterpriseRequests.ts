@@ -119,3 +119,22 @@ export const getMyEnterprise = async (): Promise<any> => {
         return null;
     }
 }
+
+export const saveGroupCode = async (enterpriseData: Enterprise) => {
+    var enterprise = enterpriseData;
+        try{
+            const res:AxiosResponse<any> = await axios.post(`${serverConnection.URL}/groups/`, enterprise);
+
+            if (res.data.msg !== undefined){
+                alert(res.data.msg); 
+                return true;
+            }
+            if (res.status === 500) alert('Ha ocurrido al alcanzar la API');
+
+        }catch(error){
+            alert("Ocurrio un error: "+error);
+            return false;
+        }
+    return false;
+    
+};
