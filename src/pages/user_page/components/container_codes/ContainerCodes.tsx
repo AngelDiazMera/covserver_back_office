@@ -12,15 +12,15 @@ import {
   Col
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.css";
-import { saveGroupCode } from '../../../../providers/enterprise/enterpriseRequests';
-import clipboard from '../img/copy.png';
-import { url } from "inspector";
-import { AiOutlineBorder } from "react-icons/ai";
+import { saveGroupCode } from '../../../../providers/groups/groupsRequest';
+import { getQRcode } from '../../../../providers/groups/groupsRequest';
+import clipboard from '../img/copy.png'; 
 
 function ContainerCodes () {
   const [nameCode,setNameCode] = useState('');
   const [state, setState] = useState(false);//This show the modal
-  const [save, setSave] = useState(false); //This set the data in the request  
+  const [save, setSave] = useState(false); //This set the data in the request
+  const codeData = 'acroni-3333'; //This const is only for test
 
   const abrirModal = () => {
     setState(true);
@@ -55,6 +55,27 @@ function myFunction() {
   alert("Código copiado");
 }
 
+
+//Function for save image 
+function download(imgG:any) {
+  //Api for get QR in b64
+  const getQR = async() => {
+    const codeqr = ({code: imgG});
+     const imgb64 = await getQRcode(codeqr);
+     return imgb64;
+  };
+  const b64= download(codeData);
+  
+  var img = codeData;//change this part because is a String
+  const linkSource = img;
+  const downloadLink = document.createElement("a");
+  downloadLink.href = linkSource;
+  downloadLink.download = "QR.png";
+  alert("Descargando QR")
+  downloadLink.click();
+  
+}
+    
   //This styles is for center the modal
   /*const modalStyles = {
     position: "absolute",
@@ -88,12 +109,12 @@ function myFunction() {
                     <div className="col offset-xxl-0">
                       <h4 className="small fw-bold">Cafetería</h4>
                       <span>
-                        Código:  <input type="text" value="acroni-3333" id="code" readOnly 
+                        Código:  <input type="text" value={codeData} id="code" readOnly 
                         style={{
                           border:"none",
                           outline:"none"
                         }}/> 
-                        <button onClick={myFunction} style={{
+                        <button onClick={myFunction} title="Copiar" style={{
                           backgroundImage: `url(${clipboard})`,
                           width:"25px",
                           height: "24.9px",
@@ -102,7 +123,8 @@ function myFunction() {
                       </span>
                     
                        
-                        <button className="btn btn-primary" type="button" title="Copiar"
+                        <button className="btn btn-primary" type="button"
+                        onClick={download}
                         style={{
                           marginTop: "25px",
                           marginLeft: "15%"
