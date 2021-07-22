@@ -60,16 +60,6 @@ function ContainerCodes() {
     loadGroups();
   }, []);
 
-  //function for copy the code
-  function myFunction() {
-    const copyText: any = document.getElementById("code");
-    console.log("+" + copyText);
-    copyText.select();
-    document.execCommand("copy");
-    console.log("Copie el valor: " + copyText.value);
-    alert("Código copiado");
-  }
-
   //Function for save image
   function download(imgG: any) {
     //Api for get QR in b64
@@ -149,7 +139,7 @@ function ContainerCodes() {
                           <td>{groups.name}</td>
                           <td>{groups.memberCode}</td>
                           <td><button
-                              onClick={myFunction}
+                              onClick={() => {navigator.clipboard.writeText(groups.memberCode as string)}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
@@ -165,7 +155,7 @@ function ContainerCodes() {
                           <td>{groups.visitorCode}</td>
                           <td>
                             <button
-                              onClick={myFunction}
+                              onClick={() => {navigator.clipboard.writeText(groups.visitorCode as string)}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
