@@ -17,7 +17,7 @@ import {
   getQRcode,
   getGroups,
   GroupData,
-} from "../../../../providers/groups/groupsRequest";
+} from "../../../../providers/groupsRequest";
 import clipboard from "../img/copy.png";
 
 function ContainerCodes() {
@@ -122,7 +122,7 @@ function ContainerCodes() {
                 {loading ? (
                   <h4>Cargando tabla...</h4>
                 ) : (
-                  <table>
+                  <table style = {{marginLeft: "2%"}}>
                     <thead>
                       <tr>
                         <th>Subgrupo</th>
@@ -147,6 +147,7 @@ function ContainerCodes() {
                                 height: "24.9px",
                                 backgroundColor: "white",
                                 border: "none",
+                                marginRight: "25px"
                               }}
                             >
                               {" "}

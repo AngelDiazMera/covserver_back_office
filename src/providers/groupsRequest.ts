@@ -1,5 +1,5 @@
 import { AxiosResponse } from "axios";
-import api from '../../config/axiosConfig'
+import api from '../config/axiosConfig'
 
 export interface Enterprise {
   access?: {
@@ -62,7 +62,7 @@ export const getQRcode = async (code: Code) => {
 
 export const getGroups = async (): Promise<any> => {
   try {
-    const { data } = await api.get('groups');
+    const { data } = await api.get('enterprise/groups');
     const groups = data.groups as GroupData[];
     return groups;
   } catch (error) {
