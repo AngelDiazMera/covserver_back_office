@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import Navbar from "../user_page/components/_navbar/Navbar";
 import HeaderNav from "./components/header_employees/HeaderNav";
 import ContainerTable from "./components/container_table/ContainerTable";
-import Footer from "../user_page/components/foter/Footer";
 
 function UserPage() {
     return ( 
@@ -14,7 +13,13 @@ function UserPage() {
           <HeaderNav></HeaderNav>
           <ContainerTable></ContainerTable>
         </div>
-        <Footer></Footer>
+        <footer className="bg-white sticky-footer">
+        <div className="container my-auto">
+          <div className="text-center my-auto copyright">
+            <span>CovServer© 2021</span>
+          </div>
+        </div>
+      </footer>
       </div>
       </div>
     )

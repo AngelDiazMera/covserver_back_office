@@ -1,23 +1,10 @@
 import React from "react";
 import logo from '../img/circle.png'
-import { getMyEnterprise } from '../../../../providers/enterpriseRequests';
-//The model data that help to show the data.
-import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
-import { useEffect, useState } from 'react'
+import Enterprise from '../../../../auth/enterpriseAuth';
  
 function HeaderNav () {
 
-  const [name,setName] = React.useState('');
-  //Get the data of enterprise
-    useEffect(() => {
-      const loadEnterprise = async () => {
-          const enterprise = await getMyEnterprise();
-          //setName(Enterprise.getInstance().name!);
-          //Enterprise.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
-      };
-      loadEnterprise();
-    }, [])
-
+  const name = React.useState(Enterprise.getInstance().name);
 
     return (
       <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
@@ -67,7 +54,7 @@ function HeaderNav () {
                       fontSize: "20px"
                     }}
                   >
-                    Name
+                    {name}
                   </span>
                   <img
                     className="border rounded-circle img-profile"

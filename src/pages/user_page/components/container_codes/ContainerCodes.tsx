@@ -18,15 +18,15 @@ import {
   getGroups,
   GroupData,
 } from "../../../../providers/groupsRequest";
-import clipboard from "../img/copy.png";
+import clipboard from "../img/copy.png"; 
 
 function ContainerCodes() {
   const [nameCode, setNameCode] = useState("");
   const [state, setState] = useState(false); //This show the modal
   const [save, setSave] = useState(false); //This set the data in the request
-  const codeData = "acroni-3333"; //This const is only for test
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
 
   const abrirModal = () => {
     setState(true);
@@ -50,7 +50,7 @@ function ContainerCodes() {
     };
     updateEnterpriseData();
   }, [save]);
-  // Hook: Load groups data
+  // Hook: Load groups data by defect
   useEffect(() => {
     const loadGroups = async () => {
       const groupsArr = await getGroups();
@@ -61,16 +61,10 @@ function ContainerCodes() {
   }, []);
 
   //Function for save image
-  function download(imgG: any) {
-    //Api for get QR in b64
-    const getQR = async () => {
-      const codeqr = { code: imgG };
-      const imgb64 = await getQRcode(codeqr);
-      return imgb64;
-    };
-    const b64 = download(codeData);
-
-    var img = codeData; //change this part because is a String
+  const getQR = async (text:String) => {
+    const codeqr = { code: text };
+    const imgb64 = await getQRcode(codeqr);
+    var img = imgb64;
     const linkSource = img;
     const downloadLink = document.createElement("a");
     downloadLink.href = linkSource;
@@ -78,6 +72,22 @@ function ContainerCodes() {
     alert("Descargando QR");
     downloadLink.click();
   }
+//Hook for refresh codes
+  useEffect(() => {
+    if(!refresh) return;
+    const loadGroups = async () => {
+      if(refresh === true){
+        const groupsArr = await getGroups();
+        setGroups(groupsArr);
+        setLoading(false);
+        setRefresh(false);
+        alert("Codigos Actualizados")
+      }
+    };
+
+    loadGroups();
+
+  }, [refresh]);
 
   //This styles is for center the modal
   /*const modalStyles = {
@@ -139,7 +149,7 @@ function ContainerCodes() {
                           <td>{groups.name}</td>
                           <td>{groups.memberCode}</td>
                           <td><button
-                              onClick={() => {navigator.clipboard.writeText(groups.memberCode as string)}}
+                              onClick={() => {{navigator.clipboard.writeText(groups.memberCode as string)} alert("Código copiado.");}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
@@ -156,7 +166,7 @@ function ContainerCodes() {
                           <td>{groups.visitorCode}</td>
                           <td>
                             <button
-                              onClick={() => {navigator.clipboard.writeText(groups.visitorCode as string)}}
+                              onClick={() => {{navigator.clipboard.writeText(groups.visitorCode as string);} alert("Código copiado.");}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
@@ -173,7 +183,7 @@ function ContainerCodes() {
                             <button
                               className="btn btn-primary"
                               type="button"
-                              onClick={download}
+                              onClick={() =>{getQR('HOLA SOY UN TEST'); }}
                               style={{
                                 marginTop: "5px",
                                 marginLeft: "15%",
@@ -212,7 +222,7 @@ function ContainerCodes() {
           <Button
             color="primary"
             disabled={!nameCode}
-            onClick={() => setSave(true)}
+            onClick={() => {setSave(true);setState(false);setRefresh(true);}}
           >
             Generar Código
           </Button>

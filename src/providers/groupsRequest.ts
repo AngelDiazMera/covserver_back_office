@@ -21,8 +21,8 @@ export interface Code {
   code?: String;
 }
 
-export const saveGroupCode = async (enterpriseData: Enterprise) => {
-  var enterprise = enterpriseData;
+export const saveGroupCode = async (codeData: GroupData) => {
+  var enterprise = codeData;
   try {
     const res: AxiosResponse<any> = await api.post(
       'groups',
@@ -48,17 +48,14 @@ export const getQRcode = async (code: Code) => {
       'groups/qr',
       codeQR
     );
-
-    if (res.status === 500) return;
-    alert("Ha ocurrido al alcanzar la API");
-
     return res.data.qr_base64;
   } catch (error) {
     alert("Ocurrio un error: " + error);
     return false;
   }
-  return false;
+  
 };
+
 
 export const getGroups = async (): Promise<any> => {
   try {

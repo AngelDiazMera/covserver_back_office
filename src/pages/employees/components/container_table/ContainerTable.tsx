@@ -1,7 +1,20 @@
 import React from "react";
+import {getQRcode} from '../../../../providers/groupsRequest';
 
 function ContainerTable () {
-   
+   //Function for save image
+const getQR = async (text:String) => {
+  const codeqr = { code: text };
+  const imgb64 = await getQRcode(codeqr);
+  var img = imgb64;
+  const linkSource = img;
+  const downloadLink = document.createElement("a");
+  downloadLink.href = linkSource;
+  downloadLink.download = "QR.png";
+  alert("Descargando QR");
+  downloadLink.click();
+}
+
     return (
       <div className="container-fluid">
         <div className="card shadow">
@@ -24,7 +37,11 @@ function ContainerTable () {
                 </p>
               </div>
                 <div className="col-lg-7 col-xl-5 offset-xl-2 offset-xxl-7">
-                  <button className="btn btn-primary" type="button">
+                  <button 
+                    className="btn btn-primary" 
+                    type="button"
+                    onClick={() =>{getQR('HOLA SOY UN TEST')} }
+                  >
                     Generar QR
                   </button>
                   <label

@@ -90,33 +90,16 @@ export const updateEnterprise = async (enterpriseData: Enterprise) => {
     var enterprise = enterpriseData;
         try{
             const res:AxiosResponse<any> = await api.post('enterprise/mine', enterprise);
-
+            
             if (res.data.msg !== undefined){
-                alert(res.data.msg); 
                 EnterpriseInstance.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
-                console.log("Consumiste la api");
-                return true;
+                return res.data.msg;
             }
-            if (res.status === 500) alert('Ha ocurrido al alcanzar la API');
+            if (res.status === 500)return false; alert('Ha ocurrido al alcanzar la API');
 
         }catch(error){
             alert("Ocurrio un error: "+error);
             return false;
-        }
-    return false;
-    
+        }  
 };
-// THIS MUST NOT BE USED!!!!!!!
-// THAT'S THE REASON WHY THE SINGLETON AUTHENTICATOR EXISTS
-export const getMyEnterprise = async (): Promise<any> => {
-    try {
-        const { data } = await api.get('enterprise/mine');
-        //const enterprises = data.enterprises as EnterpriseData[];
-        //return enterprises;
-        EnterpriseInstance.setInstance(data as EnterpriseData);
-        return data;
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
-}
+ 

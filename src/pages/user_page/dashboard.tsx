@@ -2,7 +2,6 @@ import React from "react";
 import Navbar from "./components/_navbar/Navbar";
 import HeaderDash from "./components/header_dashboard/headerdashboard";
 import ContainerCodes from "./components/container_codes/ContainerCodes";
-import Footer from "../user_page/components/foter/Footer";
 interface Props {
   onLogOut: Function
 }
@@ -16,7 +15,13 @@ function Wrapper(props: Props) {
           <HeaderDash></HeaderDash>
           <ContainerCodes></ContainerCodes>
         </div>
-        <Footer></Footer>
+        <footer className="bg-white sticky-footer">
+        <div className="container my-auto">
+          <div className="text-center my-auto copyright">
+            <span>CovServer© 2021</span>
+          </div>
+        </div>
+      </footer>
       </div>
       </div>
     );

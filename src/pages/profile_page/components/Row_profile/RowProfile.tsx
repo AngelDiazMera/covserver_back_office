@@ -1,6 +1,6 @@
 import React from "react";
 //The model data that help to show the data.
-import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
+import Enterprise from '../../../../auth/enterpriseAuth';
 import { useEffect, useState } from 'react'
 import { updateEnterprise } from '../../../../providers/enterpriseRequests'
 
@@ -24,7 +24,8 @@ function RowProfile() {
      const updateEnterpriseData = async () => {
         const data = ({name: name, acronym: acronym});
         if(isUpdate === true){
-            const isUpdated = await updateEnterprise(data);
+            const res  = await updateEnterprise(data);
+            alert(res);
             setUpdate(false);
         } 
     };

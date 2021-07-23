@@ -1,8 +1,7 @@
 import React from "react";
 import HeaderDash from "../header_myAccount/headerdashboard";
 import RowProfile from "../../components/Row_profile/RowProfile";
-import Footer from "../../../user_page/components/foter/Footer";
-
+ 
 function ContentProfile () {
    
     return (
@@ -11,7 +10,13 @@ function ContentProfile () {
           <HeaderDash></HeaderDash>
           <RowProfile></RowProfile>
         </div>
-        <Footer></Footer>
+        <footer className="bg-white sticky-footer">
+        <div className="container my-auto">
+          <div className="text-center my-auto copyright">
+            <span>CovServer© 2021</span>
+          </div>
+        </div>
+      </footer>
       </div>
     );
   

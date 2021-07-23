@@ -1,21 +1,27 @@
-import React from "react";
+import React,{useEffect,useState} from "react";
 import logo from '../../../user_page/components/img/circle.png'
 //The model data that help to show the data.
-import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
-import { useEffect, useState } from 'react'
-import { getMyEnterprise } from '../../../../providers/enterpriseRequests';
+import Enterprise from '../../../../auth/enterpriseAuth';
+import { deleteToken } from '../../../../providers/authHelpers';
+import { useHistory } from 'react-router-dom';
 
 function HeaderNav () {
-const [name,setName] = React.useState('');
-//Get the data of enterprise
-  useEffect(() => {
-    const loadEnterprise = async () => {
-        const enterprise = await getMyEnterprise();
-        setName(enterprise.name);
-        Enterprise.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
-    };
-    loadEnterprise();
-  }, [])
+const name= React.useState(Enterprise.getInstance().name);
+
+const history = useHistory();
+// Hook: When the user clicks the exit button
+const [makeRegister, setMakeRegister] = useState(false); // To check if it is doing the request
+
+useEffect(() => {
+  if (!makeRegister) return;
+
+  deleteToken();
+  history.push('/login');
+
+  setMakeRegister(false);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [makeRegister]);
+const handleOnClick = () => setMakeRegister(true);   
   
     return (
       <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
@@ -45,6 +51,8 @@ const [name,setName] = React.useState('');
                     border: "0px",
                     background: "white"
                   }}
+                   
+                  onClick={handleOnClick}
                 >
                   Salir
                 </button>
