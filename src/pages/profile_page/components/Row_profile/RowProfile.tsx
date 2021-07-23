@@ -2,7 +2,7 @@ import React from "react";
 //The model data that help to show the data.
 import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
 import { useEffect, useState } from 'react'
-import { updateEnterprise } from '../../../../providers/enterprise/enterpriseRequests'
+import { updateEnterprise } from '../../../../providers/enterpriseRequests'
 
 function RowProfile() {
     //States from data

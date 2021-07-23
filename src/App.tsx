@@ -4,10 +4,13 @@ import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
 import { initAxiosInterceptors } from './providers/authHelpers'
 // Components
 import PrivateRoute from './components/private_route/privateRoute';
-import Dashboard from './pages/dashboard/dashboard';
+// DEPRECATED: import Dashboard from './pages/dashboard/dashboard';
+import Dashboard from './pages/user_page/dashboard';
+import Profile from './pages/profile_page/profile'
 import LoginPage from './pages/login_page/loginPage';
 import RegisterPage from './pages/register_page/registerPage';
 import { loadUser } from './providers/enterpriseRequests';
+import UserPage from './pages/employees/user_page';
 
 // Load the configuration 
 initAxiosInterceptors();
@@ -56,6 +59,14 @@ function App() {
         authed={hasUser} 
         path="/dashboard" 
         component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
+      <PrivateRoute 
+        authed={hasUser} 
+        path="/profile" 
+        component={Profile}/>
+      <PrivateRoute 
+        authed={hasUser} 
+        path="/employees" 
+        component={UserPage}/>
       {/* 404 Route */}
       <Redirect 
         from='*' 
