@@ -1,8 +1,8 @@
 import { FiChevronRight, FiCheck } from 'react-icons/fi';
-
-import Centered from "../../../components/centered/centered"
-import palette from "../../../colors/colorPalette"
-
+// Components
+import Centered from "../../../../components/centered/centered"
+import palette from "../../../../colors/colorPalette"
+// Props definition
 interface Props {
     step: number,
     header: String,
@@ -15,6 +15,7 @@ interface Props {
 function Step(props: Props) {
     return (
         <div className="d-flex flex-row">
+            {/* Number of the step. If is checked, it will show a check inside */}
             <div className="d-flex flex-column justify-content-center px-3">
                 <div className={`${props.selected || props.checked ? '' : 'bg-light'} rounded`} style={{ backgroundColor: props.selected || props.checked ? '#C5CAE9' : '', width: 35, height: 35 }}>
                     <Centered>
@@ -26,14 +27,18 @@ function Step(props: Props) {
                     </Centered>
                 </div>
             </div>
-            <div className="d-flex flex-column align-items-start my-1 d-none d-sm-block">
-                <h6 className="m-0" style={{ color:props.checked ? palette['secondary-text'] : ''}}>{ props.header }</h6>
-                <span className="lh-1 text-start" style={{ color:props.checked ? palette['divider-color'] : palette['secondary-text'] }}>
+            {/* Step content: title and description */}
+            <div className="d-flex flex-column align-items-start my-1 d-none d-sm-block lh-1">
+                {/* Title */}
+                <h6 className="m-0 mb-1" style={{ color:props.checked ? palette['secondary-text'] : ''}}>{ props.header }</h6>
+                {/* Description */}
+                <span className="text-start" style={{ color:props.checked ? palette['divider-color'] : palette['secondary-text']}}>
                     <small>
                         { props.content }
                     </small>
                 </span>
             </div>
+            {/* Chevron icon to right if it is not the last */}
             {!props.isLast ? (
             <div className="d-none d-sm-block d-flex flex-column  justify-content-center mx-1 ">
                 <div style={{height:'calc(50% - 20px)'}}/>

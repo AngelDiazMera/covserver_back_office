@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios";
-import { serverConnection } from "../../keys";
+import { AxiosResponse } from "axios";
+import api from '../../config/axiosConfig'
 
 export interface Enterprise {
   access?: {
@@ -24,8 +24,8 @@ export interface Code {
 export const saveGroupCode = async (enterpriseData: Enterprise) => {
   var enterprise = enterpriseData;
   try {
-    const res: AxiosResponse<any> = await axios.post(
-      `${serverConnection.URL}/groups/`,
+    const res: AxiosResponse<any> = await api.post(
+      'groups',
       enterprise
     );
 
@@ -44,8 +44,8 @@ export const saveGroupCode = async (enterpriseData: Enterprise) => {
 export const getQRcode = async (code: Code) => {
   var codeQR = code;
   try {
-    const res: AxiosResponse<any> = await axios.post(
-      `${serverConnection.URL}/groups/qr`,
+    const res: AxiosResponse<any> = await api.post(
+      'groups/qr',
       codeQR
     );
 
@@ -62,7 +62,7 @@ export const getQRcode = async (code: Code) => {
 
 export const getGroups = async (): Promise<any> => {
   try {
-    const { data } = await axios.get(`${serverConnection.URL}/groups`);
+    const { data } = await api.get('groups');
     const groups = data.groups as GroupData[];
     return groups;
   } catch (error) {

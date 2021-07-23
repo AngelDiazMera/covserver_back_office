@@ -1,33 +1,85 @@
 import React, { useEffect, useState } from 'react'
 import TextInput from '../../../../components/text_input/textInput'
+import { checkEmailAvailability } from '../../../../providers/enterpriseRequests'
+import { validateEmail } from '../../../../lib/emailValidation';
 
+// Props definition
 interface Props {
-    setFormCompleted: Function,
-    updateFormData: Function
+    setFormCompleted: Function, // callback
+    updateFormData: Function // callback
 }
 
 function AccountForm(props: Props) {
+    // State variables
+    const [email, setEmail] = useState(''); // email
+    const [psw, setPsw] = useState(''); // password
+    const [repPsw, setRepPsw] = useState(''); // repeated password
 
-    const [email, setEmail] = useState('');
-    const [psw, setPsw] = useState('');
-    const [repPsw, setRepPsw] = useState('');
+    const [isEmailWrong, setIsEmailWrong] = useState(false); // To validate email
+    const [emailLabel, setEmailLabel] = useState(''); // Helper text to email's input
 
+    // Hook: Check if form is completed
     useEffect(() => {
-        props.setFormCompleted(false)
-        if (email.trim() !== '' && psw.trim() !== '' && repPsw.trim() !== '') {
-            if (psw === repPsw && _validateEmail(email)) {
+        // If email is wrong, return
+        if (isEmailWrong) {
+            props.setFormCompleted(false);
+            return;
+        }
+        // Check if password fields are not empty
+        if (psw.trim() !== '' || repPsw.trim() !== '') {
+            // Check if password are the same
+            if (psw === repPsw) {
                 props.setFormCompleted(true);
                 props.updateFormData({access: {email: email, password: '', nonEncPsw: psw}});
             }
             else props.setFormCompleted(false)
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [email, psw, repPsw]);
+    }, [isEmailWrong, psw, repPsw]);
 
-    const _validateEmail = (email: string): boolean => {
-        const regExp: RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regExp.test(email);
-    };
+    // Hook: when email changes and is correct, ask to server if email is well written every 500ms
+    useEffect(() => {
+        // Check if email is empty
+        if (email.trim() === '') return;
+        // Check if email is wrong
+        if(_isEmailWrong()) return;
+        setEmailLabel('Comprobando disponibilidad...')
+        // Request to server every 500 ms
+        const timer:NodeJS.Timeout = setTimeout(async () =>  {
+            try {
+                const available = await checkEmailAvailability(email);
+                if (!available) {
+                    setEmailLabel('Este email no se encuentra disponible.');
+                    setIsEmailWrong(true);
+                } else {
+                    setEmailLabel('');
+                    setIsEmailWrong(false);
+                };
+            } catch (error) {
+                setEmailLabel('No se pudo alcanzar la API.');
+                setIsEmailWrong(true);
+            }
+        }, 500);
+        // Cleanup
+        return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [email]);
+
+
+    // Check if the email is wrong (if text  is '' or is not valid)
+    const _isEmailWrong = ():boolean => {
+        if(email.trim() === '') {
+            setEmailLabel('Este campo no puede estar vacío.');
+            setIsEmailWrong(true);
+            return true;
+        }
+        if(!validateEmail(email)) {
+            setEmailLabel('La dirección de email no es válida.');
+            setIsEmailWrong(true);
+            return true;
+        }
+        return false;
+    }
 
     return (
         <>
@@ -41,8 +93,8 @@ function AccountForm(props: Props) {
                         setEmail(email);
                     }
                 }
-                wrong={email.trim() !== '' ? !_validateEmail(email) : false}
-                wrongText="La dirección de email no es válida"
+                wrong={isEmailWrong}
+                wrongText={emailLabel}
                 type="email"
                 value={email}
                 required={true}/>
@@ -61,7 +113,7 @@ function AccountForm(props: Props) {
             <TextInput
                 label="Repetir contraseña"
                 name="repPsw"
-                placeHolder="mi conraseña"
+                placeHolder="mi conraseña (nuevamente)"
                 wrong={psw !== repPsw && repPsw.trim() !== '' }
                 wrongText="Las contraseñas no coinciden"
                 onChange={ 

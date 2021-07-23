@@ -1,31 +1,46 @@
 import { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
+// Components
+import palette from "../../colors/colorPalette"
+import { signUp } from '../../providers/enterpriseRequests';
 
-import palette from "../../../../colors/colorPalette"
-import { saveEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
-
+// Props definition
 interface Props {
-    slides: React.ElementType[]
-    setActualIndex: Function,
+    slides: React.ElementType[], // Array of components
+    setActualIndex: Function, // Callback
 }
 
-function Caroussel(props: Props) {
+function CarousselForm(props: Props) {
+    const history = useHistory();
+    // State variables
+    const [actualIndex, setActualIndex] = useState(0); // Actual index in caroussel
+    const [animating, setAnimating] = useState(false); // To check if it is animating
 
-    const [actualIndex, setActualIndex] = useState(0);
-    const [animating, setAnimating] = useState(false);
-
-    const [formCompleted, setFormCompleted] = useState(false);
-    const [formData, setFormData] = useState({});
-    const [accepted, setAccepted] = useState(false);
-    const [makeRegister, setMakeRegister] = useState(false);
+    const [formCompleted, setFormCompleted] = useState(false); // When form is completed, value changes to true
+    const [formData, setFormData] = useState({}); // Full data to request( type: Enterprise )
+    const [accepted, setAccepted] = useState(false); // If terms are accepted
+    const [makeRegister, setMakeRegister] = useState(false); // To check if it is doing the request
     
+    // Hook: When the user clicks the register button
     useEffect(() => {
-        if (makeRegister === true) saveEnterprise(formData); 
-        setMakeRegister(false);
+        if(!makeRegister) return;
+
+        // It will save the enterprise (REQUEST), then, it will activate the button again
+        const registerEnterprise = async () => {
+            if (makeRegister === true){
+                const isRegistered = await signUp(formData);
+                setMakeRegister(false);
+                if (isRegistered)
+                    history.push('/login');
+            }
+        };
+        registerEnterprise();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [makeRegister]);
 
-
+    // To swipe the slides of the caroussel
     const nextSlide = () => {
         setAnimating(true);
         setTimeout(() => {
@@ -46,14 +61,15 @@ function Caroussel(props: Props) {
         }, 500);
     };
 
+    // Called from children to stablish that a form is completed
     const setCompleted = (val: boolean): void => {
         setFormCompleted(val);
     };
 
+    // Called from children to update the request data
     const updateFormData = (obj: {}): void => {
         const newData = formData;
         Object.assign(newData, obj);
-        console.log(newData);
         setFormData(newData);
     }
 
@@ -63,8 +79,11 @@ function Caroussel(props: Props) {
     return (
         <div>
             {/* if you want to use fade animation, use "carousel-fade" on the className prop */}
-            <div id="carouselExampleFade" className="carousel slide px-0 px-sm-5" data-bs-interval="false">
-                <div className="carousel-inner" style={{height:280}}>
+            <div 
+                id="carouselExampleFade" 
+                className="carousel slide px-0 px-sm-5"
+                data-bs-interval="false">
+                <div className="carousel-inner" style={{minHeight:280}}>
                     {props.slides?.map((Slide: React.ElementType, index: number) => (
                         <div className={`carousel-item${actualIndex === index ? ' active' : ''}`} key={index}>
                             <div className="d-block w-100">
@@ -85,6 +104,7 @@ function Caroussel(props: Props) {
                     <FiChevronLeft/>
                     <span>Anterior</span>
                 </button>
+                {/* It will show the "Siguiente" button only if it is not the last slide */}
                 {actualIndex < props.slides.length - 1 ? 
                 <button  
                     type="button" 
@@ -94,13 +114,21 @@ function Caroussel(props: Props) {
                     style={{backgroundColor:palette['primary-color'], borderColor:palette['primary-color']}} 
                     disabled={actualIndex === (props.slides?.length - 1) || animating || !formCompleted} 
                     onClick={nextSlide}>
-                    <span>Siguiente</span>
+                    Siguiente
                     <FiChevronRight/>
                 </button>
                 :
+                // If terms are not accepted a "button" (div simulation) will be shown (handle the boolean logic was so problematic)
+                !accepted ? 
+                <div className="btn btn-dark" style={{background: '#838ecf', borderColor: '#838ecf'}}>
+                    Registrar
+                </div>
+                :
+                // Button to register the data when terms are accepted
                 <input 
                     disabled = {
-                        !accepted
+                        // Disabled only while doing the request
+                        makeRegister
                     }
                     type="submit" 
                     value="Registrar"
@@ -113,4 +141,4 @@ function Caroussel(props: Props) {
     )
 }
 
-export default Caroussel
+export default CarousselForm

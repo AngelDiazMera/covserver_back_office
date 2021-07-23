@@ -3,7 +3,7 @@ import logo from '../../../user_page/components/img/circle.png'
 //The model data that help to show the data.
 import Enterprise, {EnterpriseData} from '../../../../auth/enterpriseAuth';
 import { useEffect, useState } from 'react'
-import { getMyEnterprise } from '../../../../providers/enterprise/enterpriseRequests';
+import { getMyEnterprise } from '../../../../providers/enterpriseRequests';
 
 function HeaderNav () {
 const [name,setName] = React.useState('');
