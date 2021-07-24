@@ -26,7 +26,7 @@ function ContainerCodes() {
   const [save, setSave] = useState(false); //This set the data in the request
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(true);
 
   const abrirModal = () => {
     setState(true);
@@ -49,7 +49,7 @@ function ContainerCodes() {
       }
     };
     updateEnterpriseData();
-  }, [save]);
+  }, [nameCode, save]);
   // Hook: Load groups data by defect
   useEffect(() => {
     const loadGroups = async () => {
@@ -81,13 +81,17 @@ function ContainerCodes() {
         setGroups(groupsArr);
         setLoading(false);
         setRefresh(false);
-        alert("Codigos Actualizados")
       }
     };
-
     loadGroups();
-
+    setRefresh(false);
   }, [refresh]);
+
+  const handleOnSave = () => {
+    setSave(true);
+    setState(false);
+    setRefresh(true);
+  };
 
   //This styles is for center the modal
   /*const modalStyles = {
@@ -237,7 +241,7 @@ function ContainerCodes() {
           <Button
             color="primary"
             disabled={!nameCode}
-            onClick={() => {setSave(true);setState(false);setRefresh(true);}}
+            onClick={() => {handleOnSave();}}
           >
             Generar Código
           </Button>
