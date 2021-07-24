@@ -26,7 +26,7 @@ function ContainerCodes() {
   const [save, setSave] = useState(false); //This set the data in the request
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [refresh, setRefresh] = useState(true);
+  const [refresh, setRefresh] = useState(false);
 
   const abrirModal = () => {
     setState(true);
@@ -37,6 +37,14 @@ function ContainerCodes() {
   const changeEnterprise = (event: any) => {
     setNameCode(event.target.value);
   };
+  
+  // When the user save a new group code
+  const handleOnSave = () => {
+    setSave(true);
+    setState(false);
+    setRefresh(true);
+  };
+
   // Hook: When the user save a new code
   useEffect(() => {
     if (!save) return;
@@ -50,6 +58,7 @@ function ContainerCodes() {
     };
     updateEnterpriseData();
   }, [nameCode, save]);
+
   // Hook: Load groups data by defect
   useEffect(() => {
     const loadGroups = async () => {
@@ -59,8 +68,23 @@ function ContainerCodes() {
     };
     loadGroups();
   }, []);
+  
+  // Hook: for refresh codes
+  useEffect(() => {
+    if(!refresh) return;
+    const loadGroups = async () => {
+      if(refresh === true){
+        const groupsArr = await getGroups();
+        setGroups(groupsArr);
+        setLoading(false);
+        window.location.reload()
+      }
+    };
+    loadGroups();
+    setRefresh(false);
+  }, [refresh]);
 
-  //Function for save image
+  // Function for save image
   const getQR = async (text:String) => {
     const codeqr = { code: text };
     const imgb64 = await getQRcode(codeqr);
@@ -72,36 +96,6 @@ function ContainerCodes() {
     alert("Descargando QR");
     downloadLink.click();
   }
-//Hook for refresh codes
-  useEffect(() => {
-    if(!refresh) return;
-    const loadGroups = async () => {
-      if(refresh === true){
-        const groupsArr = await getGroups();
-        setGroups(groupsArr);
-        setLoading(false);
-        setRefresh(false);
-      }
-    };
-    loadGroups();
-    setRefresh(false);
-  }, [refresh]);
-
-  const handleOnSave = () => {
-    setSave(true);
-    setState(false);
-    setRefresh(true);
-  };
-
-  //This styles is for center the modal
-  /*const modalStyles = {
-    position: "absolute",
-    top: "50%",
-    left: "50%"
-    transform: "translate(-50%, -50%)"
-  };
-  indicador de cambios
-  */
 
   return (
     <div
