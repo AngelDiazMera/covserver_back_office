@@ -107,7 +107,7 @@ function ContainerCodes() {
       }}
     >
       <div className="row">
-        <div className="col-lg-7 col-xl-11 offset-xl-0">
+        <div className="col offset-xxl-0">
           <div className="card shadow mb-4">
             <div className="card-header d-flex justify-content-between align-items-center">
               <h6 className="text-primary fw-bold m-0">Códigos</h6>
@@ -138,6 +138,7 @@ function ContainerCodes() {
                         <th>Subgrupo</th>
                         <th>Código de miembros</th>
                         <th></th>
+                        <th></th>
                         <th>Código de visitantes</th>
                         <th></th>
                         <th></th>
@@ -149,24 +150,37 @@ function ContainerCodes() {
                           <td>{groups.name}</td>
                           <td>{groups.memberCode}</td>
                           <td><button
-                              onClick={() => {{navigator.clipboard.writeText(groups.memberCode as string)} alert("Código copiado.");}}
+                              onClick={() => {navigator.clipboard.writeText(groups.memberCode as string)}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
                                 width: "25px",
                                 height: "24.9px",
                                 backgroundColor: "white",
-                                border: "none",
-                                marginRight: "25px"
+                                border: "none"
                               }}
                             >
                               {" "}
                             </button>
                             </td>
+                            <td>
+                            <button
+                              className="btn btn-primary"
+                              type="button"
+                              onClick={() =>{getQR(groups.memberCode as string); }}
+                              style={{
+                                marginTop: "5px",
+                                marginLeft: "15%",
+                                marginRight: "15px"
+                              }}
+                            >
+                              QR
+                            </button>
+                            </td>
                           <td>{groups.visitorCode}</td>
                           <td>
                             <button
-                              onClick={() => {{navigator.clipboard.writeText(groups.visitorCode as string);} alert("Código copiado.");}}
+                              onClick={() => {navigator.clipboard.writeText(groups.visitorCode as string)}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
@@ -183,13 +197,14 @@ function ContainerCodes() {
                             <button
                               className="btn btn-primary"
                               type="button"
-                              onClick={() =>{getQR('HOLA SOY UN TEST'); }}
+                              onClick={() =>{getQR(groups.visitorCode as string); }}
                               style={{
                                 marginTop: "5px",
                                 marginLeft: "15%",
+                                marginRight: "15px"
                               }}
                             >
-                              Código QR
+                              QR
                             </button>
                           </td>
                         </tr>
