@@ -86,6 +86,7 @@ export const getEnterprises = async (): Promise<any> => {
     }
 }
 
+// Axios request to update the data of the enterprise
 export const updateEnterprise = async (enterpriseData: Enterprise) => {
     var enterprise = enterpriseData;
         try{

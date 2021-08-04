@@ -22,7 +22,7 @@ function HeaderNav () {
               fontSize: "25px"
             }}
           >
-            Empleados
+            Usuarios
           </span>
           <ul className="navbar-nav flex-nowrap ms-auto">
             <li className="nav-item dropdown no-arrow mx-1">

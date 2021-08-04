@@ -21,6 +21,7 @@ export interface Code {
   code?: String;
 }
 
+// Axios request to save the new code group 
 export const saveGroupCode = async (codeData: GroupData) => {
   var enterprise = codeData;
   try {
@@ -41,6 +42,7 @@ export const saveGroupCode = async (codeData: GroupData) => {
   return false;
 };
 
+// Axios request to get the QR code in b64
 export const getQRcode = async (code: Code) => {
   var codeQR = code;
   try {
@@ -56,7 +58,7 @@ export const getQRcode = async (code: Code) => {
   
 };
 
-
+// Axios request to get the visits of the enterprise
 export const getGroups = async (): Promise<any> => {
   try {
     const { data } = await api.get('enterprise/groups');

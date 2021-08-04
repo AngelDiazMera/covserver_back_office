@@ -63,7 +63,7 @@ function Navbar() {
           <li className="nav-item">
             <Link className="nav-link" to={"../employees"}>
               <i className="fas fa-table"></i>
-              <span> Empleados</span>
+              <span> Usuarios</span>
             </Link>
           </li>
           <li className="nav-item">

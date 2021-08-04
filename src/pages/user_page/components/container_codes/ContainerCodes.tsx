@@ -77,7 +77,7 @@ function ContainerCodes() {
         const groupsArr = await getGroups();
         setGroups(groupsArr);
         setLoading(false);
-        window.location.reload()
+        //window.location.reload()
       }
     };
     loadGroups();
@@ -148,7 +148,7 @@ function ContainerCodes() {
                           <td>{groups.name}</td>
                           <td>{groups.memberCode}</td>
                           <td><button
-                              onClick={() => {navigator.clipboard.writeText(groups.memberCode as string)}}
+                              onClick={() => {navigator.clipboard.writeText(groups.memberCode as string); alert("Código copiado!")}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
@@ -178,7 +178,7 @@ function ContainerCodes() {
                           <td>{groups.visitorCode}</td>
                           <td>
                             <button
-                              onClick={() => {navigator.clipboard.writeText(groups.visitorCode as string)}}
+                              onClick={() => {navigator.clipboard.writeText(groups.visitorCode as string); alert("Código copiado!")}}
                               title="Copiar"
                               style={{
                                 backgroundImage: `url(${clipboard})`,
