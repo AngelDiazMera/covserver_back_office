@@ -24,10 +24,10 @@ const [isVisit, setVisit] = useState(false);
 useEffect(() => {
   const loadUsers = async () => {
 
-    const visitsArr = await getVisits();  
+    const visitsArr = await getVisits(0);  
     setVisits(visitsArr); 
 
-    const membersArr = await getMembers();  
+    const membersArr = await getMembers(0);  
       setMembers(membersArr); 
 
     setLoading(false);

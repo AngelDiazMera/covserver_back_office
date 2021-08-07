@@ -16,9 +16,9 @@ export interface UsersData{
 };
  
 // Axios request to get the visits of the enterprise
-  export const getVisits = async (): Promise<any> => {
+  export const getVisits = async (skip:any): Promise<any> => {
     try {
-      const { data } = await api.get('user/visits');
+      const { data } = await api.get(`user/visits?skip=${skip}`);
       const users = data.visits[0].visits as UsersData[]; 
       return users;
     } catch (error) {
@@ -27,11 +27,10 @@ export interface UsersData{
     }
   };
 // Axios request to get the members of the enterprise
-  export const getMembers = async (): Promise<any> => {
+  export const getMembers = async (skip:any): Promise<any> => {
     try {
-      const { data } = await api.get('user/members');
+      const { data } = await api.get(`user/members?skip=${skip}`);
       const users = data.members[0].members as UsersData[];  
-      console.log(users);
       return users;
     } catch (error) {
         console.log(error);
