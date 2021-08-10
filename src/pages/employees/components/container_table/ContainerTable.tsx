@@ -3,37 +3,106 @@ import {UsersData, getVisits,getMembers} from '../../../../providers/usersReques
 
 function ContainerTable () { 
 //All the const
-const [visits, setVisits] = useState([]);
-const [members, setMembers] = useState([]);
+let [visits, setVisits] = useState([]);
+let [members, setMembers] = useState([]);
 const [loading, setLoading] = useState(true); 
 const [isEmploy, setEmploy] = useState(true);
 const [isVisit, setVisit] = useState(false);
+let [count, setCount] = useState(0);  
+const [vSearch,setSearch] = useState('');
+
+//Get the members 
+const loadMembers = async () => { 
+  const membersArr = await getMembers(count * 10);  
+  setMembers(membersArr);  
+  setLoading(false);
+};
+
+//get visits
+const loadVisits = async () => { 
+  const visitsArr = await getVisits(count * 10);  
+  setVisits(visitsArr);  
+  setLoading(false);
+};
 
  //These const permit to change between member or visit
   const changeVisitis = () => {
     setEmploy(false);
     setVisit(true);
+    //Restart the count when change to visits
+    setCount(0); 
   };
 
   const changeEmployees = () => {
     setEmploy(true);
     setVisit(false);
+    //Restart the count when change to members
+      setCount(0); 
   };
+ 
+  //This filter the elements in the table
+  const filter=(word:any)=>{
+    let data:any;
+    if(isEmploy){
+      data = members;
+    }else{
+      data = visits;
+    }  
+    var resultadosBusqueda=data.filter((element:UsersData)=>{
+      if(element.name?.toString().toLowerCase().includes(word.toLowerCase())
+      || element.infectedDate?.toString().toLowerCase().includes(word.toLowerCase())
+      || element.symptomsDate?.toString().toLowerCase().includes(word.toLowerCase()) 
+      || element.visitDate?.toString().toLowerCase().includes(word.toLowerCase()) 
+      ){ 
+        return element; 
+      }
+    });
 
-//Hook for get visits and members
-useEffect(() => {
-  const loadUsers = async () => {
+    if(isEmploy){
+      setMembers(resultadosBusqueda);
+    }else{
+      setVisits(resultadosBusqueda);
+    }
+  }
 
-    const visitsArr = await getVisits(0);  
-    setVisits(visitsArr); 
+  //This const get the value of the input to search something 
+  const searchInput = (event:any) => {
+    setSearch(event.target.value);
+    filter(event.target.value); 
+    //This element set all the users when search input is empty
+    if(event.target.value === ''){
+      if(isEmploy){
+        loadMembers();
+      }else{
+        loadVisits();
+      } 
+    } 
+  }; 
 
-    const membersArr = await getMembers(0);  
-      setMembers(membersArr); 
+  //This increment and decrement the numbers of the page
+  const pagIncrement = () => {
+    count = count + 1;
+    setCount(count); 
+  }
+  const pagDecrement = () => {
+    if(count <= 0){
+       setCount(0)
+    }else{
+      count = count - 1;
+      setCount(count);
+    }  
+  } 
+  
 
-    setLoading(false);
-  };
-  loadUsers();
-}, []);
+//This hooks help to reset the count when the users are changed
+useEffect(() => {  
+  loadVisits();   
+}, [count]);
+
+//Hook for get members
+useEffect(() => {  
+  loadMembers();
+}, [count]);
 
 //This transform the date of the query
 function formatDate (date:Date) {
@@ -133,14 +202,16 @@ const renderHealth = (groups:any) => {
           </div>
             <div className="card-body">
               <div className="row"> 
-                  <div className="col-lg-3 col-xl-4">
+                  <div className="col-lg-3 col-xl-4" style = {{marginLeft: "2%"}}>
                     <p>Busqueda: 
                       <input 
                         style={{
                           marginLeft: "10px"
                         }}
                         type="text" 
-                        placeholder="Buscar" />
+                        placeholder="Buscar"
+                        value={vSearch}
+                        onChange={searchInput} />
                     </p>
                   </div> 
                     <div className="col-md-8 col-lg-5 col-xl-4 col-xxl-4 offset-xl-1 offset-xxl-1">
@@ -178,6 +249,7 @@ const renderHealth = (groups:any) => {
                   className="row"
                   style={{
                     marginTop: "10px",
+                    marginBottom: "20px"
                   }}
                 >
                   {loading ? (
@@ -199,44 +271,81 @@ const renderHealth = (groups:any) => {
                           </>)} 
                         </tr>
                       </thead>
-                      <tbody>  
-                      {isEmploy === true ? (<> 
+                      <tbody>    
+                      {isEmploy === true ? (<>  
+                        {members === null ? (
+                          <tr>NO HAY REGISTROS DE EMPLEADOS</tr>
+                        ): (<>
                         {members.map((groups: UsersData, index) => ( 
+                              <tr key={index}> 
+                              {renderInfected(groups)}
+                              </tr> 
+                            ))} 
+                          {members.map((groups: UsersData, index) => ( 
+                              <tr key={index}> 
+                              {renderProbaly(groups)}
+                              </tr> 
+                            ))} 
+                          {members.map((groups: UsersData, index) => ( 
+                              <tr key={index}> 
+                              {renderHealth(groups)}
+                              </tr> 
+                            ))}
+                        </>)}
+                      </>):(<>
+                        {visits === null ? (
+                          <tr>NO HAY REGISTROS DE VISITAS</tr>
+                        ): (<>
+                          {visits.map((groups: UsersData, index) => ( 
                             <tr key={index}> 
                             {renderInfected(groups)}
                             </tr> 
                           ))} 
-                        {members.map((groups: UsersData, index) => ( 
+                          {visits.map((groups: UsersData, index) => ( 
                             <tr key={index}> 
                             {renderProbaly(groups)}
                             </tr> 
                           ))} 
-                          {members.map((groups: UsersData, index) => ( 
+                          {visits.map((groups: UsersData, index) => ( 
                             <tr key={index}> 
                             {renderHealth(groups)}
                             </tr> 
-                          ))}  
-                      </>):(<> 
-                        {visits.map((groups: UsersData, index) => ( 
-                          <tr key={index}> 
-                          {renderInfected(groups)}
-                          </tr> 
-                        ))} 
-                        {visits.map((groups: UsersData, index) => ( 
-                          <tr key={index}> 
-                          {renderProbaly(groups)}
-                          </tr> 
-                        ))} 
-                        {visits.map((groups: UsersData, index) => ( 
-                          <tr key={index}> 
-                          {renderHealth(groups)}
-                          </tr> 
-                        ))} 
+                          ))}
+                        </>)} 
+                         
                       </>)} 
                       </tbody>
                     </table>
-                  )}
+                  )} 
                 </div>  
+
+                <div className="container">  
+                  <nav aria-label="...">
+                    <ul className="pagination">
+                      <li  className="page item">
+                          <button className="page-link" onClick={() => {pagDecrement();}} disabled= { count === 0 }>Anterior</button>
+                      </li> 
+                      <li className="page-item active">
+                        <span className="page-link">
+                          {count}
+                        </span>
+                      </li> 
+                      <li className="page-item">
+                        <button className="page-link">
+                          {count+1}
+                        </button>
+                      </li> 
+                      <li className="page-item" >
+                        <button className='page-link' >
+                          {count+2}
+                        </button>
+                      </li> 
+                      <li className="page-item">
+                        <button className="page-link" onClick={() => {pagIncrement();}} disabled= { visits === null || members === null } >Siguiente</button>
+                      </li>
+                    </ul>
+                  </nav>
+                </div> 
             </div>
             </div>
         </div>

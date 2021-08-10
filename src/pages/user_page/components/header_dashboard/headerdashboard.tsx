@@ -1,10 +1,16 @@
-import React from "react";
+import React from "react"; 
 import logo from '../img/circle.png'
-import Enterprise from '../../../../auth/enterpriseAuth';
- 
-function HeaderNav () {
+import Enterprise from '../../../../auth/enterpriseAuth'; 
+import { deleteToken } from '../../../../providers/authHelpers'; 
+import { Link } from "react-router-dom";
 
+function HeaderNav () { 
   const name = React.useState(Enterprise.getInstance().name);
+   
+
+    const handleOnClick = () => {
+      deleteToken();  
+    };  
 
     return (
       <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
@@ -25,18 +31,14 @@ function HeaderNav () {
           </span>
           <ul className="navbar-nav flex-nowrap ms-auto">
             <li className="nav-item dropdown no-arrow mx-1">
-              <div className="nav-item dropdown no-arrow">
-              <button
-                  className="nav-link"
-                  aria-expanded="false"
-                  style={{
+              <div className="nav-item dropdown no-arrow"> 
+                <Link className="nav-link"  onClick={handleOnClick} aria-expanded="false" to={'/login'} style={{
                     color: "#191a23",
                     border: "0px",
                     background: "white"
-                  }}
-                >
+                  }}>
                   Salir
-                </button>
+                </Link>
               </div>
             </li>
             <div className="d-none d-sm-block topbar-divider" ></div>
