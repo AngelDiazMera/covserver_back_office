@@ -1,11 +1,12 @@
 import api from '../config/axiosConfig' 
 
 enum HealthCondition {
-  lowRisk = 'Riesgo bajo',
-  mediumRisk = 'Riesgo medio',
-  infected = 'Contagiado'   
+  healthy = 'healthy',
+  risk = 'risk',
+  infected = 'infected'
 }; 
-export interface UsersData{ 
+export interface UsersData{
+  _id?:String, 
   name?: string,
   lastName?: String;
   gender?: String;
@@ -19,18 +20,27 @@ export interface UsersData{
   export const getVisits = async (skip:any): Promise<any> => {
     try {
       const { data } = await api.get(`user/visits?skip=${skip}`);
-      const users = data.visits[0].visits as UsersData[]; 
+      const users :any = data.visits[0].visits as UsersData[]; 
+      const  code :any  = data.visits[0]._id as UsersData; 
+      users.push({codes: code})
+      console.log(users); 
+
       return users;
     } catch (error) {
         console.log(error);
         return null;
     }
   };
+
 // Axios request to get the members of the enterprise
   export const getMembers = async (skip:any): Promise<any> => {
     try {
       const { data } = await api.get(`user/members?skip=${skip}`);
-      const users = data.members[0].members as UsersData[];  
+      const users:any = data.members[0].members as UsersData[];  
+      const  code:any  = data.members[0]._id as UsersData; 
+      users.push({codes: code})
+      console.log(users); 
+
       return users;
     } catch (error) {
         console.log(error);

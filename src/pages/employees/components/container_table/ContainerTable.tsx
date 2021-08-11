@@ -125,7 +125,7 @@ function formatDate (date:Date) {
 
 //These consts are for reder components according a condition
   const renderInfected = (groups:any) => { 
-      if(groups.healthCondition==='Contagiado'){ 
+      if(groups.healthCondition==='infected'){ 
         return <> 
           <td style = {{color: "red"}}>{groups.healthCondition}</td>
           <td style = {{color: "red"}}>{groups.gender}</td>
@@ -143,7 +143,7 @@ function formatDate (date:Date) {
   }
   
   const renderProbaly = (groups:any) => { 
-      if(groups.healthCondition==='Riesgo medio'){
+      if(groups.healthCondition==='risk'){
         return <> 
           <td style = {{color: "#0d6efd"}}>{groups.healthCondition}</td>
           <td style = {{color: "#0d6efd"}}>{groups.gender}</td>
@@ -160,8 +160,8 @@ function formatDate (date:Date) {
       } 
 }
 
-const renderHealth = (groups:any) => {     
-    if(groups.healthCondition==='Riesgo bajo'){
+const renderHealth = (groups:any) => {
+    if(groups.healthCondition==='healthy'){
       return <> 
         <td>{groups.healthCondition}</td>
         <td>{groups.gender}</td>
