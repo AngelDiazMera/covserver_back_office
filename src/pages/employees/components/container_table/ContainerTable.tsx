@@ -1,5 +1,6 @@
 import React,{ useEffect, useState } from "react";
-import {UsersData, getVisits,getMembers} from '../../../../providers/usersRequest';
+import {UsersData, Groups, getVisits,getMembers} from '../../../../providers/usersRequest';
+import { deleteUserFromGroup } from '../../../../providers/groupsRequest';
 
 function ContainerTable () { 
 //All the const
@@ -10,18 +11,19 @@ const [isEmploy, setEmploy] = useState(true);
 const [isVisit, setVisit] = useState(false);
 let [count, setCount] = useState(0);  
 const [vSearch,setSearch] = useState('');
+const [remove, setRemove] = useState(false);
 
 //Get the members 
 const loadMembers = async () => { 
-  const membersArr = await getMembers(count * 10);  
-  setMembers(membersArr);  
+  const groupMembers = await getMembers(count * 10);  
+  setMembers(groupMembers);  
   setLoading(false);
 };
 
 //get visits
 const loadVisits = async () => { 
-  const visitsArr = await getVisits(count * 10);  
-  setVisits(visitsArr);  
+  const groupVisits = await getVisits(count * 10);  
+  setVisits(groupVisits);  
   setLoading(false);
 };
 
@@ -96,13 +98,15 @@ const loadVisits = async () => {
 
 //This hooks help to reset the count when the users are changed
 useEffect(() => {  
-  loadVisits();   
-}, [count]);
+  loadVisits();
+  setRemove(false);   
+}, [count, remove]);
 
 //Hook for get members
 useEffect(() => {  
   loadMembers();
-}, [count]);
+  setRemove(false);   
+}, [count, remove]);
 
 //This transform the date of the query
 function formatDate (date:Date) {
@@ -124,59 +128,82 @@ function formatDate (date:Date) {
 }
 
 //These consts are for reder components according a condition
-  const renderInfected = (groups:any) => { 
-      if(groups.healthCondition==='infected'){ 
-        return <> 
-          <td style = {{color: "red"}}>{groups.healthCondition}</td>
-          <td style = {{color: "red"}}>{groups.gender}</td>
-          <td style = {{color: "red"}}>{groups.name+" "+ groups.lastName}</td>
-          {isEmploy===true ? (<>
-           <td style = {{color: "red"}}>{formatDate(groups.symptomsDate)}</td> 
-           <td style = {{color: "red"}}>{formatDate(groups.infectedDate)}</td> 
-           </>):(<>
-            <td style = {{color: "red"}}>{formatDate(groups.visitDate)}</td>
-            <td style = {{color: "red"}}>{formatDate(groups.symptomsDate)}</td>
-            <td style = {{color: "red"}}>{formatDate(groups.infectedDate)}</td> 
-          </>)} 
-        </>;
-      }   
-  }
+const renderRow = (healthCond: string, mobileUser: UsersData, groupId: string) => {
+  const { healthCondition, gender, name, lastName, visitDate, symptomsDate, infectedDate} = mobileUser;
   
-  const renderProbaly = (groups:any) => { 
-      if(groups.healthCondition==='risk'){
-        return <> 
-          <td style = {{color: "#0d6efd"}}>{groups.healthCondition}</td>
-          <td style = {{color: "#0d6efd"}}>{groups.gender}</td>
-          <td style = {{color: "#0d6efd"}}>{groups.name+" "+ groups.lastName}</td>
-          {isEmploy===true ? (<>
-            <td style = {{color: "#0d6efd"}}>{formatDate(groups.symptomsDate)}</td>
-            <td style = {{color: "#0d6efd"}}>{formatDate(groups.infectedDate)}</td>
-            </>):(<>
-              <td style = {{color: "#0d6efd"}}>{formatDate(groups.visitDate)}</td>
-              <td style = {{color: "#0d6efd"}}>{formatDate(groups.symptomsDate)}</td> 
-              <td style = {{color: "#0d6efd"}}>{formatDate(groups.infectedDate)}</td> 
-          </>)} 
-        </>;
-      } 
-}
+  interface ColorParser {
+    [key: string]: string
+  }
 
-const renderHealth = (groups:any) => {
-    if(groups.healthCondition==='healthy'){
-      return <> 
-        <td>{groups.healthCondition}</td>
-        <td>{groups.gender}</td>
-        <td>{groups.name+" "+ groups.lastName}</td> 
-        {isEmploy===true ? (<>
-          <td>{formatDate(groups.symptomsDate)}</td>
-          <td>{formatDate(groups.infectedDate)}</td>
-          </>):(<> 
-            <td>{formatDate(groups.visitDate)}</td>
-            <td>{formatDate(groups.symptomsDate)}</td>
-            <td>{formatDate(groups.infectedDate)}</td> 
-        </>)}  
-      </>;
-    } 
-} 
+  const colorParser: ColorParser = {
+      'infected': 'red',
+      'risk': 'orange',
+      'healthy': 'black'
+  };
+
+  const textColor = colorParser[healthCond];
+
+  return <> 
+      <td style = {{color: textColor}}>{healthCondition}</td>
+      <td style = {{color: textColor}}>{gender}</td>
+      <td style = {{color: textColor}}>{`${name} ${lastName}`}</td>
+
+      {!isEmploy &&
+          <td style = {{color: textColor}}>{formatDate(visitDate!)}</td>} 
+
+      <td style = {{color: textColor}}>{formatDate(symptomsDate!)}</td>
+      <td style = {{color: textColor}}>{formatDate(infectedDate!)}</td> 
+      <td>
+          <button
+              className="btn btn-danger"
+              type="button"
+              onClick={() => {
+                deleteUserFromGroup(groupId, mobileUser.userRef); 
+                alert('Usuario deslindado del grupo ' + groupId);
+                setRemove(true);
+              }}
+              style={{
+                  marginTop: "5px",
+                  marginLeft: "15%",
+                  marginRight: "15px"}}>
+              Borrar
+          </button>
+      </td>
+  </>;
+};
+
+// Reduction
+const makeReduction = (groups:Groups[]) => {
+  if(!groups) return [];
+  const reduction = groups.reduce((acc: any, curr: Groups) => {
+      var infected = curr.users!.filter((user: UsersData) => user.healthCondition ==='healthy')
+          .map((user, index) =>
+              <tr key={index}>
+                  { renderRow('healthy', user, curr._id) }
+              </tr>);
+      var probably = curr.users!.filter(user => user.healthCondition ==='risk')
+          .map((user, index) =>
+              <tr key={index}>
+                  { renderRow('risk', user, curr._id) }
+              </tr>);
+      var health = curr.users!.filter(user => user.healthCondition ==='infected')
+          .map((user, index) =>
+              <tr key={index}>
+                  { renderRow('infected', user, curr._id) }
+              </tr>);
+  
+      return { 
+          infected : [ ...acc.infected, ...infected ],
+          probably : [ ...acc.probably, ...probably ],
+          health : [ ...acc.health, ...health ],
+      };
+  
+  }, { infected: [], probably: [], health: []});
+  
+  return [ ...reduction.health, ...reduction.probably, ...reduction.infected ];
+};
+
+
     return (
       <div className="container-fluid">
         <div className="card shadow">
@@ -269,48 +296,25 @@ const renderHealth = (groups:any) => {
                           <th>Fecha de sintomas</th>
                           <th>Fecha de contagio</th>  
                           </>)} 
+                          <th></th>
                         </tr>
                       </thead>
                       <tbody>    
                       {isEmploy === true ? (<>  
-                        {members === null ? (
+                        {!members ? (
                           <tr>NO HAY REGISTROS DE EMPLEADOS</tr>
                         ): (<>
-                        {members.map((groups: UsersData, index) => ( 
-                              <tr key={index}> 
-                              {renderInfected(groups)}
-                              </tr> 
-                            ))} 
-                          {members.map((groups: UsersData, index) => ( 
-                              <tr key={index}> 
-                              {renderProbaly(groups)}
-                              </tr> 
-                            ))} 
-                          {members.map((groups: UsersData, index) => ( 
-                              <tr key={index}> 
-                              {renderHealth(groups)}
-                              </tr> 
-                            ))}
+                        {
+                          makeReduction(members)
+                        }
                         </>)}
                       </>):(<>
-                        {visits === null ? (
+                        {!visits ? (
                           <tr>NO HAY REGISTROS DE VISITAS</tr>
                         ): (<>
-                          {visits.map((groups: UsersData, index) => ( 
-                            <tr key={index}> 
-                            {renderInfected(groups)}
-                            </tr> 
-                          ))} 
-                          {visits.map((groups: UsersData, index) => ( 
-                            <tr key={index}> 
-                            {renderProbaly(groups)}
-                            </tr> 
-                          ))} 
-                          {visits.map((groups: UsersData, index) => ( 
-                            <tr key={index}> 
-                            {renderHealth(groups)}
-                            </tr> 
-                          ))}
+                        {
+                          makeReduction(visits)
+                        }
                         </>)} 
                          
                       </>)} 

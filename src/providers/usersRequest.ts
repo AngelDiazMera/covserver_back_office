@@ -6,7 +6,7 @@ enum HealthCondition {
   infected = 'infected'
 }; 
 export interface UsersData{
-  _id?:String, 
+  _id:string, 
   name?: string,
   lastName?: String;
   gender?: String;
@@ -14,18 +14,19 @@ export interface UsersData{
   symptomsDate?: Date;
   infectedDate?:Date;
   visitDate?: Date; 
+  userRef: string;
+};
+
+export interface Groups{
+  _id: string;
+  users?: UsersData[];
 };
  
 // Axios request to get the visits of the enterprise
   export const getVisits = async (skip:any): Promise<any> => {
     try {
       const { data } = await api.get(`user/visits?skip=${skip}`);
-      const users :any = data.visits[0].visits as UsersData[]; 
-      const  code :any  = data.visits[0]._id as UsersData; 
-      users.push({codes: code})
-      console.log(users); 
-
-      return users;
+      return data.groups;
     } catch (error) {
         console.log(error);
         return null;
@@ -36,12 +37,7 @@ export interface UsersData{
   export const getMembers = async (skip:any): Promise<any> => {
     try {
       const { data } = await api.get(`user/members?skip=${skip}`);
-      const users:any = data.members[0].members as UsersData[];  
-      const  code:any  = data.members[0]._id as UsersData; 
-      users.push({codes: code})
-      console.log(users); 
-
-      return users;
+      return data.groups;
     } catch (error) {
         console.log(error);
         return null;

@@ -69,3 +69,15 @@ export const getGroups = async (): Promise<any> => {
       return null;
   }
 };
+
+// API request to delete user assignation from group
+export const deleteUserFromGroup = async (code: string, userRef: string): Promise<any> => {
+  try {
+    console.log(code, userRef);
+    const { data } = await api.put('groups/assign', { code, userRef });
+    return data;
+  } catch (error) {
+      console.error(error);
+      return null;
+  }
+}
