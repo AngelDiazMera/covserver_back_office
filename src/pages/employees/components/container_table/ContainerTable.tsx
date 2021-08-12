@@ -1,6 +1,7 @@
 import React,{ useEffect, useState } from "react";
 import {UsersData, Groups, getVisits,getMembers} from '../../../../providers/usersRequest';
 import { deleteUserFromGroup } from '../../../../providers/groupsRequest';
+import { access } from "fs";
 
 function ContainerTable () { 
 //All the const
@@ -43,34 +44,43 @@ const loadVisits = async () => {
   };
  
   //This filter the elements in the table
-  const filter=(word:any)=>{
-    let data:any;
-    if(isEmploy){
-      data = members;
-    }else{
-      data = visits;
-    }  
-    var resultadosBusqueda=data.filter((element:UsersData)=>{
+  const filter=(word:any, data:Groups[])=>{
+    let content:Groups = data[0]; 
+    let user:any = [];
+    let usersPush:any = []; 
+    content.users?.map((userC:UsersData) => {
+      user.push(userC);
+    });   
+    
+    var result=user.filter((element: UsersData) =>{
       if(element.name?.toString().toLowerCase().includes(word.toLowerCase())
+      || element.lastName?.toString().toLowerCase().includes(word.toLowerCase())
       || element.infectedDate?.toString().toLowerCase().includes(word.toLowerCase())
       || element.symptomsDate?.toString().toLowerCase().includes(word.toLowerCase()) 
       || element.visitDate?.toString().toLowerCase().includes(word.toLowerCase()) 
-      ){ 
+      ){  
         return element; 
-      }
-    });
-
+      } 
+    }); 
+    //console.log(result)
+    let cont = {_id:content._id, users:result}
+    usersPush.push(cont); 
     if(isEmploy){
-      setMembers(resultadosBusqueda);
+      setMembers(usersPush); 
     }else{
-      setVisits(resultadosBusqueda);
+      setVisits(usersPush);
     }
+     
   }
 
   //This const get the value of the input to search something 
   const searchInput = (event:any) => {
     setSearch(event.target.value);
-    filter(event.target.value); 
+    //This change the value of search 
+    
+      filter(event.target.value,visits);
+    
+
     //This element set all the users when search input is empty
     if(event.target.value === ''){
       if(isEmploy){
@@ -104,7 +114,7 @@ useEffect(() => {
 
 //Hook for get members
 useEffect(() => {  
-  loadMembers();
+  loadMembers(); 
   setRemove(false);   
 }, [count, remove]);
 
@@ -131,20 +141,27 @@ function formatDate (date:Date) {
 const renderRow = (healthCond: string, mobileUser: UsersData, groupId: string) => {
   const { healthCondition, gender, name, lastName, visitDate, symptomsDate, infectedDate} = mobileUser;
   
-  interface ColorParser {
+  interface itemSelect {
     [key: string]: string
   }
 
-  const colorParser: ColorParser = {
+  const colorParser: itemSelect = {
       'infected': 'red',
       'risk': 'orange',
       'healthy': 'black'
   };
 
+  const health: itemSelect = {
+    'infected': 'Contagiado',
+    'risk': 'Riesgo Medio',
+    'healthy': 'Riesgo Bajo'
+  };
+   
   const textColor = colorParser[healthCond];
+  const condition = health[healthCondition];  
 
   return <> 
-      <td style = {{color: textColor}}>{healthCondition}</td>
+      <td style = {{color: textColor}}>{condition}</td>
       <td style = {{color: textColor}}>{gender}</td>
       <td style = {{color: textColor}}>{`${name} ${lastName}`}</td>
 
@@ -173,9 +190,9 @@ const renderRow = (healthCond: string, mobileUser: UsersData, groupId: string) =
 };
 
 // Reduction
-const makeReduction = (groups:Groups[]) => {
+const makeReduction =  (groups:Groups[]) => {
   if(!groups) return [];
-  const reduction = groups.reduce((acc: any, curr: Groups) => {
+  const reduction  =  groups.reduce((acc: any, curr: Groups) => {
       var infected = curr.users!.filter((user: UsersData) => user.healthCondition ==='healthy')
           .map((user, index) =>
               <tr key={index}>
@@ -330,34 +347,17 @@ const makeReduction = (groups:Groups[]) => {
                       <li  className="page item">
                           <button className="page-link" onClick={() => {pagDecrement();}} disabled= { count === 0 }>Anterior</button>
                       </li> 
-                      <li className="page-item active"> == $0
+                      <li className="page-item active">
                         <span className="page-link">
-                          <a href="#" aria-controls="historial" data-dt-idx="1" tabindex="0">1</a> == $0
-                          {count}
+                          {count * 10+` - `+ (count+1) * 10  }
                         </span>
-                      </li> 
-                      <li className="page-item">...
-                        <button className="page-link">
-                          {count+1}
-                        </button>
-                      </li> 
-                      <li className="page-item" >...
-                        <button className='page-link' >
-                          {count+2}
-                        </button>
-                      </li> 
+                      </li>  
                       <li className="page-item">
-                        <button className="page-link" onClick={() => {pagIncrement();}} disabled= { visits === null || members === null } >Siguiente</button>
+                        <button className="page-link" onClick={() => {pagIncrement();}} disabled= { visits === null ||visits === undefined || members === null || members === undefined } >Siguiente</button>
                       </li>
                     </ul>
                   </nav>
-                </div>
-                <button 
-                    disabled = { ContainerTable }
-                    className="btn btn-danger fw-bolder" 
-                    onClick={handleOnClick}>
-                    Salir
-                </button> 
+                </div> 
             </div>
             </div>
         </div>
