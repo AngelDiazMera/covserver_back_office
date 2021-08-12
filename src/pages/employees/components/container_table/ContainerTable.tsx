@@ -318,6 +318,7 @@ const renderHealth = (groups:any) => {
                     </table>
                   )} 
                 </div>  
+                
 
                 <div className="container">  
                   <nav aria-label="...">
@@ -325,17 +326,18 @@ const renderHealth = (groups:any) => {
                       <li  className="page item">
                           <button className="page-link" onClick={() => {pagDecrement();}} disabled= { count === 0 }>Anterior</button>
                       </li> 
-                      <li className="page-item active">
+                      <li className="page-item active"> == $0
                         <span className="page-link">
+                          <a href="#" aria-controls="historial" data-dt-idx="1" tabindex="0">1</a> == $0
                           {count}
                         </span>
                       </li> 
-                      <li className="page-item">
+                      <li className="page-item">...
                         <button className="page-link">
                           {count+1}
                         </button>
                       </li> 
-                      <li className="page-item" >
+                      <li className="page-item" >...
                         <button className='page-link' >
                           {count+2}
                         </button>
@@ -345,7 +347,13 @@ const renderHealth = (groups:any) => {
                       </li>
                     </ul>
                   </nav>
-                </div> 
+                </div>
+                <button 
+                    disabled = { ContainerTable }
+                    className="btn btn-danger fw-bolder" 
+                    onClick={handleOnClick}>
+                    Salir
+                </button> 
             </div>
             </div>
         </div>
