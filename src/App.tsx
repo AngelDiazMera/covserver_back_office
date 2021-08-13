@@ -1,27 +1,97 @@
-import { useState } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Redirect, Route } from 'react-router-dom';
+// Configuration
+import { initAxiosInterceptors } from './providers/authHelpers'
 // Components
-import AuthRoutes from './routes/auth.routes';
-import DashboardRoutes from './routes/dashboard.routes';
+import PrivateRoute from './components/private_route/privateRoute';
+// DEPRECATED: import Dashboard from './pages/dashboard/dashboard';
+import Dashboard from './pages/user_page/dashboard';
+import Profile from './pages/profile_page/profile'
+import LoginPage from './pages/login_page/loginPage';
+import RegisterPage from './pages/register_page/registerPage';
+import { loadUser } from './providers/enterpriseRequests';
+import UserPage from './pages/employees/user_page';
+import Navbar from './pages/user_page/components/_navbar/Navbar';
+
+// Load the configuration 
+initAxiosInterceptors();
 
 function App() {
   // State variables
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // If user is logged in
+  const [loadingUser, setloadingUser] = useState(true);
+  const [hasUser, setHasUser] = useState(false);
 
-  // Decides the routes the component will load depending on isLoggedIn state
-  const DecideRoutes = ():JSX.Element => {
-    setIsLoggedIn(false);
-    if (isLoggedIn)
-      return (<DashboardRoutes/>);
-    return (<AuthRoutes/>);
-  };
+  // Hook: When component is rendered, loads the user data
+  useEffect(() => {
+    // When the user is loaded, loadingUser must be false and hasUser 
+    // must depend on the storage of the browser
+    async function loadUserOnStorage() {
+      const isUserLogged = await loadUser();
+      setHasUser(isUserLogged);
+      setloadingUser(false);
+    };
+    loadUserOnStorage();
+  }, []);
 
+  // Callbacks to handle login and logout
+  const handleOnLogin = () => setHasUser(true);
+  const handleOnLogout = () => setHasUser(false);
+
+  // If the state has not finished loading
+  if (loadingUser) return(<h2>Cargando...</h2>);
   return (
-    <>
-      <Router>
-        <DecideRoutes/>
-      </Router>
-    </>
+    <Router>
+      {/* if user is logged in, '/' redirects to '/dashboard', else redirects to '/login' */}
+      <Route 
+        exact path="/"> 
+        <Redirect to={hasUser ? '/dashboard' : '/login'}/> 
+      </Route>
+      {/* Routes in case that the user is not authenticated */}
+      <PrivateRoute 
+        authed={!hasUser} 
+        path="/login" 
+        component={() => <LoginPage onLogIn={handleOnLogin}/>}/>
+      <PrivateRoute 
+        authed={!hasUser} 
+        path="/register" 
+        component={RegisterPage}/>
+      {/* Routes in case that the user is authenticated */}
+      {hasUser && 
+      <div id="wrapper">
+        <Navbar></Navbar>
+        <div className="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+
+          <PrivateRoute 
+            authed={hasUser} 
+            path="/dashboard" 
+            component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
+          <PrivateRoute 
+            authed={hasUser} 
+            path="/profile" 
+            component={() => <Profile onLogOut={handleOnLogout}/>}/>
+          <PrivateRoute 
+            authed={hasUser} 
+            path="/employees" 
+            component={() => <UserPage onLogOut={handleOnLogout}/>}/>
+        
+        </div>
+        <footer className="bg-white sticky-footer">
+          <div className="container my-auto">
+            <div className="text-center my-auto copyright">
+              <span>CovServer© 2021</span>
+            </div>
+          </div>
+        </footer>
+        </div>
+      </div>
+      
+      }
+      {/* 404 Route */}
+      <Redirect 
+        from='*' 
+        to={hasUser ? '/dashboard' : '/login'} />
+    </Router>
   );
 }
 

@@ -1,8 +1,7 @@
 import styled from "styled-components";
 // Components
-import Background from "./components/background";
+import Background, { Image } from "../../components/background/background";
 import RegisterForm from "../../layouts/register_form/registerForm";
-import Image from "./components/image";
 // Just  a styled component for decoration
 const BigHeader = styled.h2`
     opacity: 0.85;
@@ -15,6 +14,13 @@ const BigHeader = styled.h2`
     }
 `;
 
+const WhiteBackground = styled.div `
+    max-width: 760px;
+    @media (max-width: 991.5px) {
+        max-width: 100vw;
+    }
+`;
+
 function RegisterPage() {
     return (
         <div className="container-fluid h-100">
@@ -22,13 +28,12 @@ function RegisterPage() {
                 {/* Purple gradient side decoration */}
                 <Background> 
                     <div className="h-100 d-flex flex-column flex-lg-row" >
-                {/* Register form */}
-        
-                        <div className="d-flex flex-grow-1 justify-content-center col-12 col-lg-7 p-2 pt-3 pt-sm-4 bg-white text-body rounded-3 shadow order-2 order-lg-1">
+                        {/* Register form */}
+                        <WhiteBackground className="w-100 d-flex flex-grow-1 justify-content-center px-5 p-3 pt-sm-4 bg-white text-body rounded-3 shadow order-2 order-lg-1">
                             <RegisterForm/>
-                        </div>
+                        </WhiteBackground>
 
-                        <div className="col-12 col-lg-5 order-1 order-lg-2">
+                        <div className="w-100 order-1 order-lg-2">
                             <div className="h-100 d-flex flex-row flex-lg-column align-content-between justify-content-between align-self-end">
                                 <div  className="p-3 p-lg-5">
                                     <BigHeader>Tu nuevo observador de infectados</BigHeader> 

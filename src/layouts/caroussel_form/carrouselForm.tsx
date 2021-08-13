@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { useHistory } from 'react-router-dom';
 // Components
 import palette from "../../colors/colorPalette"
-import { saveEnterprise } from '../../providers/enterprise/enterpriseRequests';
+import { signUp } from '../../providers/enterpriseRequests';
 
 // Props definition
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 function CarousselForm(props: Props) {
+    const history = useHistory();
     // State variables
     const [actualIndex, setActualIndex] = useState(0); // Actual index in caroussel
     const [animating, setAnimating] = useState(false); // To check if it is animating
@@ -22,10 +24,19 @@ function CarousselForm(props: Props) {
     
     // Hook: When the user clicks the register button
     useEffect(() => {
+        if(!makeRegister) return;
+
         // It will save the enterprise (REQUEST), then, it will activate the button again
-        if (makeRegister === true) saveEnterprise(formData)
-            .then(() => setMakeRegister(false)); 
-        
+        const registerEnterprise = async () => {
+            if (makeRegister === true){
+                const isRegistered = await signUp(formData);
+                setMakeRegister(false);
+                if (isRegistered)
+                    history.push('/login');
+            }
+        };
+        registerEnterprise();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [makeRegister]);
 

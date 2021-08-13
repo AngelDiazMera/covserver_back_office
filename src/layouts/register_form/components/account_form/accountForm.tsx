@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import TextInput from '../../../../components/text_input/textInput'
-import { checkEmailAvailability } from '../../../../providers/enterprise/enterpriseRequests';
+import { checkEmailAvailability } from '../../../../providers/enterpriseRequests'
+import { validateEmail } from '../../../../lib/emailValidation';
 
 // Props definition
 interface Props {
@@ -44,40 +45,35 @@ function AccountForm(props: Props) {
         if(_isEmailWrong()) return;
         setEmailLabel('Comprobando disponibilidad...')
         // Request to server every 500 ms
-        const timer:NodeJS.Timeout = setTimeout(() => {
-            checkEmailAvailability(email)
-                .then((available:boolean) => {
-                    if (!available) {
-                        setEmailLabel('Este email no se encuentra disponible.');
-                        setIsEmailWrong(true);
-                    } else {
-                        setEmailLabel('');
-                        setIsEmailWrong(false);
-                    };
-                })
-                .catch(err => {
-                    setEmailLabel('No se pudo alcanzar la API.');
+        const timer:NodeJS.Timeout = setTimeout(async () =>  {
+            try {
+                const available = await checkEmailAvailability(email);
+                if (!available) {
+                    setEmailLabel('Este email no se encuentra disponible.');
                     setIsEmailWrong(true);
-                });
+                } else {
+                    setEmailLabel('');
+                    setIsEmailWrong(false);
+                };
+            } catch (error) {
+                setEmailLabel('No se pudo alcanzar la API.');
+                setIsEmailWrong(true);
+            }
         }, 500);
+        // Cleanup
         return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [email]);
 
-    // Validates email by RegEx
-    const _validateEmail = (email: string): boolean => {
-        const regExp: RegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regExp.test(email);
-    };
 
     // Check if the email is wrong (if text  is '' or is not valid)
-    const _isEmailWrong = () => {
+    const _isEmailWrong = ():boolean => {
         if(email.trim() === '') {
             setEmailLabel('Este campo no puede estar vacío.');
             setIsEmailWrong(true);
             return true;
         }
-        if(!_validateEmail(email)) {
+        if(!validateEmail(email)) {
             setEmailLabel('La dirección de email no es válida.');
             setIsEmailWrong(true);
             return true;

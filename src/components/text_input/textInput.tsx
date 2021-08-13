@@ -2,22 +2,23 @@
 import styled from "styled-components";
 
 interface Props {
-    onChange: React.ChangeEventHandler,
-    value: string,
-    type: string,
-    name: string,
-    required?: boolean,
-    placeHolder?: string,
-    label?: string,
-    helper?: string,
-    wrong?: boolean,
-    wrongText?: string,
+    onChange: React.ChangeEventHandler;
+    value: string;
+    type: string;
+    name: string;
+    required?: boolean;
+    placeHolder?: string;
+    label?: string;
+    helper?: string;
+    wrong?: boolean;
+    wrongText?: string;
+    big?: boolean;
 };
 
 const Input = styled.input`
     width: 100%;
     font-size: 16px;
-    padding: 10px;
+    padding: 10px};
     padding-left: 16px;
     background: #f8f9fa;
     border: none;
@@ -30,11 +31,13 @@ const Input = styled.input`
 
 function TextInput(props: Props) {
     const bgColor:string = props.wrong ? '#f0e0df' : '#f8f9fa';
+    const helperColor:string = props.wrong ? '#f2564e' : '#6c757d';
+    const padding:string = props.big ? '20px' : '10px';
     return (
         <div className="mb-3">
-            <label className="w-100 form-label">{props.label}
+            <label className="w-100 form-label text-secondary" style={{fontWeight:500}}>{props.label}
             <Input 
-                style={{background:bgColor}}
+                style={{background:bgColor, padding: padding}}
                 name={props.name}
                 type={props.type}  
                 value={props.value}
@@ -43,11 +46,11 @@ function TextInput(props: Props) {
                 placeholder={props.placeHolder}
                 aria-describedby="emailHelp"/></label>
             <div id="emailHelp" className="form-text">{props.helper}</div>
-            {props.wrong 
+            {props.wrongText?.trim() !== '' 
             ? <div 
                 id="emailHelp" 
                 className="form-text" 
-                style={{color:'#f2564e'}}>
+                style={{color:helperColor}}>
                 {props.wrongText}
               </div>
             : null}

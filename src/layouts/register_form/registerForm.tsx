@@ -18,13 +18,13 @@ function RegisterForm() {
     }
 
     return (
-        <div className="w-100 py-lg-0 pb-lg-0 pt-15 pb-12" style={{maxWidth:675}}>
+        <div className="w-100 py-lg-0 pb-lg-0 pt-15 pb-12">
 
             <div className="d-flex flex-column px-3 px-xl-0 ">
                 {/* Application logo */}
                 <div className="d-flex flex-column-auto flex-column px-10 order-0 ">
                     <Link to="/register" className = "pb-lg-4 pb-10 mb-3">
-                        <img src={logo} alt="Logotipo de CovServer" style={{width:'275px'}} />
+                        <img src={logo} alt="Logotipo de CovServer" style={{width:275}} />
                     </Link>
                 </div>
                 {/* Wizard navigation: The component that shows what is the current slide */}

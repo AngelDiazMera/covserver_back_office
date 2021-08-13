@@ -52,6 +52,7 @@ function EnterpriseForm(props: Props) {
                 value={acronym}
                 required={true}/>
         </>
+        
     )
 }
 
