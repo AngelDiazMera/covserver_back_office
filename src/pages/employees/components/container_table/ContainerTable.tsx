@@ -40,51 +40,45 @@ const loadVisits = async () => {
     setVisit(false);
     //Restart the count when change to members
       setCount(0); 
-  };
- 
+  };  
+
   //This filter the elements in the table
-  const filter=(word:any, data:Groups[])=>{
-    let content:Groups = data[0]; 
-    let user:any = [];
-    let usersPush:any = []; 
-    content.users?.map((userC:UsersData) => {
-      user.push(userC);
-    });   
-    
-    var result=user.filter((element: UsersData) =>{
-      if(element.name?.toString().toLowerCase().includes(word.toLowerCase())
-      || element.lastName?.toString().toLowerCase().includes(word.toLowerCase())
-      || element.infectedDate?.toString().toLowerCase().includes(word.toLowerCase())
-      || element.symptomsDate?.toString().toLowerCase().includes(word.toLowerCase()) 
-      || element.visitDate?.toString().toLowerCase().includes(word.toLowerCase()) 
-      ){  
-        return element; 
-      } 
-    }); 
-    //console.log(result)
-    let cont = {_id:content._id, users:result}
-    usersPush.push(cont); 
-    if(isEmploy){
-      setMembers(usersPush); 
-    }else{
-      setVisits(usersPush);
-    }
-     
+  const filter=(word:any)=>{  
+      const data: Groups[] = isEmploy ? members : visits;    
+      /** Detects if some `prop` of an object includes `someWord` */
+      const hasWord = (prop: String, someWord: string): boolean => 
+          prop.toString().toLowerCase().includes(someWord.toLowerCase());
+          
+      // Reduces data applying a filer.
+      var reduction = data.reduce((acc: Groups[], curr: Groups) => {  
+          const users = curr.users!.filter((user: UsersData) => 
+              hasWord(user.name!, word) || hasWord(user.lastName!, word) ||
+              hasWord(formatDate(user.infectedDate!), word) || hasWord(formatDate(user.symptomsDate!), word) || 
+              hasWord(formatDate(user.visitDate!), word)  
+              );  
+           const group2 = {_id: curr._id, users} ; 
+        return [...acc, group2]; 
+      }, []);  
+      const contenid:any = reduction;
+      if(isEmploy){  
+        members = [];
+        setMembers(contenid); 
+      }else{ 
+        visits= [];
+        setVisits(contenid);
+      }  
   }
 
   //This const get the value of the input to search something 
   const searchInput = (event:any) => {
     setSearch(event.target.value);
-    //This change the value of search 
-    
-      filter(event.target.value,visits);
-    
-
+    //This change the value of search  
+      filter(event.target.value); 
     //This element set all the users when search input is empty
-    if(event.target.value === ''){
-      if(isEmploy){
+    if(event.target.value === '' || event.target.value === ' ' ){
+      if(isEmploy){  
         loadMembers();
-      }else{
+      }else{  
         loadVisits();
       } 
     } 
@@ -102,8 +96,7 @@ const loadVisits = async () => {
       count = count - 1;
       setCount(count);
     }  
-  } 
-  
+  }  
 
 //This hooks help to reset the count when the users are changed
 useEffect(() => {  
