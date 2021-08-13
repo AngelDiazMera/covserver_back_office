@@ -43,7 +43,7 @@ const StyledLink = styled.li<StyledProps>`
     width: calc(100% - ${props => props.isNavActive ? '0px' : '25px'}) !important;
     margin: 0px 0px 0px ${props => props.isNavActive ? '0px' : '25px'};
     background: ${props => (props.active 
-        ? '#f5f6f9' 
+        ? '#f8f9fc' 
         : '#303f9f')};
     @media (max-width: 768px) {
         width: 100%  !important;
@@ -52,12 +52,12 @@ const StyledLink = styled.li<StyledProps>`
 `;
 
 const NavLink = styled(Link)<StyledProps>`
-    background-color: ${props => props.active ? 'white' : '#303f9f'};
+    background-color: ${props => props.active ? '#f8f9fc' : '#303f9f'};
     border-radius: 10px 0px 0px 10px !important;
     color: ${props => props.active ? '#303f9f' : 'white'} !important;
     height:${props => props.isNavActive ? '75px' : '40px'};
     margin-left: -10px;
-    width: calc(${props => props.isNavActive ? '7.5rem' : '14rem'} - 15px) !important;
+    width: calc(${props => props.isNavActive ? '7.7rem' : '14rem'} - 15px) !important;
     transition: 100ms ;
     @media (max-width: 768px) {
         width: 7rem !important;

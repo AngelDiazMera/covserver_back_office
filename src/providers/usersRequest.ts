@@ -26,7 +26,7 @@ export interface Groups{
   export const getVisits = async (skip:any): Promise<any> => {
     try {
       const { data } = await api.get(`user/visits?skip=${skip}`);
-      return data.groups;
+      return data;
     } catch (error) {
         console.log(error);
         return null;
@@ -37,7 +37,7 @@ export interface Groups{
   export const getMembers = async (skip:any): Promise<any> => {
     try {
       const { data } = await api.get(`user/members?skip=${skip}`);
-      return data.groups;
+      return data;
     } catch (error) {
         console.log(error);
         return null;

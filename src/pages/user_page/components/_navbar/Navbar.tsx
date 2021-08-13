@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import logo from "../img/img_cov.png";
-import { Link } from "react-router-dom";
+import logo from "../../../../assets/white-icon.png";
+import miniLogo from "../../../../assets/mini-white.png";
 import ButtonMinimize from "../button_minimize/buttonMinimize";
 import ListLink from "./listLink";
 
@@ -23,6 +23,7 @@ function Navbar() {
   const updateIndex = useCallback((index:number) => {
     console.log('Actualizando a ', index);
     setActualPage(index);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [actualPage]);
 
   const configs = [
@@ -57,22 +58,22 @@ function Navbar() {
         <div className="sidebar-brand-icon rotate-n-15"></div>
         <div className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0">
           <img
-            src={logo}
+            src={miniLogo}
             alt="covserver_logo"
-            width="40px"
-            height="40px"
+            height="35px"
             style={{
               transform: "translate(0px)",
             }}
           />
-          <div
-            className="sidebar-brand-text mx-3"
+          <img
+            className="sidebar-brand-text ms-2"
+            src={logo}
+            alt="covserver_logo"
+            height="20px"
             style={{
-              color: "white",
+              transform: "translate(0px)",
             }}
-          >
-            <span>Covserver</span>
-          </div>
+          />
         </div>
         <hr className="sidebar-divider my-0" />
         <ul className="navbar-nav text-light" id="accordionSidebar">

@@ -2,17 +2,17 @@
 import styled from "styled-components";
 
 interface Props {
-    onChange: React.ChangeEventHandler,
-    value: string,
-    type: string,
-    name: string,
-    required?: boolean,
-    placeHolder?: string,
-    label?: string,
-    helper?: string,
-    wrong?: boolean,
-    wrongText?: string,
-    big?: boolean
+    onChange: React.ChangeEventHandler;
+    value: string;
+    type: string;
+    name: string;
+    required?: boolean;
+    placeHolder?: string;
+    label?: string;
+    helper?: string;
+    wrong?: boolean;
+    wrongText?: string;
+    big?: boolean;
 };
 
 const Input = styled.input`
