@@ -34,7 +34,7 @@ function ContainerTable () {
       if (groups == null) return;
 
       const totalPage = groups.reduce((acc:number, curr:Groups) => acc + curr.users!.length, 0);
-      setCounterTextM(`${count}-${totalPage} de ${total}`);
+      setCounterTextM(total == null ? '-' : `${count}-${totalPage} de ${total}`);
       setMembers(groups);  
       setTotalMembers(total);  
       setLoading(false);
@@ -47,7 +47,7 @@ function ContainerTable () {
       if (groups == null) return;
 
       const totalPage = groups.reduce((acc:number, curr:Groups) => acc + curr.users!.length, 0);
-      setCounterTextV(`${count}-${totalPage} de ${total}`);
+      setCounterTextV(total == null ? '-' : `${count}-${totalPage} de ${total}`);
       setVisits(groups);  
       setTotalVisits(total);  
       setLoading(false);
@@ -193,7 +193,7 @@ function ContainerTable () {
                 </div>
               <div className="table-responsive mx-3"> 
                   {loading ? (
-                    <div className="w-100 d-flex flex-column justify-content-center" style={{height:265}}>
+                    <div className="w-100 d-flex flex-column justify-content-center user-select-none" style={{height:265}}>
                       <div className="d-flex flex-row justify-content-center">
                         <Loader size={64}/>
                         <span className="my-auto ms-4 fs-4">Cargando...</span>
@@ -202,11 +202,10 @@ function ContainerTable () {
                   ) : (
                     <table className="table table-borderless">
                       <TableData
-                        isEmploy={isEmploy}
+                        isEmploy = {isEmploy}
                         deleteUserFromGroup={deleteUserFromGroup}
-                        members={members}
-                        setRemove={setRemove}
-                        visits={visits}/>
+                        groups={isEmploy ? members : visits}
+                        setRemove={setRemove}/>
                       <caption className="pb-0">
                         <div className="d-flex flex-row justify-content-end">
                           <ul className="pagination m-0">
@@ -227,7 +226,9 @@ function ContainerTable () {
                                 style={{color: '#757575'}}
                                 className="page-link" 
                                 onClick={() => {pagIncrement();}} 
-                                disabled= { isEmploy ? count + 10 >= totalMembers : count + 10 >= totalVisits}>
+                                disabled= { isEmploy 
+                                ? count + 10 >= totalMembers || totalMembers == null
+                                : count + 10 >= totalVisits || totalVisits == null}>
                                 <FiChevronRight/>
                               </button>
                             </li>

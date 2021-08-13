@@ -28,19 +28,19 @@ function Navbar() {
 
   const configs = [
     { 
-      route: '../dashboard' ,
+      route: '../dashboard/groups' ,
       icon: 'fas fa-tachometer-alt',
-      name: 'Mi cuenta'
+      name: 'Grupos'
     },
     { 
-      route: '../profile' ,
-      icon: 'fas fa-user',
-      name: 'Usuarios'
-    },
-    { 
-      route: '../employees' ,
+      route: '../dashboard/users' ,
       icon: 'fas fa-table',
       name: 'Dashboard'
+    },
+    { 
+      route: '../dashboard/profile' ,
+      icon: 'fas fa-user',
+      name: 'Mi cuenta'
     },
   ];
   console.log('Renderizando navbar');
