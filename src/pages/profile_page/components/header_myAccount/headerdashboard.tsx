@@ -4,8 +4,12 @@ import logo from '../../../user_page/components/img/circle.png'
 import Enterprise from '../../../../auth/enterpriseAuth';
 import { deleteToken } from '../../../../providers/authHelpers';
 import { useHistory } from 'react-router-dom';
+import LogOutButton from "../../../../components/logout_button/logOutButton";
+interface Props {
+  onLogOut: Function
+}
 
-function HeaderNav () {
+function HeaderNav (props: Props) {
 const name= React.useState(Enterprise.getInstance().name);
 
 const history = useHistory();
@@ -43,19 +47,7 @@ const handleOnClick = () => setMakeRegister(true);
           <ul className="navbar-nav flex-nowrap ms-auto">
             <li className="nav-item dropdown no-arrow mx-1">
               <div className="nav-item dropdown no-arrow">
-                <button
-                  className="nav-link"
-                  aria-expanded="false"
-                  style={{
-                    color: "#191a23",
-                    border: "0px",
-                    background: "white"
-                  }}
-                   
-                  onClick={handleOnClick}
-                >
-                  Salir
-                </button>
+                <LogOutButton onLogOut = {props.onLogOut}/>
               </div>
             </li>
             <div className="d-none d-sm-block topbar-divider" ></div>

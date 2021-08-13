@@ -9,7 +9,7 @@ function Wrapper(props: Props) {
     return (
       <div id="wrapper">
         <Navbar></Navbar>
-        <ContentWrapperProfile></ContentWrapperProfile> 
+        <ContentWrapperProfile onLogOut={props.onLogOut}></ContentWrapperProfile> 
       </div>
     );
 }

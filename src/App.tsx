@@ -62,11 +62,11 @@ function App() {
       <PrivateRoute 
         authed={hasUser} 
         path="/profile" 
-        component={Profile}/>
+        component={() => <Profile onLogOut={handleOnLogout}/>}/>
       <PrivateRoute 
         authed={hasUser} 
         path="/employees" 
-        component={UserPage}/>
+        component={() => <UserPage onLogOut={handleOnLogout}/>}/>
       {/* 404 Route */}
       <Redirect 
         from='*' 

@@ -32,9 +32,9 @@ function LoginPage(props:Props) {
                     <div className="h-100 d-flex flex-column flex-lg-row" >
                 {/* Register form */}
         
-                        <div className="d-flex flex-grow-1 justify-content-center justify-content-lg-start col-12 col-lg-7 p-2 pt-3 pt-sm-4 bg-white text-body rounded-3 shadow order-2" >
-                            <div className="w-100" style={{maxWidth:550}}>
-                                <div className="w-100 py-lg-0 pb-lg-0 pb-12 m-2 m-xl-5 px-0 px-lg-4">
+                        <div className=" d-flex flex-grow-1 justify-content-center justify-content-lg-start p-2 pt-3 pt-sm-4 bg-white text-body rounded-3 shadow order-2" style={{width: 'content-fit'}}>
+                            <div className="w-100" style={{maxWidth:564}}>
+                                <div className="py-lg-0 pb-lg-0 pb-12 m-2 m-xl-5 px-0 px-lg-4">
 
                                     <div className="d-flex flex-column px-3 px-xl-0">
                                         {/* Application logo */}
@@ -56,7 +56,7 @@ function LoginPage(props:Props) {
                                             </div>
                                         </div>
                                         {/* Form body */}
-                                        <div className="order-3 mt-3" style={{maxWidth:500}}>
+                                        <div className="order-3 mt-3">
                                             <LoginForm onLogIn={props.onLogIn}/>
                                             
                                         </div>
@@ -65,8 +65,8 @@ function LoginPage(props:Props) {
                             </div>
                         </div>
 
-                        <div className="col-12 col-lg-5">
-                            <div className="h-100 d-flex flex-row flex-lg-column align-content-between justify-content-between align-self-end order-1">
+                        <div className="w-100">
+                            <div className="h-100 d-flex flex-grow-1 flex-row flex-lg-column align-content-between justify-content-between align-self-end order-1">
                                 <div  className="p-3 p-lg-5">
                                     <BigHeader>Tu Nuevo Observador de Infectados</BigHeader> 
                                 </div>

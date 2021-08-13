@@ -12,7 +12,7 @@ function Wrapper(props: Props) {
         <Navbar></Navbar>
         <div className="d-flex flex-column" id="content-wrapper">
         <div id="content"> 
-          <HeaderDash></HeaderDash>
+          <HeaderDash onLogOut={props.onLogOut}></HeaderDash>
           <ContainerCodes></ContainerCodes>
         </div>
         <footer className="bg-white sticky-footer">

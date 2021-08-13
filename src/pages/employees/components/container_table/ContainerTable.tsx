@@ -1,7 +1,6 @@
 import React,{ useEffect, useState } from "react";
 import {UsersData, Groups, getVisits,getMembers} from '../../../../providers/usersRequest';
 import { deleteUserFromGroup } from '../../../../providers/groupsRequest';
-import { access } from "fs";
 
 function ContainerTable () { 
 //All the const
@@ -347,11 +346,16 @@ const makeReduction =  (groups:Groups[]) => {
                       <li  className="page item">
                           <button className="page-link" onClick={() => {pagDecrement();}} disabled= { count === 0 }>Anterior</button>
                       </li> 
-                      <li className="page-item active">
-                        <span className="page-link">
-                          {count * 10+` - `+ (count+1) * 10  }
-                        </span>
-                      </li>  
+                      <li className="page-item">...
+                        <button className="page-link">
+                          {count+1}
+                        </button>
+                      </li> 
+                      <li className="page-item" >...
+                        <button className='page-link' >
+                          {count+2}
+                        </button>
+                      </li> 
                       <li className="page-item">
                         <button className="page-link" onClick={() => {pagIncrement();}} disabled= { visits === null ||visits === undefined || members === null || members === undefined } >Siguiente</button>
                       </li>

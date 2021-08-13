@@ -2,8 +2,13 @@ import React from "react";
 import logo from '../../../user_page/components/img/circle.png' 
 //The model data that help to show the data.
 import Enterprise from '../../../../auth/enterpriseAuth'; 
+import LogOutButton from "../../../../components/logout_button/logOutButton";
  
-function HeaderNav () {
+interface Props {
+  onLogOut: Function
+}
+
+function HeaderNav (props:Props) {
   const name = React.useState(Enterprise.getInstance().name);
 
     return (
@@ -26,17 +31,7 @@ function HeaderNav () {
           <ul className="navbar-nav flex-nowrap ms-auto">
             <li className="nav-item dropdown no-arrow mx-1">
               <div className="nav-item dropdown no-arrow">
-              <button
-                  className="nav-link"
-                  aria-expanded="false"
-                  style={{
-                    color: "#191a23",
-                    border: "0px",
-                    background: "white"
-                  }}
-                >
-                  Salir
-                </button>
+                <LogOutButton onLogOut = {props.onLogOut}/>
               </div>
             </li>
             <div className="d-none d-sm-block topbar-divider" ></div>

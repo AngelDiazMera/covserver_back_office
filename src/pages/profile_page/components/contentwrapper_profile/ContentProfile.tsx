@@ -2,12 +2,17 @@ import React from "react";
 import HeaderDash from "../header_myAccount/headerdashboard";
 import RowProfile from "../../components/Row_profile/RowProfile";
  
-function ContentProfile () {
+interface Props {
+  onLogOut: Function
+}
+
+
+function ContentProfile (props: Props) {
    
     return (
       <div className="d-flex flex-column" id="content-wrapper">
         <div id="content"> 
-          <HeaderDash></HeaderDash>
+          <HeaderDash onLogOut={props.onLogOut}></HeaderDash>
           <RowProfile></RowProfile>
         </div>
         <footer className="bg-white sticky-footer">

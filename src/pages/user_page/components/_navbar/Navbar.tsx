@@ -66,12 +66,12 @@ function Navbar() {
               <span> Usuarios</span>
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link className="nav-link" to="#">
               <i className="fas fa-user-circle"></i>
               <span> Cerrar sesión</span>
             </Link>
-          </li>
+          </li> */}
         </ul>
 
         <div className="text-center d-none d-md-inline">

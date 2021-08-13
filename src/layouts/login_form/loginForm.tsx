@@ -89,11 +89,11 @@ function LoginForm(props: Props) {
                     <button 
                         disabled = { makeRegister }
                         type="submit" 
-                        className="btn btn-dark fw-bolder" 
+                        className="btn btn-dark fw-bolder ms-0 ms-lg-5" 
                         onClick={handleOnClick}
                         style={{
                             backgroundColor:palette['primary-color'], borderColor:palette['primary-color'],
-                            padding:'13px 26px'
+                            padding:'13px 26px',
                             }}>
                         Ingresar
                     </button>
