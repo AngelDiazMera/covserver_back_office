@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import logo from "../img/img_cov.png";
 import { Link } from "react-router-dom";
+import ButtonMinimize from "../button_minimize/buttonMinimize";
+import ListLink from "./listLink";
 
 function Navbar() {
   const [isNavActive, setIsNavActive] = useState(false);
+  const [actualPage, setActualPage] = useState(0);
 
   const myFunction = () => {
     const bodyClasses = document.body.classList; // Classes of body DOM target
@@ -17,13 +20,37 @@ function Navbar() {
     } else bodyClasses.remove("sidebar-toggled");
   };
 
+  const updateIndex = useCallback((index:number) => {
+    console.log('Actualizando a ', index);
+    setActualPage(index);
+  }, [actualPage]);
+
+  const configs = [
+    { 
+      route: '../dashboard' ,
+      icon: 'fas fa-tachometer-alt',
+      name: 'Mi cuenta'
+    },
+    { 
+      route: '../profile' ,
+      icon: 'fas fa-user',
+      name: 'Usuarios'
+    },
+    { 
+      route: '../employees' ,
+      icon: 'fas fa-table',
+      name: 'Dashboard'
+    },
+  ];
+  console.log('Renderizando navbar');
   return (
     <nav
-      className={`navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0 ${
+      className={`navbar navbar-dark align-items-start align-content-between sidebar sidebar-dark accordion bg-gradient-primary p-0 ${
         isNavActive ? "toggled" : ""
       }`}
       style={{
         background: "#303f9f",
+        transition: '250ms ease-out'
       }}
     >
       <div className="container-fluid d-flex flex-column p-0">
@@ -31,6 +58,7 @@ function Navbar() {
         <div className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0">
           <img
             src={logo}
+            alt="covserver_logo"
             width="40px"
             height="40px"
             style={{
@@ -48,40 +76,19 @@ function Navbar() {
         </div>
         <hr className="sidebar-divider my-0" />
         <ul className="navbar-nav text-light" id="accordionSidebar">
-          <li className="nav-item">
-            <Link className="nav-link" to={"../dashboard"}>
-              <i className="fas fa-tachometer-alt" />
-              <span> Dashboard</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to={'../profile'}>
-              <i className="fas fa-user"></i>
-              <span> Mi cuenta</span>
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to={"../employees"}>
-              <i className="fas fa-table"></i>
-              <span> Usuarios</span>
-            </Link>
-          </li>
-          {/* <li className="nav-item">
-            <Link className="nav-link" to="#">
-              <i className="fas fa-user-circle"></i>
-              <span> Cerrar sesión</span>
-            </Link>
-          </li> */}
+          {configs.map( (link, index) => 
+            <ListLink 
+              key={index} 
+              index={index} 
+              config={link} 
+              isNavActive={isNavActive} 
+              actualPage={actualPage}
+              onClick={() => updateIndex(index)}></ListLink>)}
         </ul>
-
-        <div className="text-center d-none d-md-inline">
-          <button
-            className="btn rounded-circle border-0"
-            id="sidebarToggle"
-            type="button"
-            onClick={myFunction}
-          />
-        </div>
+        
+      </div>
+      <div className="text-center d-none d-md-inline ms-auto me-3">
+        <ButtonMinimize onClick={myFunction}/>
       </div>
     </nav>
   );

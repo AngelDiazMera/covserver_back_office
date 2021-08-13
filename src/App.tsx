@@ -11,6 +11,7 @@ import LoginPage from './pages/login_page/loginPage';
 import RegisterPage from './pages/register_page/registerPage';
 import { loadUser } from './providers/enterpriseRequests';
 import UserPage from './pages/employees/user_page';
+import Navbar from './pages/user_page/components/_navbar/Navbar';
 
 // Load the configuration 
 initAxiosInterceptors();
@@ -55,18 +56,37 @@ function App() {
         path="/register" 
         component={RegisterPage}/>
       {/* Routes in case that the user is authenticated */}
-      <PrivateRoute 
-        authed={hasUser} 
-        path="/dashboard" 
-        component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
-      <PrivateRoute 
-        authed={hasUser} 
-        path="/profile" 
-        component={() => <Profile onLogOut={handleOnLogout}/>}/>
-      <PrivateRoute 
-        authed={hasUser} 
-        path="/employees" 
-        component={() => <UserPage onLogOut={handleOnLogout}/>}/>
+      {hasUser && 
+      <div id="wrapper">
+        <Navbar></Navbar>
+        <div className="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+
+          <PrivateRoute 
+            authed={hasUser} 
+            path="/dashboard" 
+            component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
+          <PrivateRoute 
+            authed={hasUser} 
+            path="/profile" 
+            component={() => <Profile onLogOut={handleOnLogout}/>}/>
+          <PrivateRoute 
+            authed={hasUser} 
+            path="/employees" 
+            component={() => <UserPage onLogOut={handleOnLogout}/>}/>
+        
+        </div>
+        <footer className="bg-white sticky-footer">
+          <div className="container my-auto">
+            <div className="text-center my-auto copyright">
+              <span>CovServer© 2021</span>
+            </div>
+          </div>
+        </footer>
+        </div>
+      </div>
+      
+      }
       {/* 404 Route */}
       <Redirect 
         from='*' 
