@@ -73,8 +73,8 @@ function ListLink(props: Props) {
     console.log('render ', name, props.actualPage, '-', props.index);
 
     return (
-        <StyledLink className="nav-item" active={isActive} onClick={props.onClick} isNavActive={props.isNavActive}>
-            <NavLink className={`nav-link fs-6 fw-bolder p-2  ${props.isNavActive ? 'ps-md-2' : 'ps-md-4'}`} to={route} active={isActive} isNavActive={props.isNavActive}>
+        <StyledLink className="nav-item" active={isActive} isNavActive={props.isNavActive}>
+            <NavLink className={`nav-link fs-6 fw-bolder p-2  ${props.isNavActive ? 'ps-md-2' : 'ps-md-4'} user-select-none`} to={route} active={isActive} isNavActive={props.isNavActive}  onClick={props.onClick}>
                 <i className={`${icon}`} style={{color:isActive ? "#303f9f" : 'white'}}/>
                 <span> {name}</span>
             </NavLink>
