@@ -138,6 +138,12 @@ function ContainerCodes() {
                     <span className="my-auto ms-4 fs-4">Cargando...</span>
                   </div>
                 </div>
+                ) : ( groups.length === 0 ? (
+                  <div className="w-100 d-flex flex-column justify-content-center user-select-none" style={{height:265}}>
+                    <div className="d-flex flex-row justify-content-center">
+                      <span className="my-auto ms-4 fs-4">No se han encontrado grupos</span>
+                    </div>
+                  </div>
                 ) : (
                   <table style = {{marginLeft: "2%"}}>
                     <thead style={{color:"#6c757d"}}>
@@ -153,7 +159,6 @@ function ContainerCodes() {
                     </thead>
                     <tbody>
                       
-                    {!groups ? (<tr>No hay grupos registrados</tr>) : ( <>
                       {groups?.map((groups: GroupData, index) => (
                         <tr key={index}>
                           <td>{groups.name}</td>
@@ -217,11 +222,10 @@ function ContainerCodes() {
                             </button>
                           </td>
                         </tr>
-                      ))
-                      }</>)}
+                      ))}
                     </tbody>
                   </table>
-                )}
+                ))}
               </div>
             </div>
           </div>
