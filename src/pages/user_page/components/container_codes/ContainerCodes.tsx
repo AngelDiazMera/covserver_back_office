@@ -18,7 +18,9 @@ import {
   getGroups,
   GroupData,
 } from "../../../../providers/groupsRequest";
+import TextInput from "../../../../components/text_input/textInput";
 import clipboard from "../img/copy.png"; 
+import Loader from "../../../../components/loader/loader";
 
 function ContainerCodes() {
   const [nameCode, setNameCode] = useState("");
@@ -108,12 +110,14 @@ function ContainerCodes() {
         <div className="col offset-xxl-0">
           <div className="card shadow mb-4">
             <div className="card-header d-flex justify-content-between align-items-center">
-              <h6 className="text-primary fw-bold m-0">Códigos</h6>
+              <h6 style={{fontWeight: "bold", fontSize: "16px", color: "#3f51b5"}}>Códigos</h6>
               <button
-                className="btn btn-primary"
+                className="btn btn-light"
                 type="button"
                 style={{
-                  marginTop: "10px",
+                  backgroundColor: "#3f51b5",
+                  borderBlockColor: "#f8f9fa",
+                  color: "white"
                 }}
                 onClick={abrirModal}
               >
@@ -127,11 +131,16 @@ function ContainerCodes() {
                   marginTop: "20px",
                 }}
               >
-                {loading ? (
-                  <h4>Cargando tabla...</h4>
+              {loading ? (
+                  <div className="w-100 d-flex flex-column justify-content-center" style={{height:265}}>
+                  <div className="d-flex flex-row justify-content-center">
+                    <Loader size={64}/>
+                    <span className="my-auto ms-4 fs-4">Cargando...</span>
+                  </div>
+                </div>
                 ) : (
                   <table style = {{marginLeft: "2%"}}>
-                    <thead>
+                    <thead style={{color:"#6c757d"}}>
                       <tr>
                         <th>Subgrupo</th>
                         <th>Código de miembros</th>
@@ -143,7 +152,9 @@ function ContainerCodes() {
                       </tr>
                     </thead>
                     <tbody>
-                      {groups.map((groups: GroupData, index) => (
+                      
+                    {!groups ? (<tr>No hay grupos registrados</tr>) : ( <>
+                      {groups?.map((groups: GroupData, index) => (
                         <tr key={index}>
                           <td>{groups.name}</td>
                           <td>{groups.memberCode}</td>
@@ -167,9 +178,9 @@ function ContainerCodes() {
                               type="button"
                               onClick={() =>{getQR(groups.memberCode as string); }}
                               style={{
-                                marginTop: "5px",
-                                marginLeft: "15%",
-                                marginRight: "15px"
+                                backgroundColor: "#3f51b5",
+                                borderBlockColor: "#f8f9fa",
+                                color: "white"
                               }}
                             >
                               QR
@@ -197,16 +208,17 @@ function ContainerCodes() {
                               type="button"
                               onClick={() =>{getQR(groups.visitorCode as string); }}
                               style={{
-                                marginTop: "5px",
-                                marginLeft: "15%",
-                                marginRight: "15px"
+                                backgroundColor: "#3f51b5",
+                                borderBlockColor: "#f8f9fa",
+                                color: "white"
                               }}
                             >
                               QR
                             </button>
                           </td>
                         </tr>
-                      ))}
+                      ))
+                      }</>)}
                     </tbody>
                   </table>
                 )}
@@ -220,24 +232,30 @@ function ContainerCodes() {
         <ModalHeader>Nuevo Código</ModalHeader>
         <ModalBody>
           <FormGroup>
-            <Label for="nameCode">Nombre del area</Label>
-            <Input
-              type="text"
-              id="nameCode"
-              value={nameCode}
+            <TextInput
+              label="Nombre del área"
+              name="nameCode"
+              placeHolder="ej. Recursos Humanos"
               onChange={changeEnterprise}
-              placeholder="ej. Recursos Humanos"
-            />
+              type="text"
+              value={nameCode}
+              required={true}/>
           </FormGroup>
         </ModalBody>
 
         <ModalFooter>
           <Button
-            color="primary"
+            className="btn btn-light"
+            type="button"
+            style={{
+              backgroundColor: "#3f51b5",
+              borderBlockColor: "#f8f9fa",
+              color: "white"
+            }}
             disabled={!nameCode}
             onClick={() => {handleOnSave();}}
           >
-            Generar Código
+            Generar código
           </Button>
           <Button color="secondary" onClick={cerrarModal}>
             Salir
