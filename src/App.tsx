@@ -64,15 +64,15 @@ function App() {
 
           <PrivateRoute 
             authed={hasUser} 
-            path="/dashboard" 
+            path="/dashboard/groups" 
             component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
           <PrivateRoute 
             authed={hasUser} 
-            path="/profile" 
+            path="/dashboard/profile" 
             component={() => <Profile onLogOut={handleOnLogout}/>}/>
           <PrivateRoute 
             authed={hasUser} 
-            path="/employees" 
+            path="/dashboard/users" 
             component={() => <UserPage onLogOut={handleOnLogout}/>}/>
         
         </div>
@@ -90,7 +90,7 @@ function App() {
       {/* 404 Route */}
       <Redirect 
         from='*' 
-        to={hasUser ? '/dashboard' : '/login'} />
+        to={hasUser ? '/dashboard/groups' : '/login'} />
     </Router>
   );
 }

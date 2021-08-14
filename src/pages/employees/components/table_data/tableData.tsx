@@ -4,9 +4,8 @@ import { Groups, UsersData } from '../../../../providers/usersRequest'
 import RiskTd, { ItemSelect } from '../table_helpers/riskTd';
 
 interface Props {
-    isEmploy: boolean;
-    members: Groups[];
-    visits: Groups[];
+    isEmploy: boolean
+    groups: Groups[];
     setRemove: (val: boolean) => void;
     deleteUserFromGroup:(groupId: string, userRef: string) => void;
 }
@@ -29,7 +28,7 @@ export function formatDate (date:Date) {
     return fecha;
 }
 
-const TableData: React.FC<Props> = ({isEmploy, members, visits, setRemove, deleteUserFromGroup}) => {
+const TableData: React.FC<Props> = ({groups, isEmploy, setRemove, deleteUserFromGroup}) => {
     //This transform the date of the query
     
 
@@ -98,12 +97,22 @@ const TableData: React.FC<Props> = ({isEmploy, members, visits, setRemove, delet
                 health : [ ...acc.health, ...health ],
             };
         }, { infected: [], probably: [], health: []});
-        
+
         return [ ...reduction.health, ...reduction.probably, ...reduction.infected ];
       };
 
+    if (groups.length === 0)
+        return (
+            <div className="w-100 d-flex flex-column justify-content-center user-select-none" style={{height:265}}>
+                <div className="d-flex flex-row justify-content-center">
+                    <span className="my-auto ms-4 fs-4">No se han encontrado {isEmploy ? 'miembros': 'visitas'}</span>
+                </div>
+            </div>
+        );
+    
+
     return (
-        <>
+        <> 
         <thead style={{color:"#6c757d"}}>
             <tr className="table-default">
                 <th scope="col" style = {{width: "180px"}}>Estado de salud</th>
@@ -121,9 +130,7 @@ const TableData: React.FC<Props> = ({isEmploy, members, visits, setRemove, delet
             </tr>
         </thead>
         <tbody style={{color:"#212121"}} id="table-body">    
-            { isEmploy 
-            ? !members ? <tr>NO HAY REGISTROS DE EMPLEADOS</tr> : makeReduction(members)
-            : !visits ? <tr>NO HAY REGISTROS DE VISITAS</tr> : makeReduction(visits)} 
+            { makeReduction(groups)} 
         </tbody>
         </>
     )

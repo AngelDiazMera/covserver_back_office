@@ -39,7 +39,7 @@ const StyledLink = styled.li<StyledProps>`
         ${roundStyle}
         border-radius: 0px 10px 0px 0px;
     }
-    transition: 100ms;
+    transition: 250ms ease-out;
     width: calc(100% - ${props => props.isNavActive ? '0px' : '25px'}) !important;
     margin: 0px 0px 0px ${props => props.isNavActive ? '0px' : '25px'};
     background: ${props => (props.active 
@@ -58,7 +58,7 @@ const NavLink = styled(Link)<StyledProps>`
     height:${props => props.isNavActive ? '75px' : '40px'};
     margin-left: -10px;
     width: calc(${props => props.isNavActive ? '7.7rem' : '14rem'} - 15px) !important;
-    transition: 100ms ;
+    transition: 250ms ease-out ;
     @media (max-width: 768px) {
         width: 7rem !important;
         height: 75px;
