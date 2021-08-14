@@ -13,6 +13,7 @@ interface Props {
     wrong?: boolean;
     wrongText?: string;
     big?: boolean;
+    disabled?:boolean;
 };
 
 const Input = styled.input`
@@ -44,6 +45,7 @@ function TextInput(props: Props) {
                 onChange={ (evt) => props.onChange(evt) }
                 required={props.required ? false : props.required}
                 placeholder={props.placeHolder}
+                disabled={props.disabled ? true: false}
                 aria-describedby="emailHelp"/></label>
             <div id="emailHelp" className="form-text">{props.helper}</div>
             {props.wrongText?.trim() !== '' 

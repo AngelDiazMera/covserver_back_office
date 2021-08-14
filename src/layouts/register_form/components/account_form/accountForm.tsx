@@ -113,7 +113,7 @@ function AccountForm(props: Props) {
             <TextInput
                 label="Repetir contraseña"
                 name="repPsw"
-                placeHolder="mi conraseña (nuevamente)"
+                placeHolder="mi contraseña (nuevamente)"
                 wrong={psw !== repPsw && repPsw.trim() !== '' }
                 wrongText="Las contraseñas no coinciden"
                 onChange={ 

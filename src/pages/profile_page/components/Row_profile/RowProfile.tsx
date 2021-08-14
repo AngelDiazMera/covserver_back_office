@@ -3,6 +3,7 @@ import React from "react";
 import Enterprise from '../../../../auth/enterpriseAuth';
 import { useEffect, useState } from 'react'
 import { updateEnterprise } from '../../../../providers/enterpriseRequests'
+import TextInput from "../../../../components/text_input/textInput";
 
 function RowProfile() {
     //States from data
@@ -41,29 +42,48 @@ function RowProfile() {
       >
         <div className="row" >
             <div className="col offset-xxl-0">
-                <div className="card shadow mb-3">
+                <div className="card shadow mb-3" style={{maxWidth: 1150}} >
                     <div className="card-header py-3"><p className="text-primary m-0 fw-bold">Datos de cuenta</p></div>
                     <div className="card-body">
                         <form>
                             <div className="row">
                                 <div className="col">
-                                    <div className="mb-3">
-                                        <label className="form-label"><strong>Nombre de la empresa</strong></label>
-                                        <input className="form-control" type="text" value={name} onChange={changeEnterprise} placeholder="Nombre de la empresa" />
+                                    <div className="mb-3"> 
+                                        <TextInput
+                                            label="Nombre de la empresa"
+                                            placeHolder="Nombre de la empresa"
+                                            onChange={changeEnterprise}
+                                            type="text"
+                                            name="name enterprise"
+                                            value={`${name}`}
+                                            required={true}/>
                                     </div>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col">
-                                    <div className="mb-3">
-                                        <label className="form-label" ><strong>Acrónimo</strong><br /></label>
-                                        <input className="form-control" type="text" value={acronym} onChange={changeAcron} placeholder="Acrónimo"   />
+                                    <div className="mb-3"> 
+                                        <TextInput
+                                            label="Acrónimo"
+                                            placeHolder="Acrónimo"
+                                            onChange={changeAcron}
+                                            type="text"
+                                            name="acronym"
+                                            value={`${acronym}`}
+                                            required={true}/>
                                     </div>
                                 </div>
                                 <div className="col">
                                     <div className="mb-3">
-                                        <label className="form-label" ><strong>Correo electronico</strong><br /></label>
-                                        <input className="form-control" type="text" value={Enterprise.getInstance().email} placeholder="Correo electronico"  disabled/>
+                                         <TextInput
+                                            label="Correo electronico"
+                                            placeHolder="Correo electronico" 
+                                            type="text"
+                                            onChange={ function(){} }
+                                            name="Correo Electronico"
+                                            value={`${Enterprise.getInstance().email}`} 
+                                            disabled={true}
+                                            />
                                     </div>
                                 </div>
                             </div>
