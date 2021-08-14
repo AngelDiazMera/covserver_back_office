@@ -35,7 +35,7 @@ function LoginForm(props: Props) {
             const res = await signIn(email, psw);
             if (res) {
                 props.onLogIn();
-                history.push('/dashboard');
+                history.push('/dashboard/groups');
             }
         };
 
