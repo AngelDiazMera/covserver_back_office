@@ -145,11 +145,9 @@ function ContainerTable () {
               }}
             >
               <div className="col-lg-5 col-xl-5"> 
-                <p
-                  className="text-primary m-0 fw-bold"
-                >
+              <h6 style={{fontWeight: "bold", fontSize: "16px", color: "#3f51b5"}}>
                 {isEmploy === true ? (<>Información de Miembros</>):(<>Información de Visitantes</>)} 
-                </p>  
+              </h6> 
               </div> 
             </div>
           </div>

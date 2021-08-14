@@ -43,7 +43,9 @@ function RowProfile() {
         <div className="row" >
             <div className="col offset-xxl-0">
                 <div className="card shadow mb-3" style={{maxWidth: 1150}} >
-                    <div className="card-header py-3"><p className="text-primary m-0 fw-bold">Datos de cuenta</p></div>
+                    <div className="card-header py-3">
+                        <h6 style={{fontWeight: "bold", fontSize: "16px", color: "#3f51b5"}}>Datos de la cuenta</h6>
+                    </div>
                     <div className="card-body">
                         <form>
                             <div className="row">
@@ -88,12 +90,19 @@ function RowProfile() {
                                 </div>
                             </div>
                             <div className="mb-3">
-                                <input 
-                                    className="btn btn-primary btn-sm" 
-                                    type="submit" 
+                                <button
+                                    className="btn btn-light"
+                                    type="button"
+                                    style={{
+                                        backgroundColor: "#3f51b5",
+                                        borderBlockColor: "#f8f9fa",
+                                        color: "white"
+                                    }}
                                     onClick={() => setUpdate(true)}
-                                    value="Actualizar"  
-                                    disabled={!name || !acronym}/>
+                                    disabled={!name || !acronym}
+                                >
+                                    Actualizar
+                                </button>
                             </div>
                             <label
                                 style={{
