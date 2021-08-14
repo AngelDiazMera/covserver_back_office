@@ -12,6 +12,7 @@ import RegisterPage from './pages/register_page/registerPage';
 import { loadUser } from './providers/enterpriseRequests';
 import UserPage from './pages/employees/user_page';
 import Navbar from './pages/user_page/components/_navbar/Navbar';
+import Loader from "./components/loader/loader";
 
 // Load the configuration 
 initAxiosInterceptors();
@@ -38,7 +39,14 @@ function App() {
   const handleOnLogout = () => setHasUser(false);
 
   // If the state has not finished loading
-  if (loadingUser) return(<h2>Cargando...</h2>);
+  if (loadingUser) return(<>
+    <div className="w-100 d-flex flex-column justify-content-center" style={{height:265}}>
+      <div className="d-flex flex-row justify-content-center">
+          <Loader size={64}/>
+          <span className="my-auto ms-4 fs-4">Cargando...</span>
+      </div>
+    </div>
+  </>);
   return (
     <Router>
       {/* if user is logged in, '/' redirects to '/dashboard', else redirects to '/login' */}
