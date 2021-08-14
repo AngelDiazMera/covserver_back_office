@@ -42,7 +42,7 @@ function RowProfile() {
       >
         <div className="row" >
             <div className="col offset-xxl-0">
-                <div className="card shadow mb-3" style={{maxWidth: 1150}} >
+                <div className="card shadow m-auto mb-3" style={{maxWidth: 1150}} >
                     <div className="card-header py-3">
                         <h6 style={{fontWeight: "bold", fontSize: "16px", color: "#3f51b5"}}>Datos de la cuenta</h6>
                     </div>

@@ -6,8 +6,6 @@ import {
   ModalBody,
   ModalFooter,
   FormGroup,
-  Input,
-  Label,
   Row,
   Col,
 } from "reactstrap";
@@ -108,7 +106,7 @@ function ContainerCodes() {
     >
       <div className="row">
         <div className="col offset-xxl-0">
-          <div className="card shadow mb-4" style={{maxWidth: 1150}}>
+          <div className="card shadow m-auto mb-4" style={{maxWidth: 1150}}>
             <div className="card-header d-flex justify-content-between align-items-center">
               <h6 style={{fontWeight: "bold", fontSize: "16px", color: "#3f51b5"}}>Códigos</h6>
               <button
