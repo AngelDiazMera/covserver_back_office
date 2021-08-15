@@ -96,9 +96,10 @@ function App() {
       
       }
       {/* 404 Route */}
-      <Redirect 
-        from='*' 
-        to={hasUser ? '/dashboard/groups' : '/login'} />
+      <Route 
+        exact path="*"> 
+        <Redirect to={hasUser ? '/dashboard' : '/login'}/> 
+      </Route>
     </Router>
   );
 }
