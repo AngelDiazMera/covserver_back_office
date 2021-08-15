@@ -52,6 +52,11 @@ function App() {
       {/* if user is logged in, '/' redirects to '/dashboard', else redirects to '/login' */}
       <Route 
         exact path="/"> 
+        <Redirect to={hasUser ? '/dashboard/groups' : '/login'}/> 
+      </Route>
+      {/* 404 Route */}
+      <Route 
+        exact path="*"> 
         <Redirect to={hasUser ? '/dashboard' : '/login'}/> 
       </Route>
       {/* Routes in case that the user is not authenticated */}
@@ -95,11 +100,6 @@ function App() {
       </div>
       
       }
-      {/* 404 Route */}
-      <Route 
-        exact path="*"> 
-        <Redirect to={hasUser ? '/dashboard' : '/login'}/> 
-      </Route>
     </Router>
   );
 }
