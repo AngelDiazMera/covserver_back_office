@@ -6,11 +6,12 @@ COPY package*.json ./
 
 RUN npm install\
     && npm install typescript -g\
-    && npm install -g serve
-
+    && npm install -g serve\
+    && npm install react-scripts@3.4.1 -g --silent
+    
 COPY . .
 EXPOSE 3000
 
 RUN npm run build 
 
-CMD ["serve", "-l", "3000", "-s", "build"]
+CMD ["npm", "run", "prod"]
