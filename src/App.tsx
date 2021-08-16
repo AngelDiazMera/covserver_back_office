@@ -57,7 +57,7 @@ function App() {
       {/* 404 Route */}
       <Route 
         exact path="*"> 
-        <Redirect to={hasUser ? '/dashboard' : '/login'}/> 
+        <Redirect to={hasUser ? '/dashboard/groups' : '/login'}/> 
       </Route>
       {/* Routes in case that the user is not authenticated */}
       <PrivateRoute 
