@@ -35,7 +35,7 @@ function Navbar() {
     { 
       route: '../dashboard/users' ,
       icon: 'fas fa-table',
-      name: 'Dashboard'
+      name: 'Usuarios'
     },
     { 
       route: '../dashboard/profile' ,

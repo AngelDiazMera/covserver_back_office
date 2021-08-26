@@ -91,9 +91,9 @@ export const updateEnterprise = async (enterpriseData: Enterprise) => {
     var enterprise = enterpriseData;
         try{
             const res:AxiosResponse<any> = await api.post('enterprise/mine', enterprise);
-            
+            const mailEnt = EnterpriseInstance.getInstance().email;
             if (res.data.msg !== undefined){
-                EnterpriseInstance.setInstance({name: enterprise.name, acronym:enterprise.acronym} as EnterpriseData);
+                EnterpriseInstance.setInstance({name: enterprise.name, acronym:enterprise.acronym, email:mailEnt} as EnterpriseData);
                 return res.data.msg;
             }
             if (res.status === 500)return false; alert('Ha ocurrido al alcanzar la API');

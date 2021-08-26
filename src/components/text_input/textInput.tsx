@@ -14,6 +14,7 @@ interface Props {
     wrongText?: string;
     big?: boolean;
     disabled?:boolean;
+    maxlength?:number;
 };
 
 const Input = styled.input`
@@ -46,13 +47,14 @@ function TextInput(props: Props) {
                 required={props.required ? false : props.required}
                 placeholder={props.placeHolder}
                 disabled={props.disabled ? true: false}
+                maxLength={props.maxlength}
                 aria-describedby="emailHelp"/></label>
             <div id="emailHelp" className="form-text">{props.helper}</div>
             {props.wrongText?.trim() !== '' 
             ? <div 
                 id="emailHelp" 
                 className="form-text" 
-                style={{color:helperColor}}>
+                style={{color:helperColor, display:` ${!props.wrong ? 'none' : 'block'}`}}>
                 {props.wrongText}
               </div>
             : null}

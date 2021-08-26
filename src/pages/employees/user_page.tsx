@@ -1,13 +1,14 @@
-import HeaderNav from "./components/header_employees/HeaderNav";
+import HeaderNav from "../../layouts/components_page/components/headerPage";
 import ContainerTable from "./components/container_table/ContainerTable";
 interface Props {
-  onLogOut: Function
+  onLogOut: Function,
+  pageName:string
 }
 
 function UserPage(props:Props) {
     return ( 
       <>
-      <HeaderNav onLogOut={props.onLogOut}></HeaderNav>
+      <HeaderNav onLogOut={props.onLogOut} pageName={"Usuarios"}></HeaderNav>
       <ContainerTable></ContainerTable>
       </>
     )

@@ -146,7 +146,7 @@ function ContainerCodes() {
                   <table style = {{marginLeft: "2%"}}>
                     <thead style={{color:"#6c757d"}}>
                       <tr>
-                        <th>Subgrupo</th>
+                        <th style={{width:"300px"}}>Subgrupo</th>
                         <th>Código de miembros</th>
                         <th></th>
                         <th></th>
@@ -241,6 +241,7 @@ function ContainerCodes() {
               onChange={changeEnterprise}
               type="text"
               value={nameCode}
+              maxlength={35}
               required={true}/>
           </FormGroup>
         </ModalBody>

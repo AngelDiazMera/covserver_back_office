@@ -1,13 +1,10 @@
-import React,{ useEffect, useRef, useState } from "react";
-import { BsFillTrashFill } from 'react-icons/bs';
+import React,{ useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import {UsersData, Groups, getVisits,getMembers} from '../../../../providers/usersRequest';
 import { deleteUserFromGroup } from '../../../../providers/groupsRequest';
-import RiskTd, { ItemSelect } from "../table_helpers/riskTd";
 import TextInput from "../../../../components/text_input/textInput";
-import TableData, { formatDate } from "../table_data/tableData";
-import Centered from "../../../../components/centered/centered";
+import TableData, { formatDate } from "../table_data/tableData"; 
 import Loader from "../../../../components/loader/loader";
 
 function ContainerTable () { 

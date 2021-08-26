@@ -73,15 +73,15 @@ function App() {
           <PrivateRoute 
             authed={hasUser} 
             path="/dashboard/groups" 
-            component={() => <Dashboard onLogOut={handleOnLogout}/>}/>
+            component={() => <Dashboard onLogOut={handleOnLogout} pageName={''}/>}/>
           <PrivateRoute 
             authed={hasUser} 
             path="/dashboard/profile" 
-            component={() => <Profile onLogOut={handleOnLogout}/>}/>
+            component={() => <Profile onLogOut={handleOnLogout} pageName={''}/>}/>
           <PrivateRoute 
             authed={hasUser} 
             path="/dashboard/users" 
-            component={() => <UserPage onLogOut={handleOnLogout}/>}/>
+            component={() => <UserPage onLogOut={handleOnLogout} pageName={''}/>}/>
         
         </div>
         <footer className="bg-white sticky-footer">

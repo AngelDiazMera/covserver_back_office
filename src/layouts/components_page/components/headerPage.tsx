@@ -1,16 +1,32 @@
-import React from "react";
-import logo from '../../../user_page/components/img/circle.png' 
+import React,{useEffect,useState} from "react";
+import logo from '../../../pages/user_page/components/img/circle.png'
 //The model data that help to show the data.
-import Enterprise from '../../../../auth/enterpriseAuth'; 
-import LogOutButton from "../../../../components/logout_button/logOutButton";
- 
+import Enterprise from '../../../auth/enterpriseAuth';
+import { deleteToken } from '../../../providers/authHelpers';
+import { useHistory } from 'react-router-dom';
+import LogOutButton from "../../../components/logout_button/logOutButton";
 interface Props {
-  onLogOut: Function
+  onLogOut: Function, 
+  pageName:string
 }
 
-function HeaderNav (props:Props) {
-  const name = React.useState(Enterprise.getInstance().name);
+function HeaderNav (props: Props) {
+const name= React.useState(Enterprise.getInstance().name);
 
+const history = useHistory();
+// Hook: When the user clicks the exit button
+const [makeRegister, setMakeRegister] = useState(false); // To check if it is doing the request
+
+useEffect(() => {
+  if (!makeRegister) return;
+
+  deleteToken();
+  history.push('/login');
+
+  setMakeRegister(false);
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [makeRegister]);  
+  
     return (
       <nav className="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
         <div className="container-fluid">
@@ -26,7 +42,7 @@ function HeaderNav (props:Props) {
               fontSize: "25px"
             }}
           >
-            Usuarios
+            {props.pageName}
           </span>
           <ul className="navbar-nav flex-nowrap ms-auto">
             <li className="nav-item dropdown no-arrow mx-1">
@@ -55,6 +71,7 @@ function HeaderNav (props:Props) {
                     className="border rounded-circle img-profile"
                     width="25px"
                     height="25px"
+                    alt="user"
                     src={logo}
                   />
                 </div>

@@ -7,8 +7,8 @@ import TextInput from "../../../../components/text_input/textInput";
 
 function RowProfile() {
     //States from data
-    const [name,setName] = useState(Enterprise.getInstance().name);
-    const [acronym, setAcronym] = useState(Enterprise.getInstance().acronym);
+    const [nameEnt,setName] = useState(Enterprise.getInstance().name);
+    const [acronymEnt, setAcronym] = useState(Enterprise.getInstance().acronym); 
     const [isUpdate, setUpdate] = useState(false); //This set the data in the request  
 
     //onChange functions for data, it check the data in the inputs
@@ -17,17 +17,17 @@ function RowProfile() {
     }; 
     const changeAcron = (event:any) => {
         setAcronym(event.target.value);
-    };  
-    
+    };
+
   // Hook: When the user clicks the update button
   useEffect(() => { 
     if (!isUpdate) return;
      const updateEnterpriseData = async () => {
-        const data = ({name: name, acronym: acronym});
+        const data:Enterprise = {name: nameEnt,acronym: acronymEnt };      
         if(isUpdate === true){
             const res  = await updateEnterprise(data);
             alert(res);
-            setUpdate(false);
+            setUpdate(false); 
         } 
     };
     updateEnterpriseData();
@@ -57,7 +57,8 @@ function RowProfile() {
                                             onChange={changeEnterprise}
                                             type="text"
                                             name="name enterprise"
-                                            value={`${name}`}
+                                            maxlength={35}
+                                            value={`${nameEnt}`}
                                             required={true}/>
                                     </div>
                                 </div>
@@ -71,7 +72,8 @@ function RowProfile() {
                                             onChange={changeAcron}
                                             type="text"
                                             name="acronym"
-                                            value={`${acronym}`}
+                                            maxlength={15}
+                                            value={`${acronymEnt}`}
                                             required={true}/>
                                     </div>
                                 </div>
@@ -99,7 +101,7 @@ function RowProfile() {
                                         color: "white"
                                     }}
                                     onClick={() => setUpdate(true)}
-                                    disabled={!name || !acronym}
+                                    disabled={!nameEnt || !acronymEnt}
                                 >
                                     Actualizar
                                 </button>
@@ -108,7 +110,7 @@ function RowProfile() {
                                 style={{
                                     color:"red",
                                     marginTop:"10px",
-                                    display:` ${!name || !acronym ? 'block' : 'none'}` 
+                                    display:` ${!nameEnt || !acronymEnt ? 'block' : 'none'}` 
                                 }}
  
                                 >Los campos no pueden estar vacios
