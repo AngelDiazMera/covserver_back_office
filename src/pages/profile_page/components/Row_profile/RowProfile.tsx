@@ -22,16 +22,15 @@ function RowProfile() {
   // Hook: When the user clicks the update button
   useEffect(() => { 
     if (!isUpdate) return;
-     const updateEnterpriseData = async () => {
-        const data:Enterprise = {name: nameEnt,acronym: acronymEnt };      
+     const updateEnterpriseData = async () => {      
         if(isUpdate === true){
-            const res  = await updateEnterprise(data);
+            const res  = await updateEnterprise(`${nameEnt}`, `${acronymEnt}`);
             alert(res);
             setUpdate(false); 
         } 
     };
     updateEnterpriseData();
-  }, [isUpdate]);
+  }, [isUpdate,nameEnt,acronymEnt]);
   
     return (
         <div

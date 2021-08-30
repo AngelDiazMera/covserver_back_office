@@ -6,8 +6,7 @@ import {
   ModalBody,
   ModalFooter,
   FormGroup,
-  Row,
-  Col,
+  Label
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.css";
 import {
@@ -15,25 +14,40 @@ import {
   getQRcode,
   getGroups,
   GroupData,
+  deleteGroupCode,
 } from "../../../../providers/groupsRequest";
 import TextInput from "../../../../components/text_input/textInput";
 import clipboard from "../img/copy.png"; 
 import Loader from "../../../../components/loader/loader";
+import { BsFillTrashFill } from 'react-icons/bs';
+import Centered from "../../../../components/centered/centered";
+//import Mmodal from "../_modal/modal"
 
 function ContainerCodes() {
   const [nameCode, setNameCode] = useState("");
-  const [state, setState] = useState(false); //This show the modal
+  const [idCode,setIdcode] = useState("");
+  const [stateNew, setStateNew] = useState(false); //This show the modal
+  const [stateDel, setStateDel] = useState(false);
   const [save, setSave] = useState(false); //This set the data in the request
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
-
+  const [deleteCode, setDeleteCode] = useState(false); 
+  /*These const are for modal New Code*/
   const abrirModal = () => {
-    setState(true);
+    setStateNew(true);
+    setStateDel(false);
   };
-  const cerrarModal = () => {
-    setState(false);
+
+  /*These const are for delete*/
+  const modalDelete = () => {
+    setStateDel(true);
   };
+  const modalExit = () => {
+    setStateDel(false);
+    setStateNew(false);
+  };
+
   const changeEnterprise = (event: any) => {
     setNameCode(event.target.value);
   };
@@ -41,7 +55,14 @@ function ContainerCodes() {
   // When the user save a new group code
   const handleOnSave = () => {
     setSave(true);
-    setState(false);
+    setStateDel(false);
+    setRefresh(true);
+  };
+
+  //when the user delete a code
+  const handleDelete = () => {
+    setDeleteCode(true);
+    setStateNew(false);
     setRefresh(true);
   };
 
@@ -68,6 +89,20 @@ function ContainerCodes() {
     };
     loadGroups();
   }, []);
+
+  //Hook: delete codes
+  useEffect(() => {
+    if (!deleteCode) return;
+    const deleteCodeEnt = async () => {
+      if (deleteCode === true) {
+        await deleteGroupCode(idCode);
+        setDeleteCode(false);
+        setIdcode("");
+        setRefresh(true);
+      }
+    };
+    deleteCodeEnt();
+  }, [deleteCode,idCode]);
   
   // Hook: for refresh codes
   useEffect(() => {
@@ -147,11 +182,12 @@ function ContainerCodes() {
                     <thead style={{color:"#6c757d"}}>
                       <tr>
                         <th style={{width:"300px"}}>Subgrupo</th>
-                        <th>Código de miembros</th>
+                        <th style={{width:"200px"}}>Código de miembros</th>
                         <th></th>
                         <th></th>
-                        <th>Código de visitantes</th>
+                        <th style={{width:"200px"}}>Código de visitantes</th>
                         <th></th>
+                        <th style={{width:"25px"}}></th>
                         <th></th>
                       </tr>
                     </thead>
@@ -188,7 +224,7 @@ function ContainerCodes() {
                             >
                               QR
                             </button>
-                            </td>
+                            </td> 
                           <td>{groups.visitorCode}</td>
                           <td>
                             <button
@@ -219,6 +255,22 @@ function ContainerCodes() {
                               QR
                             </button>
                           </td>
+                          <td>
+                          <button
+                            className="btn btn-light rounded-circle"
+                            type="button" 
+                            onClick={ () =>{
+                              modalDelete();
+                                setIdcode(`${groups._id}`);
+                              } 
+                            }
+                            style={{
+                              marginTop: "5px",
+                              marginLeft: "15%",
+                              marginRight: "15px"}}>
+                            <BsFillTrashFill/>
+                          </button>
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -229,11 +281,24 @@ function ContainerCodes() {
           </div>
         </div>
       </div>
-
-      <Modal isOpen={state}>
-        <ModalHeader>Nuevo Código</ModalHeader>
+      {/* <Mmodal
+        isDelete = {stateDel}
+        isNewCode = {stateNew}
+        deleteGroupCode = {deleteGroupCode}
+      /> */} 
+      <Modal isOpen={stateDel || stateNew}>
+      {stateNew ? (
+      <ModalHeader>
+        Nuevo Código
+      </ModalHeader>) : ( 
+      <ModalHeader 
+        style={{alignSelf:"center"}}
+      >
+          ¿Estas seguro de eliminar este código?
+      </ModalHeader>)}
         <ModalBody>
-          <FormGroup>
+          {stateNew ?
+          (<FormGroup>
             <TextInput
               label="Nombre del área"
               name="nameCode"
@@ -242,12 +307,18 @@ function ContainerCodes() {
               type="text"
               value={nameCode}
               maxlength={35}
+              wrong={nameCode.trim() === '' }
+              wrongText="El campo no puede estar vacío"
               required={true}/>
-          </FormGroup>
+          </FormGroup>):
+          (<Centered> 
+            <Label>Esta acción eliminara el código junto con los usuarios que lo hayan escaneado.</Label>
+          </Centered>)}
         </ModalBody>
 
         <ModalFooter>
-          <Button
+          {stateNew ? 
+          (<Button
             className="btn btn-light"
             type="button"
             style={{
@@ -259,23 +330,25 @@ function ContainerCodes() {
             onClick={() => {handleOnSave();}}
           >
             Generar código
-          </Button>
-          <Button color="secondary" onClick={cerrarModal}>
+          </Button> ): 
+           (<Button
+           className="btn btn-light"
+           type="button"
+           style={{
+             backgroundColor: "red",
+             borderBlockColor: "#f8f9fa",
+             color: "white"
+           }} 
+           onClick={() => {handleDelete();}}
+         >
+           Eliminar
+         </Button>)}
+
+          <Button 
+            color="secondary" 
+            onClick={() => {modalExit();}}>
             Salir
           </Button>
-          <Row>
-            <Col>
-              <label
-                style={{
-                  color: "red",
-                  marginTop: "10px",
-                  display: ` ${!nameCode ? "block" : "none"}`,
-                }}
-              >
-                Los campos no pueden estar vacios
-              </label>
-            </Col>{" "}
-          </Row>
         </ModalFooter>
       </Modal>
     </div>

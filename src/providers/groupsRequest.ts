@@ -12,9 +12,10 @@ export interface Enterprise {
 }
 
 export interface GroupData {
-  name?: String;
-  memberCode?: String;
-  visitorCode?: String;
+  _id?:string;
+  name?: string;
+  memberCode?: string;
+  visitorCode?: string;
 }
 
 export interface Code {
@@ -34,7 +35,7 @@ export const saveGroupCode = async (codeData: GroupData) => {
       alert(res.data.msg);
       return true;
     }
-    if (res.status === 500) alert("Ha ocurrido al alcanzar la API");
+    if (res.status === 500) alert("Ha ocurrido un error al alcanzar la API");
   } catch (error) {
     alert("Ocurrio un error: " + error);
     return false;
@@ -62,7 +63,7 @@ export const getQRcode = async (code: Code) => {
 export const getGroups = async (): Promise<any> => {
   try {
     const { data } = await api.get('enterprise/groups');
-    const groups = data.groups as GroupData[];
+    const groups = data.groups as GroupData[]; 
     return groups;
   } catch (error) {
       console.log(error);
@@ -73,7 +74,6 @@ export const getGroups = async (): Promise<any> => {
 // API request to delete user assignation from group
 export const deleteUserFromGroup = async (code: string, userRef: string): Promise<any> => {
   try {
-    console.log(code, userRef);
     const { data } = await api.put('groups/assign', { code, userRef });
     return data;
   } catch (error) {
@@ -81,3 +81,22 @@ export const deleteUserFromGroup = async (code: string, userRef: string): Promis
       return null;
   }
 }
+
+// Axios request to delete the code group 
+export const deleteGroupCode = async (_id: string): Promise<any> => {
+  try { 
+    const res: AxiosResponse<any> = await api.delete(
+      `groups/?_id=${_id}`
+    );
+      console.log(res)
+    if (res.data !== undefined) {
+      alert(res.data.msg);
+      return true;
+    }
+    if (res.status === 500) alert("Ha ocurrido un error al alcanzar la API");
+  } catch (error) {
+    alert("Ocurrio un error: " + error);
+    return false;
+  }
+  return false;
+};

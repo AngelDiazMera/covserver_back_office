@@ -87,8 +87,8 @@ export const getEnterprises = async (): Promise<any> => {
 }
 
 // Axios request to update the data of the enterprise
-export const updateEnterprise = async (enterpriseData: Enterprise) => {
-    var enterprise = enterpriseData;
+export const updateEnterprise = async (name:string, acronym:string) => {
+    var enterprise:Enterprise = {name,acronym};
         try{
             const res:AxiosResponse<any> = await api.post('enterprise/mine', enterprise);
             const mailEnt = EnterpriseInstance.getInstance().email;
