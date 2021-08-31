@@ -6,10 +6,11 @@ import RiskTd, { ItemSelect } from '../table_helpers/riskTd';
 interface Props {
     isEmploy: boolean
     groups: Groups[];
+    code:string;
     setRemove: (val: boolean) => void;
     deleteUserFromGroup:(groupId: string, userRef: string) => void;
 }
-
+//This transform the date of the query
 export function formatDate (date:Date) {
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
@@ -28,11 +29,8 @@ export function formatDate (date:Date) {
     return fecha;
 }
 
-const TableData: React.FC<Props> = ({groups, isEmploy, setRemove, deleteUserFromGroup}) => {
-    //This transform the date of the query
-    
-
-    //These consts are for reder components according a condition
+const TableData: React.FC<Props> = ({groups, isEmploy,code, setRemove, deleteUserFromGroup}) => {
+    //These consts are for render components according a condition
     const renderRow = (healthCond: string, mobileUser: UsersData, groupId: string) => {
         const { healthCondition, gender, name, lastName, visitDate, symptomsDate, infectedDate} = mobileUser;
   
@@ -43,6 +41,7 @@ const TableData: React.FC<Props> = ({groups, isEmploy, setRemove, deleteUserFrom
         };
         
         const condition = health[healthCondition];  
+        console.log("ingresado: "+code)
   
         return <> 
             <RiskTd type={healthCondition}>{condition}</RiskTd>
@@ -75,17 +74,17 @@ const TableData: React.FC<Props> = ({groups, isEmploy, setRemove, deleteUserFrom
     const makeReduction =  (groups:Groups[]) => {
         if(!groups) return [];
         const reduction  =  groups.reduce((acc: any, curr: Groups) => {
-            var infected = curr.users!.filter((user: UsersData) => user.healthCondition ==='healthy')
+            var infected = curr.users!.filter((user: UsersData) => user.healthCondition ==='healthy' && curr._id === code)
                 .map((user, index) =>
                     <tr key={index}>
                         { renderRow('healthy', user, curr._id) }
                     </tr>);
-            var probably = curr.users!.filter(user => user.healthCondition ==='risk')
+            var probably = curr.users!.filter(user => user.healthCondition ==='risk' && curr._id === code)
                 .map((user, index) =>
                     <tr key={index}>
                         { renderRow('risk', user, curr._id) }
                     </tr>);
-            var health = curr.users!.filter(user => user.healthCondition ==='infected')
+            var health = curr.users!.filter(user => user.healthCondition ==='infected' && curr._id === code)
                 .map((user, index) =>
                     <tr key={index}>
                         { renderRow('infected', user, curr._id) }

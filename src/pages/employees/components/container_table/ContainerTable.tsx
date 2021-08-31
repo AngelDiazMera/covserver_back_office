@@ -24,14 +24,23 @@ function ContainerTable () {
     const [totalMembers, setTotalMembers] = useState(0);
     const [totalVisits, setTotalVisits] = useState(0);
 
+    const [listCodesV,setListCodesV] = useState([]);
+    const [listCodesM,setListCodesM] = useState([]);
+    const [idSelected, setIdSelected] = useState('');
+    let idCode:any = [];
     //Get the members 
     const loadMembers = async () => { 
-      const {groups, total} = await getMembers(count * 10);  
-
+      const {groups, total} = await getMembers(count * 10);
       if (groups == null) return;
 
-      const totalPage = groups.reduce((acc:number, curr:Groups) => acc + curr.users!.length, 0);
+      const totalPage = groups.reduce((acc:number, curr:Groups) => idCode.push({_id:curr._id}) && acc + curr.users!.length, 0);
       setCounterTextM(total == null ? '-' : `${count}-${totalPage} de ${total}`);
+      console.log(groups)
+      setIdSelected(idCode[0]._id)//Set the first element to consult data
+      //set the codes into arraylist
+      setListCodesM(idCode);
+      //reestart array
+      idCode=[];
       setMembers(groups);  
       setTotalMembers(total);  
       setLoading(false);
@@ -40,15 +49,25 @@ function ContainerTable () {
     //get visits
     const loadVisits = async () => { 
       const {groups, total} = await getVisits(count * 10); 
-
+      
       if (groups == null) return;
 
-      const totalPage = groups.reduce((acc:number, curr:Groups) => acc + curr.users!.length, 0);
+      const totalPage = groups.reduce((acc:number, curr:Groups) => idCode.push({_id: curr._id}) && acc + curr.users!.length, 0);
+      //set the codes into arraylist
+      setIdSelected(idCode[0]._id)
+      setListCodesV(idCode)
+      //reestart the array to set anothers codes
+      idCode=[];
+
       setCounterTextV(total == null ? '-' : `${count}-${totalPage} de ${total}`);
       setVisits(groups);  
       setTotalVisits(total);  
       setLoading(false);
     };
+    //Code select
+    const codeSelect = (event:any) =>  {
+      setIdSelected(event.target.value);
+    }
 
     //These const permit to change between member or visit
     const changeVisitis = () => {
@@ -129,7 +148,7 @@ function ContainerTable () {
       setRemove(false);   
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [count, remove, isEmploy]);
-
+     
     return (
       <div className="container-fluid" >
         <div className="card shadow m-auto" style={{maxWidth: 1150}}>
@@ -149,7 +168,7 @@ function ContainerTable () {
             </div>
           </div>
             <div className="card-body px-0 py-3">
-              <div className="w-100 d-flex flex-row justify-content-between gap-3"> 
+              <div className="w-90 d-flex flex-row justify-content-between gap-3"> 
                   <div className="w-100" style = {{marginLeft: "2%"}}>
                     <TextInput
                       label="Filtro de búsqueda"
@@ -160,6 +179,31 @@ function ContainerTable () {
                       value={vSearch}
                       required={true}/>
                   </div> 
+
+                  <div className="d-flex flex-column flex-sm-row me-3 gap-3 dropdown">
+                    <label className="w-100 form-label text-secondary" style={{fontWeight:500}}>
+                      Grupo
+                      <select 
+                        className="btn dropdown-toggle"
+                        onChange={codeSelect}
+                        style={{
+                          backgroundColor: "rgb(248, 249, 250)",
+                          borderBlockColor: "rgb(248, 249, 250)",
+                          color: "black",
+                          marginTop:"4px"
+                        }}>
+                        {isEmploy? 
+                        <>{listCodesM.map((id: Groups, index:number) => ( 
+                          <option value={id._id} className="dropdown-item">{id._id}</option>
+                        ))}</> : 
+                        <>{listCodesV.map((id: Groups, index:number) => ( 
+                          <option value={`${id._id}`} className="dropdown-item">{id._id}</option>
+                        ))}</> }
+                      </select> 
+                     
+                    </label>
+                    
+                  </div>
                   <div className="d-flex flex-column flex-sm-row my-auto me-3 gap-3">
                     <button
                       className="btn btn-light"
@@ -198,6 +242,7 @@ function ContainerTable () {
                     <table className="table table-borderless">
                       <TableData
                         isEmploy = {isEmploy}
+                        code={idSelected}
                         deleteUserFromGroup={deleteUserFromGroup}
                         groups={isEmploy ? members : visits}
                         setRemove={setRemove}/>

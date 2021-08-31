@@ -60,9 +60,9 @@ export const getQRcode = async (code: Code) => {
 };
 
 // Axios request to get the visits of the enterprise
-export const getGroups = async (): Promise<any> => {
+export const getGroups = async (skip:any): Promise<any> => {
   try {
-    const { data } = await api.get('enterprise/groups');
+    const { data } = await api.get(`enterprise/groups?skip=${skip}`);
     const groups = data.groups as GroupData[]; 
     return groups;
   } catch (error) {

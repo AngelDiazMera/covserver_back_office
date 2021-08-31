@@ -21,6 +21,7 @@ import clipboard from "../img/copy.png";
 import Loader from "../../../../components/loader/loader";
 import { BsFillTrashFill } from 'react-icons/bs';
 import Centered from "../../../../components/centered/centered";
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 //import Mmodal from "../_modal/modal"
 
 function ContainerCodes() {
@@ -33,6 +34,9 @@ function ContainerCodes() {
   const [loading, setLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [deleteCode, setDeleteCode] = useState(false); 
+  let [count, setCount] = useState(0);
+  const [totalCodes, setTotalCodes] = useState(0);
+  const [counterText,setCounterText] = useState("-");
   /*These const are for modal New Code*/
   const abrirModal = () => {
     setStateNew(true);
@@ -48,7 +52,7 @@ function ContainerCodes() {
     setStateNew(false);
   };
 
-  const changeEnterprise = (event: any) => {
+  const newCode = (event: any) => {
     setNameCode(event.target.value);
   };
   
@@ -83,12 +87,20 @@ function ContainerCodes() {
   // Hook: Load groups data by defect
   useEffect(() => {
     const loadGroups = async () => {
-      const groupsArr = await getGroups();
+      const  groupsArr= await getGroups(count * 10); 
+
+      if (groupsArr == null) return;
+
+      const total = groupsArr.length;
+
+      setCounterText(groupsArr == null ? '-' : `${count}-${total} de ${total}`);
+
+      setTotalCodes(total);
       setGroups(groupsArr);
       setLoading(false);
     };
     loadGroups();
-  }, []);
+  }, [count]);
 
   //Hook: delete codes
   useEffect(() => {
@@ -109,7 +121,7 @@ function ContainerCodes() {
     if(!refresh) return;
     const loadGroups = async () => {
       if(refresh === true){
-        const groupsArr = await getGroups();
+        const groupsArr = await getGroups(count * 10);
         setGroups(groupsArr);
         setLoading(false);
         window.location.reload()
@@ -132,6 +144,20 @@ function ContainerCodes() {
     downloadLink.click();
   }
 
+  /*FOR PAGINATION */
+  //This increment and decrement the numbers of the page
+  const pagIncrement = () => {
+    count = count + 1;
+    setCount(count); 
+  }
+  const pagDecrement = () => {
+    if(count <= 0){
+      setCount(0)
+    }else{
+      count = count - 1;
+      setCount(count);
+    }  
+  }  
   return (
     <div
       className="container-fluid"
@@ -274,6 +300,33 @@ function ContainerCodes() {
                         </tr>
                       ))}
                     </tbody>
+                    <caption className="pb-0" style={{marginRight:"5%"}}>
+                        <div className="d-flex flex-row justify-content-end">
+                          <ul className="pagination m-0">
+                            <li className="page-item">
+                              <button 
+                                style={{color: '#757575'}}
+                                className="page-link" 
+                                onClick={() => {pagDecrement();}} 
+                                disabled= { count === 0 }>
+                                <FiChevronLeft/>
+                              </button>
+                            </li>
+                            <li className="page-item">
+                              <p className="page-link user-select-none m-0" style={{color: '#757575'}}>{counterText}</p>
+                            </li>
+                            <li className="page-item">
+                              <button 
+                                style={{color: '#757575'}}
+                                className="page-link" 
+                                onClick={() => {pagIncrement();}} 
+                                disabled= { count + 10 >= totalCodes || totalCodes == null}>
+                                <FiChevronRight/>
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </caption>
                   </table>
                 ))}
               </div>
@@ -303,7 +356,7 @@ function ContainerCodes() {
               label="Nombre del área"
               name="nameCode"
               placeHolder="ej. Recursos Humanos"
-              onChange={changeEnterprise}
+              onChange={newCode}
               type="text"
               value={nameCode}
               maxlength={35}
