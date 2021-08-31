@@ -129,7 +129,7 @@ function ContainerCodes() {
     };
     loadGroups();
     setRefresh(false);
-  }, [refresh]);
+  }, [refresh,count]);
 
   // Function for save image
   const getQR = async (text:String) => {

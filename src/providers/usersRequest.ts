@@ -8,8 +8,8 @@ enum HealthCondition {
 export interface UsersData{
   _id:string, 
   name?: string,
-  lastName?: String;
-  gender?: String;
+  lastName?: string;
+  gender?: string;
   healthCondition: HealthCondition;
   symptomsDate?: Date;
   infectedDate?:Date;

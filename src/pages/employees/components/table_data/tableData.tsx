@@ -39,13 +39,18 @@ const TableData: React.FC<Props> = ({groups, isEmploy,code, setRemove, deleteUse
           'risk': 'Riesgo Medio',
           'healthy': 'Riesgo Bajo'
         };
+        const sex: ItemSelect = {
+            'male': 'Masculino',
+            'female': 'Femenino',
+            'other': 'Otro'
+        }
         
-        const condition = health[healthCondition];  
-        console.log("ingresado: "+code)
-  
+        const condition = health[healthCondition];
+        const sexo = sex[gender as string];
+    
         return <> 
             <RiskTd type={healthCondition}>{condition}</RiskTd>
-            <td>{gender}</td>
+            <td>{sexo}</td>
             <td>{`${name} ${lastName}`}</td>
   
             {!isEmploy && <td>{formatDate(visitDate!)}</td>} 
