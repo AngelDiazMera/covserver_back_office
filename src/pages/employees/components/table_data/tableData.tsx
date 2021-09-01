@@ -35,6 +35,8 @@ const TableData: React.FC<Props> = ({groups, isEmploy,code, setRemove, deleteUse
         const { healthCondition, gender, name, lastName, visitDate, symptomsDate, infectedDate} = mobileUser;
   
         const health: ItemSelect = {
+          'none':'Riesgo Bajo',
+          'None':'Riesgo Bajo',
           'infected': 'Contagiado',
           'risk': 'Riesgo Medio',
           'healthy': 'Riesgo Bajo'

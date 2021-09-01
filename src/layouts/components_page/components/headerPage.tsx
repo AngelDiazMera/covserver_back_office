@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from "react";
-import logo from '../../../pages/user_page/components/img/circle.png'
+import logo from '../../../assets/UPP.png'
 //The model data that help to show the data.
 import Enterprise from '../../../auth/enterpriseAuth';
 import { deleteToken } from '../../../providers/authHelpers';
