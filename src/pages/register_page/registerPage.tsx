@@ -36,7 +36,7 @@ function RegisterPage() {
                         <div className="w-100 order-1 order-lg-2">
                             <div className="h-100 d-flex flex-row flex-lg-column align-content-between justify-content-between align-self-end">
                                 <div  className="p-3 p-lg-5">
-                                    <BigHeader>Tu nuevo observador de infectados</BigHeader> 
+                                    <BigHeader>Tu Observador de Contagiados</BigHeader> 
                                 </div>
                                 <div className="d-flex flex-row justify-content-end p-2">
                                     <Image/>

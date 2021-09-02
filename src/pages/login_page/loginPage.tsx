@@ -68,7 +68,7 @@ function LoginPage(props:Props) {
                         <div className="w-100">
                             <div className="h-100 d-flex flex-grow-1 flex-row flex-lg-column align-content-between justify-content-between align-self-end order-1">
                                 <div  className="p-3 p-lg-5">
-                                    <BigHeader>Tu Nuevo Observador de Infectados</BigHeader> 
+                                    <BigHeader>Tu Observador de Contagiados</BigHeader> 
                                 </div>
                                 <div className="d-flex flex-row justify-content-start p-2">
                                     <Image/>

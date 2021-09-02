@@ -48,7 +48,8 @@ const TableData: React.FC<Props> = ({groups, isEmploy,code, setRemove, deleteUse
         
         const condition = health[healthCondition];
         const sexo = sex[gender as string];
-    
+        let lastSymptoms:any = mobileUser.symptoms?.length;
+
         return <> 
             <RiskTd type={healthCondition}>{condition}</RiskTd>
             <td>{sexo}</td>
@@ -63,8 +64,10 @@ const TableData: React.FC<Props> = ({groups, isEmploy,code, setRemove, deleteUse
                 <>
                 {mobileUser.symptoms?.map((cont:Symptoms,index ) => (
                     <>
+                    {lastSymptoms-1 === index ? <>
                         <td>{formatDate(cont.symptomsDate)}</td>
-                        <td>{formatDate(cont.covidDate)}</td> 
+                        <td>{formatDate(cont.covidDate)}</td>
+                    </> : <></>}
                     </>
                 ))}
                 </>
