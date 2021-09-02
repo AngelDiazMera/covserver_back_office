@@ -5,6 +5,11 @@ enum HealthCondition {
   risk = 'risk',
   infected = 'infected'
 }; 
+export interface Symptoms{
+  isCovid:boolean;
+  symptomsDate:Date;
+  covidDate:Date;
+}
 export interface UsersData{
   _id:string, 
   name?: string,
@@ -15,6 +20,7 @@ export interface UsersData{
   infectedDate?:Date;
   visitDate?: Date; 
   userRef: string;
+  symptoms?:Symptoms[];
 };
 
 export interface Groups{

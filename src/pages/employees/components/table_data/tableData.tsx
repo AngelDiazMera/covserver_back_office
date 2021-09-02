@@ -1,6 +1,6 @@
 import React from 'react'
 import { BsFillTrashFill } from 'react-icons/bs';
-import { Groups, UsersData } from '../../../../providers/usersRequest'
+import { Groups, UsersData, Symptoms } from '../../../../providers/usersRequest'
 import RiskTd, { ItemSelect } from '../table_helpers/riskTd';
 
 interface Props {
@@ -32,8 +32,7 @@ export function formatDate (date:Date) {
 const TableData: React.FC<Props> = ({groups, isEmploy,code, setRemove, deleteUserFromGroup}) => {
     //These consts are for render components according a condition
     const renderRow = (healthCond: string, mobileUser: UsersData, groupId: string) => {
-        const { healthCondition, gender, name, lastName, visitDate, symptomsDate, infectedDate} = mobileUser;
-  
+        const { healthCondition, gender, name, lastName, visitDate} = mobileUser; 
         const health: ItemSelect = {
           'none':'Riesgo Bajo',
           'None':'Riesgo Bajo',
@@ -56,9 +55,21 @@ const TableData: React.FC<Props> = ({groups, isEmploy,code, setRemove, deleteUse
             <td>{`${name} ${lastName}`}</td>
   
             {!isEmploy && <td>{formatDate(visitDate!)}</td>} 
-  
-            <td>{formatDate(symptomsDate!)}</td>
-            <td>{formatDate(infectedDate!)}</td> 
+            {mobileUser.symptoms?.length === 0  ? 
+                <>
+                    <td></td>
+                    <td></td>
+                </>:
+                <>
+                {mobileUser.symptoms?.map((cont:Symptoms,index ) => (
+                    <>
+                        <td>{formatDate(cont.symptomsDate)}</td>
+                        <td>{formatDate(cont.covidDate)}</td> 
+                    </>
+                ))}
+                </>
+            }
+            
             <td>
               <button
                 className="btn btn-light rounded-circle"

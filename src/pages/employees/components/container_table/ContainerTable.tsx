@@ -35,7 +35,6 @@ function ContainerTable () {
 
       const totalPage = groups.reduce((acc:number, curr:Groups) => idCode.push({_id:curr._id}) && acc + curr.users!.length, 0);
       setCounterTextM(total == null ? '-' : `${count}-${totalPage} de ${total}`);
-      console.log(groups)
       setIdSelected(idCode[0]._id)//Set the first element to consult data
       //set the codes into arraylist
       setListCodesM(idCode);
