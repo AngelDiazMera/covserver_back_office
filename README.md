@@ -2,14 +2,20 @@
 
 React web application to manage of possible Covid 19 infections with people with whom you could have been in contact and also manage areas for specific places to control infection propagation.
 
-Demo could be seen here https://cutt.ly/IWvUiLK
+Demo could be seen here https://covserver.herokuapp.com/
 
-Some screenshots from the app here...
+# Covserver Demo screenshots
+
 <div align="center"> 
   
-Login page             
-:-------------------------:
-![image](https://user-images.githubusercontent.com/47422372/153886270-72acb5a6-d6d2-443e-bc41-8d41b32a2144.png)  
+Login page             | Register page
+:-------------------------: | :-------------------------:
+![image](https://user-images.githubusercontent.com/47422372/154281234-c77390e7-5748-479c-9f08-a2c05ee8dfdc.png)  | ![image](https://user-images.githubusercontent.com/47422372/154281045-3c33c836-ca8b-444a-9be8-e90ae56a116e.png)
+  
+ 
+Visitors & users page             | Areas management page
+:-------------------------: | :-------------------------:
+![image](https://user-images.githubusercontent.com/47422372/154280670-c672a896-596d-4c1c-aeee-507d520dd6de.png)  | ![image](https://user-images.githubusercontent.com/47422372/154280810-d580e488-4b52-4cc6-a00d-e3c95a4eaaad.png)
   
 </div>
 
