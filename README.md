@@ -17,7 +17,7 @@ Login page
 
 ## Related projects:
 
-- Mobile app (ReactJs): https://github.com/AngelDiazMera/covid-app
+- Mobile app (Futter): https://github.com/AngelDiazMera/covid-app
 - Back end (ExpressJs): https://github.com/AngelDiazMera/covserver_backend
 
 
