@@ -1,8 +1,8 @@
 # Covserver Back office
 <div>
-  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ffc70f?style=for-the-badge&logo=javascript&logoColor=white" />
+  <img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
   <img alt="ReactJs" src="https://img.shields.io/badge/ReactJs-45b8d8?style=for-the-badge&logo=react&logoColor=white" />
-<img alt="NodeJs" src="https://img.shields.io/badge/NodeJs-43853d?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img alt="NodeJs" src="https://img.shields.io/badge/NodeJs-43853d?style=for-the-badge&logo=node.js&logoColor=white" />
   <img alt="Jest" src="https://img.shields.io/badge/-Jest-15c213?style=for-the-badge&logo=jest&logoColor=white" />
   <img alt="Bootrstrap" src="https://img.shields.io/badge/-Bootrstrap-7952b3?style=for-the-badge&logo=bootstrap&logoColor=white" />
   <img alt="Styled Components" src="https://img.shields.io/badge/-Styled_Components-db7092?style=for-the-badge&logo=styled-components&logoColor=white" />
@@ -85,7 +85,7 @@ Pull requests are allowed ;)
 
   Angel Díaz | Antonio Rosas | Rodrigo Cruz | Shaden Narvaez | Johan Maye
   :-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:
-  [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AngelDiazMera/) | [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Antonio152/) | [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rodrigocrz/) | [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Shadenn/) | [![](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Johan07032000/)
+  [![](https://img.shields.io/badge/AngelDiazMera-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/AngelDiazMera/) | [![](https://img.shields.io/badge/Antonio152-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Antonio152/) | [![](https://img.shields.io/badge/rodrigocrz-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/rodrigocrz/) | [![](https://img.shields.io/badge/Shadenn-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Shadenn/) | [![](https://img.shields.io/badge/Johan07032000-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Johan07032000/)
 </div>
 
 ## License
