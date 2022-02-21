@@ -1,5 +1,13 @@
 # Covserver Back office
-
+<div>
+  <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ffc70f?style=for-the-badge&logo=javascript&logoColor=white" />
+  <img alt="ReactJs" src="https://img.shields.io/badge/ReactJs-45b8d8?style=for-the-badge&logo=react&logoColor=white" />
+<img alt="NodeJs" src="https://img.shields.io/badge/NodeJs-43853d?style=for-the-badge&logo=node.js&logoColor=white" />
+  <img alt="Jest" src="https://img.shields.io/badge/-Jest-15c213?style=for-the-badge&logo=jest&logoColor=white" />
+  <img alt="Bootrstrap" src="https://img.shields.io/badge/-Bootrstrap-7952b3?style=for-the-badge&logo=bootstrap&logoColor=white" />
+  <img alt="Styled Components" src="https://img.shields.io/badge/-Styled_Components-db7092?style=for-the-badge&logo=styled-components&logoColor=white" />
+</div>
+  
 React web application to manage of possible Covid 19 infections with people with whom you could have been in contact and also manage areas for specific places to control infection propagation.
 
 Demo could be seen here https://covserver.herokuapp.com/
